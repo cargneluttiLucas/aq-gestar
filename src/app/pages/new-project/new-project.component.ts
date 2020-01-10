@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormControl} from '@angular/forms';
 
 
 @Component({
@@ -11,11 +11,7 @@ export class NewProjectComponent implements OnInit {
 
     newProyectFormGroup: FormGroup;
 
-    itemsProductos = [{ id: 1, text: 'Convivimos', disabled: false },
-      { id: 2, text: 'HBO', disabled: false },
-      { id: 2, text: 'Préstamo', disabled: false },
-      { id: 2, text: 'Seguro', disabled: false },
-      { id: 3, text: 'Tarjetas', disabled: true }];
+    itemsProductos = [{ id: 1, text: 'Convivimos', disabled: false }];
     constructor() { }
 
 
@@ -28,7 +24,7 @@ export class NewProjectComponent implements OnInit {
         this.newProyectFormGroup = new FormGroup({
             id: new FormControl(''),
             client: new FormControl(''),
-            name: new FormControl(''),
+            nombre: new FormControl(''),
             projectType: new FormControl(''),
             state: new FormControl(''),
             dateStart: new FormControl(''),

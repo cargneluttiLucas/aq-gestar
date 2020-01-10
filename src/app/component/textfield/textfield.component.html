@@ -2,10 +2,10 @@
     <div class="box-textfield" [ngClass]="{'box-textfield--custom': controlMessagesProyection}">
       <div class="box-textfield__inputs">
         <div class="box-textfield__inputs__input" zBrowser>
-          <input (focus)="focusFunction()" id="{{id}}" [formControl]="formControl" [autocomplete]="autocomplete" [ngClass]="{'disabled': disabled}" 
+          <input (focus)="focusFunction()" id="{{id}}" [formControl]="control" [autocomplete]="autocomplete" [ngClass]="{'disabled': disabled}" 
             appMask [mask]="mask" [hiddenInput]="hiddenInput"
             name="{{id}}" (focusout)="focusOutFunction($event)" type="{{typeInput}}">
-          <label [ngClass]="{'whitNotPlaceholder': formControl.value,
+          <label [ngClass]="{'whitNotPlaceholder': control.value,
                                'label-disabled': disabled}">{{ text }}</label>
         </div>
         <div class="icon box-textfield__inputs__icons"
@@ -24,7 +24,7 @@
       <div *ngIf="!controlMessagesProyection">
         <app-control-messages (handleControl)="handleControl($event)" [validationMoment]="validationMoment$"
         hint="{{menssagesHint}}" success="{{menssagesSuccess}}" alternativeError="{{menssagesError}}"
-        [control]="formControl">
+        [control]="control">
       </app-control-messages>
     </div>
   </div>

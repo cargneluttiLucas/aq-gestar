@@ -51,7 +51,7 @@ export class TextfieldComponent implements OnInit, AfterViewInit {
     @Input() menssagesError: string;
     @Input() notControlMessage = false;
 
-    @Input() public formControl: FormControl;
+    @Input() public control: FormControl;
 
     private statusChangesSubscription: Subscription;
     private data: any;
@@ -130,8 +130,8 @@ export class TextfieldComponent implements OnInit, AfterViewInit {
             }
         });
 
-        this.formControl.statusChanges.subscribe(() => {
-            if (this.formControl.dirty) {
+        this.control.statusChanges.subscribe(() => {
+            if (this.control.dirty) {
                 this.isFocusLine = true;
                 this.isErrorLine = false;
                 this.isSuccessLine = false;
@@ -146,8 +146,8 @@ export class TextfieldComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        const zControlMessages = this.boxTextfield.nativeElement.querySelectorAll('[ControlMessages]');
-        if (zControlMessages.length > 0) {
+        const controlMessages = this.boxTextfield.nativeElement.querySelectorAll('[ControlMessages]');
+        if (controlMessages.length > 0) {
             this.controlMessagesProyection = true;
         }
 
@@ -155,8 +155,8 @@ export class TextfieldComponent implements OnInit, AfterViewInit {
             this.controlMessagesProyection = this.notControlMessage;
         }
 
-        const zContainerIcon = this.boxTextfield.nativeElement.querySelectorAll('.checkbox-container');
-        if (zContainerIcon.length > 0) {
+        const containerIcon = this.boxTextfield.nativeElement.querySelectorAll('.checkbox-container');
+        if (containerIcon.length > 0) {
             this.checkboxProyection = true;
         }
         this.cdRef.detectChanges();
@@ -204,17 +204,17 @@ export class TextfieldComponent implements OnInit, AfterViewInit {
     }
 
     createForm() {
-        if (this.formControl === undefined) {
-            this.formControl = new FormControl('');
+        if (this.control === undefined) {
+            this.control = new FormControl('');
         }
         if (this.required) {
-            this.formControl.validator ?
-                this.formControl.setValidators([this.formControl.validator, Validators.required]) :
-                this.formControl.setValidators(Validators.required);
+            this.control.validator ?
+                this.control.setValidators([this.control.validator, Validators.required]) :
+                this.control.setValidators(Validators.required);
         } else {
-            this.formControl.validator ?
-                this.formControl.setValidators([this.formControl.validator]) :
-                this.formControl.setValidators(Validators.nullValidator);
+            this.control.validator ?
+                this.control.setValidators([this.control.validator]) :
+                this.control.setValidators(Validators.nullValidator);
         }
     }
 
