@@ -14,7 +14,8 @@ import { ModalDialogService } from '../utils/services';
     TextfieldModule.forRoot(),
     ButtonModule.forRoot(),
     LoadingModule.forRoot(),
-    UtilsModule.forRoot()
+    UtilsModule.forRoot(),
+    SelectModule.forRoot()
   ],
   declarations: [
   ],
@@ -22,6 +23,7 @@ import { ModalDialogService } from '../utils/services';
     TextfieldModule,
     ButtonModule,
     LoadingModule,
+    SelectModule,
     UtilsModule
   ]
 })

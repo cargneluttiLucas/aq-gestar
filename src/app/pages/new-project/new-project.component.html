@@ -10,6 +10,9 @@
                 <app-textfield [text]="'Cliente'" [formControl]="newProyectFormGroup.get('client')"></app-textfield>
             </div>
             <div class="col-md-6">
+                <app-select [items]="itemsProductos" [dropUp]="false"
+                [placeholderDefault]="'Producto'"
+                [messagesError]="'Seleccioná un producto'"></app-select>
             </div>
         </div>
         

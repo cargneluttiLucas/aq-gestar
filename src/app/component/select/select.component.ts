@@ -29,7 +29,7 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy {
   @Input() item = null;
   @Input() dropUp = true;
 
-  @ViewChild('selectRef', { static: false}) selectRef: ElementRef;
+  @ViewChild('selectRef', { static: true}) selectRef: ElementRef;
 
   selectResultsWidth: number;
   iconOpen = false;

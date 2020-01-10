@@ -1,4 +1,4 @@
-<div #selectRef class="container" [formGroup]="form" zOuterClick (clickOutside)="clickOutside($event)"
+<div #selectRef class="container" [formGroup]="form" appOuterClick (clickOutside)="clickOutside($event)"
      [ngClass]="{'container--selected-open': iconOpen && item,
                  'container--selected': !iconOpen && item,
                  'container--open': iconOpen && !item && !isErrorLine,

@@ -1,14 +1,13 @@
-<ul #selectResults class="select-container" zOuterClick (clickOutside)="clickOutside()"
-    [ngClass]="{'select-container--mobile': isMobile}">
-  <li zHover [isHover]="true" *ngIf="defaultValue" [stylesEnter]="hoverStylesEnter" [stylesLeave]="hoverStylesLeave"
-      class="select-container__results"
-      (click)="selectedItem(null)">
-    <p class="select-container__results__text" >{{defaultValue.text}}</p>
+<ul #selectResults class="select-container" appOuterClick (clickOutside)="clickOutside()"
+  [ngClass]="{'select-container--mobile': isMobile}">
+  <li appHover [isHover]="true" *ngIf="defaultValue" [stylesEnter]="hoverStylesEnter" [stylesLeave]="hoverStylesLeave"
+    class="select-container__results" (click)="selectedItem(null)">
+    <p class="select-container__results__text">{{defaultValue.text}}</p>
   </li>
-  <ng-container  *ngFor="let item of selectedItems; let i = index">
-    <li zHover [isHover]="!item.disabled ? true : false" [ngClass]="{'select-container__results--disabled': item.disabled}"
-        [stylesEnter]="hoverStylesEnter" [stylesLeave]="hoverStylesLeave"
-        class="select-container__results" (click)="selectedItem(item)">
+  <ng-container *ngFor="let item of selectedItems; let i = index">
+    <li appHover [isHover]="!item.disabled ? true : false"
+      [ngClass]="{'select-container__results--disabled': item.disabled}" [stylesEnter]="hoverStylesEnter"
+      [stylesLeave]="hoverStylesLeave" class="select-container__results" (click)="selectedItem(item)">
       <p class="select-container__results__text">{{item.text}}</p>
     </li>
   </ng-container>

@@ -10,6 +10,12 @@ import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors }
 export class NewProjectComponent implements OnInit {
 
     newProyectFormGroup: FormGroup;
+
+    itemsProductos = [{ id: 1, text: 'Convivimos', disabled: false },
+      { id: 2, text: 'HBO', disabled: false },
+      { id: 2, text: 'Préstamo', disabled: false },
+      { id: 2, text: 'Seguro', disabled: false },
+      { id: 3, text: 'Tarjetas', disabled: true }];
     constructor() { }
 
 

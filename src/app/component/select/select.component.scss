@@ -4,7 +4,7 @@
 
 :host {
 
-  .z-container {
+  .container {
     height: 92px;
     min-width: 80px;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -12,11 +12,11 @@
 
     &--error {
 
-      .z-container__border {
+      .container__border {
         border-bottom: 1px solid $color-error-700;
       }
 
-      .z-container__field__texts__placeholder {
+      .container__field__texts__placeholder {
         font-size: 18px;
         line-height: 1.78;
       }
@@ -24,13 +24,13 @@
 
     &--errorFocus {
 
-      .z-container__field__texts__placeholder {
+      .container__field__texts__placeholder {
         font-size: 16px;
         line-height: 1;
         padding-bottom: 36px;
       }
 
-      .z-container__border {
+      .container__border {
         border-bottom: 2px solid $color-error-700;
         margin-top: -1px;
       }
@@ -39,24 +39,24 @@
     &--disabled {
       cursor: not-allowed;
 
-      .z-container__field__texts__placeholder,
-      .z-container__field__texts__item,
-      .z-container__field__icon {
+      .container__field__texts__placeholder,
+      .container__field__texts__item,
+      .container__field__icon {
         color: $color-grayscale-400;
       }
 
-      .z-container__border {
+      .container__border {
         border-bottom: 1px dashed $color-grayscale-300;
       }
     }
 
     &--open {
 
-      .z-container__border {
+      .container__border {
         border-bottom: 2px solid $color-grayscale-800;
       }
 
-      .z-container__field__texts__placeholder {
+      .container__field__texts__placeholder {
         font-size: 16px;
         line-height: 1;
         padding-bottom: 36px;
@@ -65,7 +65,7 @@
 
     &--selected {
 
-      .z-container__field__texts__placeholder {
+      .container__field__texts__placeholder {
         font-size: 16px;
         line-height: 1;
         margin-bottom: 4px;
@@ -75,11 +75,11 @@
 
     &--selected-open {
 
-      .z-container__border {
+      .container__border {
         border-bottom: 2px solid $color-grayscale-800;
       }
 
-      .z-container__field__texts__placeholder {
+      .container__field__texts__placeholder {
         font-size: 16px;
         line-height: 1;
         margin-bottom: 4px;
