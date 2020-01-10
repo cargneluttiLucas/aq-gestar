@@ -1,10 +1,17 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TextfieldComponent } from './textfield.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormModule } from '../form';
+import { MaskModule } from 'src/app/utils';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FormModule.forRoot(),
+    MaskModule.forRoot()
   ],
   declarations: [
     TextfieldComponent
@@ -14,4 +21,10 @@ import { TextfieldComponent } from './textfield.component';
   ]
 })
 export class TextfieldModule {
+  constructor() {}
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: TextfieldModule
+    };
+  }
 }

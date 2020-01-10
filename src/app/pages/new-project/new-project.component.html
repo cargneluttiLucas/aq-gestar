@@ -1,3 +1,25 @@
-<div [formGroup]="newProyectFormGroup">
-
+<div class="container">
+    <div [formGroup]="newProyectFormGroup">
+        <div class="row">
+            <div class="col-xl-3">
+                <app-textfield [text]="'ID'" [formControl]="newProyectFormGroup.get('id')" [disabled]="true"></app-textfield>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <app-textfield [text]="'Cliente'" [formControl]="newProyectFormGroup.get('client')"></app-textfield>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+        
+        <app-textfield [text]="'Estado'" [formControl]="newProyectFormGroup.get('state')"></app-textfield>
+        <app-textfield [text]="'Fecha de Inicio Planificada'" [formControl]="newProyectFormGroup.get('dateStart')"></app-textfield>
+        <app-textfield [text]="'Fecha de Fin Planificada'" [formControl]="newProyectFormGroup.get('dateEnd')"></app-textfield>
+        <app-textfield [text]="'Fecha de Inicio Real'" [formControl]="newProyectFormGroup.get('dateStartReal')"></app-textfield>
+        <app-textfield [text]="'Fecha de Fin Real'" [formControl]="newProyectFormGroup.get('dateEndReal')"></app-textfield>
+        <app-textfield [text]="'Horas'" [formControl]="newProyectFormGroup.get('hours')"></app-textfield>
+    
+        <app-button text="Guardar"></app-button>
+    </div>
 </div>

@@ -1,0 +1,9 @@
+<ng-container>
+  <button class="btn {{typeButtonClass}}"
+          [style.width]="widthButton" [ngClass]="{'loading': isLoading}" [disabled]="disabled"
+          (click)="onButtonClicked()">
+    <div [style.visibility]="isLoading ? 'hidden' : 'visible'">{{ text }}</div>
+    <app-loading class="btn-spinner" *ngIf="isLoading" [withBg]="isBackground"
+    [type]="typeLoadingClass" [size]="'medium'"></app-loading>
+  </button>
+</ng-container>

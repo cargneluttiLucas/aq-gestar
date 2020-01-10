@@ -1,0 +1,37 @@
+<div #selectRef class="container" [formGroup]="form" zOuterClick (clickOutside)="clickOutside($event)"
+     [ngClass]="{'container--selected-open': iconOpen && item,
+                 'container--selected': !iconOpen && item,
+                 'container--open': iconOpen && !item && !isErrorLine,
+                 'container--error': isErrorLine && !inFocus && !item,
+                 'container--errorFocus': isErrorLine && inFocus && !item,
+                 'container--disabled': disabled}">
+  <div class="container__field" (click)="openItemsResult()">
+    <div class="container__field__texts">
+        <span class="container__field__texts__placeholder">
+          {{placeholderDefault}}
+        </span>
+      <span class="container__field__texts__item" *ngIf="item">
+          {{item.text}}
+        </span>
+    </div>
+    <div class="icon container__field__icon">
+      <div [ngClass]="{'icon-angle-down size-16': !iconOpen, 'icon-angle-up size-16': iconOpen}"></div>
+    </div>
+  </div>
+
+  <div class="container__border"></div>
+  <div class="container__messages" [style.width.px]="selectResultsWidth">
+    <app-control-messages (handleControl)="handleControl($event)" [validationMoment]="validationMoment"
+                        hint="{{messagesHint}}" success="{{messagesSuccess}}" alternativeError="{{messagesError}}"
+                        [control]="form.get('select')">
+    </app-control-messages>
+  </div>
+  <app-select-results class="container__overlay" [dropUp]="dropUp" [style.width.px]="selectResultsWidth" [isMobile]="isMobileSelect"
+                    *ngIf="items && iconOpen" [selectedItems]="items" [defaultValue]="defaultValue"
+                    (itemSelected)="itemSelect($event)">
+
+  </app-select-results>
+
+</div>
+
+

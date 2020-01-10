@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./app/styles/vendor/reset";
+@import "./app/styles/vendor/flexboxgrid/flexboxgrid";
+@import "./app/styles/colors";
+@import "./app/styles/variables";
+@import "./app/styles/modals";
+@import "./app/styles/spaces";
+@import "./app/styles/animations";

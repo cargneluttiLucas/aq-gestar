@@ -2,7 +2,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewProjectModule } from './new-project/new-project.module';
 import { RequirementsModule } from './requirements/requirements.module';
-import { ComponentsModule } from '../component/component.module';
 
 @NgModule({
   imports: [

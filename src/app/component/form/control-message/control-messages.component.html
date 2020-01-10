@@ -1,0 +1,18 @@
+<div zBrowser>
+  <div class="control-messages-error" *ngIf="control.invalid && visible">
+    <div *ngIf="message" class="control-messages-margin">{{message}}</div>
+    <div *ngIf="message" class="icon control-messages-margin">
+      <div class="icon-alert-circle"></div>
+    </div>
+  </div>
+  <div class="control-messages-success" *ngIf="control.valid && control.dirty && visible">
+    <div *ngIf="message" class="control-messages-margin">{{message}}</div>
+    <div *ngIf="message" class="icon control-messages-margin">
+      <div class="icon-check-circle"></div>
+    </div>
+  </div>
+
+  <div *ngIf="!visible" class="control-messages-hint">
+    <div *ngIf="hint" class="control-messages-margin">{{hint}}</div>
+  </div>
+</div>
