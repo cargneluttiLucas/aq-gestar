@@ -5,14 +5,15 @@ export class NewProjectModel {
     public projectState: string;
     public projectStateId: number;
     public startDate: Date;
+    public realStartDate: Date;
     public endDate: Date;
+    public realEndDate: Date;
+    
     public sinOrdenCompra: number;
     public repositorioSVN: string;
     public numeroDeCompra: number;
     public estimateHours: number;
     public realHours: number;
-    public realStartDate: Date;
-    public realEndDate: Date;
     public customerId: number;
     public customer: string;
     public projetRiesgo: string; // es un combo box

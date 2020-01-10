@@ -1,5 +1,5 @@
 <div #box>
-    <div class="box-textfield" [ngClass]="{'box-textfield--custom': zControlMessagesProyection}">
+    <div class="box-textfield" [ngClass]="{'box-textfield--custom': controlMessagesProyection}">
       <div class="box-textfield__inputs">
         <div class="box-textfield__inputs__input" zBrowser>
           <input (focus)="focusFunction()" id="{{id}}" [formControl]="formControl" [autocomplete]="autocomplete" [ngClass]="{'disabled': disabled}" 
@@ -9,7 +9,7 @@
                                'label-disabled': disabled}">{{ text }}</label>
         </div>
         <div class="icon box-textfield__inputs__icons"
-          [ngClass]="{'box-textfield__inputs__checkbox': zCheckboxProyection}">
+          [ngClass]="{'box-textfield__inputs__checkbox': checkboxProyection}">
           <ng-content select="container-icon"></ng-content>
           <ng-content select="checkbox"></ng-content>
         </div>
@@ -21,7 +21,7 @@
                                                       'box-textfield__lines--successFocus': isSuccessLine && isFocusLine,
                                                       'box-textfield__lines--disabled': disabled}">
       </div>
-      <div *ngIf="!zControlMessagesProyection">
+      <div *ngIf="!controlMessagesProyection">
         <app-control-messages (handleControl)="handleControl($event)" [validationMoment]="validationMoment$"
         hint="{{menssagesHint}}" success="{{menssagesSuccess}}" alternativeError="{{menssagesError}}"
         [control]="formControl">

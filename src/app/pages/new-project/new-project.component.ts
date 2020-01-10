@@ -29,6 +29,7 @@ export class NewProjectComponent implements OnInit {
             id: new FormControl(''),
             client: new FormControl(''),
             name: new FormControl(''),
+            projectType: new FormControl(''),
             state: new FormControl(''),
             dateStart: new FormControl(''),
             dateEnd: new FormControl(''),

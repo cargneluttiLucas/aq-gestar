@@ -24,7 +24,7 @@ export class SelectResultsComponent implements AfterViewInit, OnInit, OnChanges,
   @Input() isMobile = true;
   @Input() dropUp = true;
   @Output() itemSelected = new EventEmitter<any>();
-  @ViewChild('selectResults', {static: false}) selectResults: ElementRef;
+  @ViewChild('selectResults', {static: true}) selectResults: ElementRef;
   selectPositionY;
   isdropUp = false;
   marginBottom = 64;

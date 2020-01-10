@@ -111,8 +111,8 @@ export class TextfieldComponent implements OnInit, AfterViewInit {
 
     public value: any;
 
-    public zControlMessagesProyection = false;
-    public zCheckboxProyection: boolean;
+    public controlMessagesProyection = false;
+    public checkboxProyection: boolean;
 
     constructor(private cdRef: ChangeDetectorRef) { }
 
@@ -148,16 +148,16 @@ export class TextfieldComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         const zControlMessages = this.boxTextfield.nativeElement.querySelectorAll('[ControlMessages]');
         if (zControlMessages.length > 0) {
-            this.zControlMessagesProyection = true;
+            this.controlMessagesProyection = true;
         }
 
         if (this.notControlMessage) {
-            this.zControlMessagesProyection = this.notControlMessage;
+            this.controlMessagesProyection = this.notControlMessage;
         }
 
         const zContainerIcon = this.boxTextfield.nativeElement.querySelectorAll('.checkbox-container');
         if (zContainerIcon.length > 0) {
-            this.zCheckboxProyection = true;
+            this.checkboxProyection = true;
         }
         this.cdRef.detectChanges();
     }

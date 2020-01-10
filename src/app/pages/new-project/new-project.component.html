@@ -9,18 +9,34 @@
             <div class="col-md-6">
                 <app-textfield [text]="'Cliente'" [formControl]="newProyectFormGroup.get('client')"></app-textfield>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
-                <app-select [items]="itemsProductos" [dropUp]="false"
-                [placeholderDefault]="'Producto'"
-                [messagesError]="'Seleccioná un producto'"></app-select>
+                <app-textfield [text]="'Nombre'" [formControl]="newProyectFormGroup.get('name')"></app-textfield>
+            </div>
+            <div class="col-md-3">
+                <app-select [items]="itemsProductos" [formControl]="newProyectFormGroup.get('projectType')" [placeholderDefault]="'Tipo proyecto'"></app-select>
+            </div>
+            <div class="col-md-3">
+                <app-select [items]="itemsProductos" [formControl]="newProyectFormGroup.get('state')" [placeholderDefault]="'Estado'"></app-select>
             </div>
         </div>
-        
-        <app-textfield [text]="'Estado'" [formControl]="newProyectFormGroup.get('state')"></app-textfield>
-        <app-textfield [text]="'Fecha de Inicio Planificada'" [formControl]="newProyectFormGroup.get('dateStart')"></app-textfield>
-        <app-textfield [text]="'Fecha de Fin Planificada'" [formControl]="newProyectFormGroup.get('dateEnd')"></app-textfield>
-        <app-textfield [text]="'Fecha de Inicio Real'" [formControl]="newProyectFormGroup.get('dateStartReal')"></app-textfield>
-        <app-textfield [text]="'Fecha de Fin Real'" [formControl]="newProyectFormGroup.get('dateEndReal')"></app-textfield>
+        <div class="row">
+            <div class="col-md-6">
+                <app-textfield [text]="'Fecha de Inicio Planificada'" [mask]="'00/00/0000'" [formControl]="newProyectFormGroup.get('dateStart')"></app-textfield>
+            </div>
+            <div class="col-md-6">
+                <app-textfield [text]="'Fecha de Fin Planificada'" [mask]="'00/00/0000'" [formControl]="newProyectFormGroup.get('dateEnd')"></app-textfield>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <app-textfield [text]="'Fecha de Inicio Real'" [mask]="'00/00/0000'" [formControl]="newProyectFormGroup.get('dateStartReal')"></app-textfield>
+            </div>
+            <div class="col-md-6">
+                <app-textfield [text]="'Fecha de Fin Real'" [mask]="'00/00/0000'" [formControl]="newProyectFormGroup.get('dateEndReal')"></app-textfield>
+            </div>
+        </div>
         <app-textfield [text]="'Horas'" [formControl]="newProyectFormGroup.get('hours')"></app-textfield>
     
         <app-button text="Guardar"></app-button>
