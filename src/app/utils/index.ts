@@ -3,3 +3,4 @@ export * from './mask/index';
 export * from './enums/index';
 export * from './services/index';
 export * from './directives/index';
+export * from './pipes/index';

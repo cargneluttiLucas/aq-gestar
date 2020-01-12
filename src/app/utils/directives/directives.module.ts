@@ -7,10 +7,12 @@ import { OuterClickDirective } from './outerclick/outerclick.directive';
 import { ErrorFeedbackDirective } from './error-feedback/error-feedback.directive';
 import { BrowserDirective } from './browser/browser.directive';
 import { DatePipe } from '../pipes/date.pipes';
+import { SafePipe } from '../pipes/safe.pipe';
 import { IterateKeys } from '../pipes/iterate-keys.pipes';
 
 export const commonPipes = [
   IterateKeys,
+  SafePipe,
   DatePipe,
   RippleEffectDirective,
   HoverDirective,

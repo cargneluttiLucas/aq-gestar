@@ -74,7 +74,7 @@ export class RippleEffectDirective {
     span.style.width = `${width}px`;
     span.style.pointerEvents = 'none';
 
-    this.renderer.addClass(span, 'z-rippleEffect');
+    this.renderer.addClass(span, 'app-rippleEffect');
     this.element.nativeElement.appendChild(span);
     return span;
   }

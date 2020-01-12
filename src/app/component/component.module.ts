@@ -1,12 +1,13 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TextfieldModule } from './textfield/textfield.module';
-import { FormModule } from './form/forms.module';
+import { TextfieldPredictiveModule } from './textfield-predictive/textfield-predictive.module';
 import { UtilsModule } from '../utils/utils.module';
 import { ButtonModule } from './button/button.module';
 import { LoadingModule } from './loading/loading.module';
-import { SelectModule, SelectComponent, SelectResultsComponent } from './select';
-import { ModalDialogService } from '../utils/services';
+import { SelectModule } from './select';
+import { ListModule } from './list';
+import { ModalsModule } from '../utils/services/modal/modal.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,10 @@ import { ModalDialogService } from '../utils/services';
     ButtonModule.forRoot(),
     LoadingModule.forRoot(),
     UtilsModule.forRoot(),
-    SelectModule.forRoot()
+    SelectModule.forRoot(),
+    ListModule.forRoot(),
+    ModalsModule.forRoot(),
+    TextfieldPredictiveModule.forRoot()
   ],
   declarations: [
   ],
@@ -24,7 +28,10 @@ import { ModalDialogService } from '../utils/services';
     ButtonModule,
     LoadingModule,
     SelectModule,
-    UtilsModule
+    UtilsModule,
+    ListModule,
+    ModalsModule,
+    TextfieldPredictiveModule
   ]
 })
 export class ComponentsModule {

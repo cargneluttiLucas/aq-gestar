@@ -4,19 +4,19 @@
 
 :host {
 
-  .container {
-    height: 92px;
+  .select-container {
+    height: 88px;
     min-width: 80px;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     width: 100%;
 
     &--error {
 
-      .container__border {
+      .select-container__border {
         border-bottom: 1px solid $color-error-700;
       }
 
-      .container__field__texts__placeholder {
+      .select-container__field__texts__placeholder {
         font-size: 18px;
         line-height: 1.78;
       }
@@ -24,13 +24,13 @@
 
     &--errorFocus {
 
-      .container__field__texts__placeholder {
+      .select-container__field__texts__placeholder {
         font-size: 16px;
         line-height: 1;
         padding-bottom: 36px;
       }
 
-      .container__border {
+      .select-container__border {
         border-bottom: 2px solid $color-error-700;
         margin-top: -1px;
       }
@@ -39,9 +39,9 @@
     &--disabled {
       cursor: not-allowed;
 
-      .container__field__texts__placeholder,
-      .container__field__texts__item,
-      .container__field__icon {
+      .select-container__field__texts__placeholder,
+      .select-container__field__texts__item,
+      .select-container__field__icon {
         color: $color-grayscale-400;
       }
 
@@ -52,11 +52,11 @@
 
     &--open {
 
-      .container__border {
+      .select-container__border {
         border-bottom: 2px solid $color-grayscale-800;
       }
 
-      .container__field__texts__placeholder {
+      .select-container__field__texts__placeholder {
         font-size: 16px;
         line-height: 1;
         padding-bottom: 36px;
@@ -65,7 +65,7 @@
 
     &--selected {
 
-      .container__field__texts__placeholder {
+      .select-container__field__texts__placeholder {
         font-size: 16px;
         line-height: 1;
         margin-bottom: 4px;
@@ -75,11 +75,11 @@
 
     &--selected-open {
 
-      .container__border {
+      .select-container__border {
         border-bottom: 2px solid $color-grayscale-800;
       }
 
-      .container__field__texts__placeholder {
+      .select-container__field__texts__placeholder {
         font-size: 16px;
         line-height: 1;
         margin-bottom: 4px;
@@ -95,7 +95,6 @@
       align-items: center;
       cursor: pointer;
       display: flex;
-      height: 65px;
       justify-content: space-between;
       width: 100%;
 

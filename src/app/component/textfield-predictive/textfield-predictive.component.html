@@ -1,0 +1,37 @@
+<div class="z-container" zOuterClick (clickOutside)="clickOutside($event)">
+  <app-textfield [text]="text" [id]="id" [submit$]="validationMoment$" [control]="selectFormControl"
+    [menssagesSuccess]="menssagesSuccess" [menssagesHint]="menssagesHint" [autocomplete]="autocomplete"
+    [menssagesError]="menssagesError" [disabled]="disabled" (focus)="openDialog($event, id)"
+    (handlerError)="handleControl($event)">
+  </app-textfield>
+
+  <app-select-results class="z-container__overlay" *ngIf="itemsFilter && iconOpen" [isMobile]="false"
+    [selectedItems]="itemsFilter" [defaultValue]="defaultValue" (itemSelected)="itemSelect($event)">
+  </app-select-results>
+</div>
+
+<app-modal id="{{id}}">
+  <div class="container-textfield-predictive-modal">
+    <app-textfield class="container-textfield-predictive-modal__textfield" [text]="text" id="{{id}}-mobile" [submit$]="validationMoment$" [control]="selectFormControl"
+      [menssagesSuccess]="menssagesSuccess" [menssagesHint]="menssagesHint" [menssagesError]="menssagesError"
+      [disabled]="disabled" (handlerError)="handleControl($event)">
+    </app-textfield>
+    <div *ngIf="itemsFilter.length > 0" class="container-textfield-predictive-modal__body">
+      <app-list *ngFor="let item of itemsFilter; let index=index" [index]="index" [item]="item" [disabled]="item.disabled"
+        (elementSelected)="itemSelectedList($event)">
+        <div primaryTitle>
+          {{item.text}}
+        </div>
+        <div primarySubtitle>
+        </div>
+        <div secondaryTitle>
+        </div>
+        <div secondarySubtitle>
+        </div>
+      </app-list>
+    </div>
+    <div *ngIf="itemsFilter.length === 0 && selectFormControl.dirty && flagDefault" class="container-textfield-predictive-modal__img">
+      <img src="{{urlImg}}">
+    </div>
+  </div>
+</app-modal>

@@ -1,0 +1,14 @@
+<header class="container-header" [ngClass]="{'container-header--scroll-down' : isVisible === true, 'container-header--scroll-up' : isVisible === false}">
+  <div class="container-header__menu">
+    <ng-content select="[menu]"></ng-content>
+  </div>
+  <div class="container-header__left">
+    <ng-content select="[left]"></ng-content>
+  </div>
+  <div class="container-header__center">
+    <ng-content select="[center]"></ng-content>
+  </div>
+  <div class="container-header__right">
+    <ng-content select="[right]"></ng-content>
+  </div>
+</header>

@@ -29,11 +29,12 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy {
   @Input() item = null;
   @Input() dropUp = true;
 
-  @ViewChild('selectRef', { static: true}) selectRef: ElementRef;
+  @Input() select: FormControl;
+
+  @ViewChild('selectRef', { static: true }) selectRef: ElementRef;
 
   selectResultsWidth: number;
   iconOpen = false;
-  form: FormGroup;
   validationMoment: BehaviorSubject<boolean>;
   errors: any;
   isErrorLine = false;
@@ -104,9 +105,20 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   createForm(): void {
-    this.form = new FormGroup({
-      select: new FormControl(this.item, this.required ? Validators.compose([Validators.required]) : null)
-    });
+    this.select = new FormControl(this.item, this.required ? Validators.compose([Validators.required]) : null);
+
+    // if (this.select === undefined) {
+    //   this.select = new FormControl('');
+    // }
+    // if (this.required) {
+    //   this.select.validator ?
+    //     this.select.setValidators([this.select.validator, Validators.required]) :
+    //     this.select.setValidators(Validators.required);
+    // } else {
+    //   this.select.validator ?
+    //     this.select.setValidators([this.select.validator]) :
+    //     this.select.setValidators(Validators.nullValidator);
+    // }
   }
 
   openItemsResult() {
@@ -149,7 +161,7 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy {
 
     if (this.inFocus) {
       this.validationMoment.next(true);
-      this.form.get('select').setValue(this.item);
+      this.select.setValue(this.item);
       this.inFocus = false;
       this.statusLinesErrorSuccess();
     }

@@ -1,0 +1,125 @@
+@import "../../styles/variables";
+@import "../../styles/colors";
+
+.container-header {
+  align-items: center;
+  background-color: $color-grayscale-100;
+  color: $color-grayscale-700;
+  display: flex;
+  font: 600 18px $primary-font-stack;
+  left: 0;
+  min-height: 56px;
+  position: sticky;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+
+  &--scroll-down {
+    animation: scrollDownAnimation 1s;
+    animation-fill-mode: forwards;
+  }
+
+  &--scroll-up {
+    animation: scrollUpAnimation 1s;
+    animation-fill-mode: forwards;
+  }
+
+  &__menu {
+    display: none;
+  }
+
+  &__left {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: flex-start;
+  }
+
+  &__center {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 2;
+    justify-content: center;
+  }
+
+  &__right {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: flex-end;
+  }
+}
+
+@keyframes scrollUpAnimation {
+
+  0% {
+    transform: translateY(0%);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes scrollDownAnimation {
+
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@media screen and (min-width: $screen-xl-min) {
+
+  .container-header__left,
+  .container-header__center,
+  .container-header__right {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: $screen-l-max) {
+
+  .container-header__left,
+  .container-header__center,
+  .container-header__right {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: $screen-l-min) {
+
+  .container-header__left,
+  .container-header__center,
+  .container-header__right {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: $screen-m-min) {
+
+  .container-header__left,
+  .container-header__center,
+  .container-header__right {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: $screen-s-min) {
+
+  .container-header__menu {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .container-header__left,
+  .container-header__center,
+  .container-header__right {
+    display: none;
+  }
+}

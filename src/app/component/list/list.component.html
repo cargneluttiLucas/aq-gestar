@@ -1,0 +1,38 @@
+<div [ngClass]="{'elements--disabled': disabled,
+                 'elements--notPadding': notPadding,
+                 'elements--notClickable': !clickable}" class="elements" #box (click)="clickElement($event)">
+
+
+    <div class="elements__left" [ngClass]="{'elements__left--element': isLeftElement}">
+        <ng-content select="[left]"></ng-content>
+    </div>
+
+
+    <div class="elements__texts" [ngClass]="{'elements__texts--disabled': disabled}">
+        <div class="elements__texts__primary">
+            <ng-content select="[primaryTitle]"></ng-content>
+            <div *ngIf="isPrimarySubtitle" class="elements__texts__sub-title"
+                [ngClass]="{'elements__texts__sub-title--disabled': disabled}">
+                <ng-content select="[primarySubtitle]"></ng-content>
+            </div>
+        </div>
+        <div class="elements__texts__secondary">
+            <ng-content select="[secondaryTitle]"></ng-content>
+            <div *ngIf="isPrimarySubtitle" class="elements__texts__sub-title"
+                [ngClass]="{'elements__texts__sub-title--disabled': disabled}">
+                <ng-content select="[secondarySubtitle]"></ng-content>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="elements__right" [ngClass]="{'elements__right__secundary-text': isSecondaryText && isPrimarySubtitle,
+                    'elements__right--element': isRightElement,
+                    'elements__right--elementLeft': isLeftElement,
+                    'elements__right--element-radio' : isRadio,
+                    'elements__right__icon' : isIcon,
+                    'elements__right--disabled': disabled}">
+        <ng-content select="[right]"></ng-content>
+    </div>
+
+</div>
