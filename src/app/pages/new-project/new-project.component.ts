@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NewProjectService } from 'src/app/services/new-project.service';
+import { CookieService } from 'src/app/services/cookie.service';
 
 
 @Component({
@@ -21,7 +22,11 @@ export class NewProjectComponent implements OnInit {
     stateProjectSelected = null;
     projectRiskSelected = null;
     managementAreaInChargeSelected = null;
-    constructor(private newProyectService: NewProjectService) { }
+
+
+    constructor(
+        private newProyectService: NewProjectService,
+        private cookieService: CookieService) { }
 
 
     ngOnInit() {
@@ -103,10 +108,14 @@ export class NewProjectComponent implements OnInit {
     }
 
     validForm(): boolean {
-        return this.newProyectFormGroup.valid &&  this.managementAreaInChargeSelected
-        && this.projectRiskSelected && this.stateProjectSelected &&  this.typeProjectSelected;
+        return this.newProyectFormGroup.valid && this.managementAreaInChargeSelected
+            && this.projectRiskSelected && this.stateProjectSelected && this.typeProjectSelected;
     }
 
-    saveProject() {
+    save() {
+    }
+    saveAndClose() {
+    }
+    close() {
     }
 }

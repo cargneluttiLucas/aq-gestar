@@ -58,7 +58,7 @@ input {
   display: flex;
   flex-direction: column;
   height: 88px;
-  max-width: 640px;
+  max-width: 100%;
   min-width: 80px;
 
   &--custom {

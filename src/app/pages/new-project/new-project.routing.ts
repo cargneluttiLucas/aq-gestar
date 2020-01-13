@@ -5,13 +5,7 @@ import { NewProjectComponent } from './new-project.component';
 const routes: Routes = [
   {
     path: '',
-    component: NewProjectComponent,
-    children: [
-      {
-        path: 'new-project',
-        component: NewProjectComponent
-      }
-    ]
+    component: NewProjectComponent
   }
 ];
 

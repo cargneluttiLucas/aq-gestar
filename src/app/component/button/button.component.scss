@@ -13,7 +13,7 @@
 
   &.btn-primary {
     align-items: center;
-    background-color: $color-brand-500;
+    background-color: #2B3148 ;
     border: none;
     border-radius: 60px;
     box-shadow: none;
@@ -23,10 +23,10 @@
     font-family: $primary-font-stack, helvetica, arial, sans-serif;
     font-size: 18px;
     font-weight: bold;
-    height: 48px;
+    height: 34px;
     justify-content: center;
     letter-spacing: 0.1px;
-    line-height: 2.67;
+    // line-height: 2.67;
     max-width: 312px;
     min-width: 136px;
     outline: none;
@@ -65,9 +65,9 @@
       box-shadow: 0 3px 6px 0 transparentize($color-brand-500, 0.5);
     }
 
-    &:hover {
-      box-shadow: 0 3px 6px 0 transparentize($color-brand-500, 0.5);
-    }
+    // &:hover {
+    //   box-shadow: 0 3px 6px 0 transparentize($color-brand-500, 0.5);
+    // }
 
     &:active::after {
       opacity: 0.6;
@@ -182,15 +182,15 @@
   &.btn-header {
 
     @extend .btn-primary;
-    background: transparent;
-    color: $color-brand-500;
+    border-radius: 0;
+    //color: $color-brand-500;
     min-width: inherit;
     padding: 0 16px;
 
-    &:hover {
-      background: none;
-      box-shadow: none;
-    }
+    // &:hover {
+    //   background: none;
+    //   box-shadow: none;
+    // }
 
     &:focus {
       box-shadow: none;

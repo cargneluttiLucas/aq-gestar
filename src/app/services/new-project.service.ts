@@ -11,25 +11,15 @@ export class NewProjectService {
   }
 
   public getTypeProyect() {
-    this.http.get<any>('');
-    const subject = new Subject<any>();
-    setTimeout(() => {
-      subject.next([
-        {
-          id: 1, text: 'Tipo 1', disabled: false
-        },
-        {
-          id: 2, text: 'Tipo 2', disabled: false
-        },
-        {
-          id: 3, text: 'Tipo 3', disabled: false
-        },
-        {
-          id: 4, text: 'Tipo 4', disabled: false
-        },
-      ]);
-    }, 1000);
-    return subject.asObservable();
+    const options = {
+      headers: {
+        AuthToken: 'C86549624639A8CCC0765451E2FB3ABAAEB0387B8C78E3BC06FCF38C2235FAFE',
+        SessionId: '7a3cc8beeeb34260a2bb58f39ced0162',
+        'content-type': 'application/json'
+      }
+    };
+
+    return this.http.get<any>('http://3.227.233.169:80/bffgestar/api/v1/Proyectos', options);
   }
 
   getStateProject() {

@@ -8,6 +8,8 @@ import { LoadingModule } from './loading/loading.module';
 import { SelectModule } from './select';
 import { ListModule } from './list';
 import { ModalsModule } from '../utils/services/modal/modal.module';
+import { HeaderModule } from './header';
+import { CheckboxsModule } from './checkboxs';
 
 @NgModule({
   imports: [
@@ -19,7 +21,9 @@ import { ModalsModule } from '../utils/services/modal/modal.module';
     SelectModule.forRoot(),
     ListModule.forRoot(),
     ModalsModule.forRoot(),
-    TextfieldPredictiveModule.forRoot()
+    TextfieldPredictiveModule.forRoot(),
+    HeaderModule.forRoot(),
+    CheckboxsModule.forRoot()
   ],
   declarations: [
   ],
@@ -31,7 +35,9 @@ import { ModalsModule } from '../utils/services/modal/modal.module';
     UtilsModule,
     ListModule,
     ModalsModule,
-    TextfieldPredictiveModule
+    HeaderModule,
+    TextfieldPredictiveModule,
+    CheckboxsModule
   ]
 })
 export class ComponentsModule {

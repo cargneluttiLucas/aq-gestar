@@ -5,13 +5,7 @@ import { RequirementsComponent } from './requirements.component';
 const routes: Routes = [
   {
     path: '',
-    component: RequirementsComponent,
-    children: [
-      {
-        path: 'requirements',
-        component: RequirementsComponent
-      }
-    ]
+    component: RequirementsComponent
   }
 ];
 

@@ -1,4 +1,11 @@
 <div class="container">
+    <app-header>
+        <div right>
+            <app-button type="header" text="Guardar" (clickButton)="save()"></app-button>
+            <app-button type="header" text="Guardar y Salir" (clickButton)="saveAndClose()"></app-button>
+            <app-button type="header" text="Salir" (clickButton)="close()"></app-button>
+        </div>
+    </app-header>
     <div [formGroup]="newProyectFormGroup">
         <div class="row">
             <div class="col-xl-3">
@@ -11,11 +18,12 @@
                 <app-textfield text="Cliente" id="client" [control]="newProyectFormGroup.get('client')">
                 </app-textfield>
             </div>
-        </div>
-        <div class="row">
             <div class="col-md-6">
                 <app-textfield text="Nombre" id="name" [control]="newProyectFormGroup.get('name')"></app-textfield>
             </div>
+        </div>
+
+        <div class="row">
             <div class="col-md-3">
                 <app-select [items]="typeProject" (itemSelected)="selectedItem($event, 'typeProject')"
                     placeholderDefault="Tipo proyecto"></app-select>
@@ -24,7 +32,18 @@
                 <app-select [items]="stateProject" (itemSelected)="selectedItem($event, 'stateProject')"
                     placeholderDefault="Estado"></app-select>
             </div>
+            <div class="col-md-3">
+                <app-select placeholderDefault="Riesgo del peoyecto"
+                    (itemSelected)="selectedItem($event, 'projectRisk')" [items]="projectRisk">
+                </app-select>
+            </div>
+            <div class="col-md-3">
+                <app-select placeholderDefault="Área de gestion a cargo"
+                    (itemSelected)="selectedItem($event, 'managementAreaInCharge')" [items]="managementAreaInCharge">
+                </app-select>
+            </div>
         </div>
+
         <div class="row">
             <div class="col-md-6">
                 <app-textfield text="Fecha de Inicio Planificada" id="dateStart" mask="00/00/0000"
@@ -60,22 +79,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <app-textfield text="Número de compra" id="purchaseNumber"
                     [control]="newProyectFormGroup.get('purchaseNumber')">
                 </app-textfield>
-            </div>
-            <div class="col-md-3">
-                <app-select placeholderDefault="Riesgo del peoyecto"
-                    (itemSelected)="selectedItem($event, 'projectRisk')" [items]="projectRisk">
-                </app-select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <app-select placeholderDefault="Área de gestion a cargo"
-                    (itemSelected)="selectedItem($event, 'managementAreaInCharge')" [items]="managementAreaInCharge">
-                </app-select>
             </div>
             <div class="col-md-6">
                 <app-textfield text="Esponsor" id="sponsor" [control]="newProyectFormGroup.get('sponsor')">
@@ -83,14 +90,14 @@
             </div>
         </div>
         <div class="row">
+
+
+        </div>
+        <div class="row">
             <div class="col-md-12">
                 <app-textfield text="Descripcion" id="description" [control]="newProyectFormGroup.get('description')">
                 </app-textfield>
             </div>
         </div>
-
-
-
-        <app-button text="Guardar" [disabled]="!validForm()" (clickButton)="saveProject()"></app-button>
     </div>
 </div>
