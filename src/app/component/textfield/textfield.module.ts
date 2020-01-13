@@ -4,6 +4,7 @@ import { TextfieldComponent } from './textfield.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormModule } from '../form';
 import { MaskModule } from 'src/app/utils';
+import { CheckboxsModule } from '../checkboxs';
 
 @NgModule({
   imports: [
@@ -11,7 +12,8 @@ import { MaskModule } from 'src/app/utils';
     FormsModule,
     ReactiveFormsModule,
     FormModule.forRoot(),
-    MaskModule.forRoot()
+    MaskModule.forRoot(),
+    CheckboxsModule.forRoot()
   ],
   declarations: [
     TextfieldComponent

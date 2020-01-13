@@ -23,6 +23,8 @@ export class NewProjectComponent implements OnInit {
     projectRiskSelected = null;
     managementAreaInChargeSelected = null;
 
+    checkbox = { id: 1, disabled: false, selected: false, indeterminate: false, text: 'Sin numero' };
+
 
     constructor(
         private newProyectService: NewProjectService,
