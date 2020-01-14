@@ -13,9 +13,7 @@ export class NewProjectService {
   public getTypeProyect() {
     const options = {
       headers: {
-        AuthToken: 'C86549624639A8CCC0765451E2FB3ABAAEB0387B8C78E3BC06FCF38C2235FAFE',
-        SessionId: '7a3cc8beeeb34260a2bb58f39ced0162',
-        'content-type': 'application/json'
+        SessionId: '7a3cc8beeeb34260a2bb58f39ced0162'
       }
     };
 
