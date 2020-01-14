@@ -56,6 +56,7 @@ export class NewProjectComponent implements OnInit {
             managementAreaInCharge: new FormControl(''),
             description: new FormControl(''),
             sponsor: new FormControl(''),
+            displayname: new FormControl(''),
         });
     }
 

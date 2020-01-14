@@ -1,25 +1,34 @@
 <div class="container">
     <app-header>
         <div right>
-            <app-button type="header" text="Guardar" (clickButton)="save()"></app-button>
-            <app-button type="header" text="Guardar y Salir" (clickButton)="saveAndClose()"></app-button>
+            <app-button type="header" [disabled]="!validForm()" text="Guardar" (clickButton)="save()"></app-button>
+            <app-button type="header" [disabled]="!validForm()" text="Guardar y Salir" (clickButton)="saveAndClose()">
+            </app-button>
             <app-button type="header" text="Salir" (clickButton)="close()"></app-button>
         </div>
     </app-header>
     <div [formGroup]="newProyectFormGroup">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-xl-3">
                 <app-textfield text="ID" id="id" ([ngModel])="newProyectFormGroup.get('id')" [disabled]="true">
                 </app-textfield>
             </div>
-        </div>
+        </div> -->
         <div class="row">
             <div class="col-md-6">
                 <app-textfield text="Cliente" id="client" [control]="newProyectFormGroup.get('client')">
                 </app-textfield>
             </div>
+
+        </div>
+
+        <div class="row">
             <div class="col-md-6">
                 <app-textfield text="Nombre" id="name" [control]="newProyectFormGroup.get('name')"></app-textfield>
+            </div>
+            <div class="col-md-6">
+                <app-textfield text="Display" id="displayname" [control]="newProyectFormGroup.get('displayname')">
+                </app-textfield>
             </div>
         </div>
 
@@ -91,7 +100,6 @@
             </div>
         </div>
         <div class="row">
-
 
         </div>
         <div class="row">

@@ -13,7 +13,7 @@ export class NewProjectService {
   public getTypeProyect() {
     const options = {
       headers: {
-        SessionId: '7a3cc8beeeb34260a2bb58f39ced0162'
+        'SessionId': 'cd9646546a174c4caf0ead4ecf326f14',
       }
     };
 

@@ -1,1 +1,27 @@
-<label for=""> lucas requirements</label>
+<div class="container">
+  <app-header>
+      <div right>
+          <app-button type="header" text="Guardar" (clickButton)="save()"></app-button>
+          <app-button type="header" text="Guardar y Salir" (clickButton)="saveAndClose()"></app-button>
+          <app-button type="header" text="Salir" (clickButton)="close()"></app-button>
+      </div>
+  </app-header>
+  <div [formGroup]="requirementFormGroup">
+      <div class="row">
+          <div class="col-xl-3">
+              <app-textfield text="ID" id="id" ([ngModel])="requirementFormGroup.get('id')" [disabled]="true">
+              </app-textfield>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6">
+              <app-textfield text="Cliente" id="client" [control]="requirementFormGroup.get('client')">
+              </app-textfield>
+          </div>
+          <div class="col-md-6">
+              <app-textfield text="Nombre" id="name" [control]="requirementFormGroup.get('name')"></app-textfield>
+          </div>
+      </div>
+
+  </div>
+</div>
