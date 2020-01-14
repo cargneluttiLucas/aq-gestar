@@ -19,13 +19,14 @@ export class RequirementsComponent implements OnInit {
 
     createForm() {
         this.requirementFormGroup = new FormGroup({
-            name: new FormControl('')
+            client: new FormControl(''),
+            name: new FormControl(''),
+            id: new FormControl(''),
         });
     }
 
     validForm(): boolean {
-        return this.requirementFormGroup.valid && this.managementAreaInChargeSelected
-            && this.projectRiskSelected && this.stateProjectSelected && this.typeProjectSelected;
+        return this.requirementFormGroup.valid;
     }
 
     save() {

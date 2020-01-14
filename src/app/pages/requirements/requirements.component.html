@@ -9,7 +9,7 @@
   <div [formGroup]="requirementFormGroup">
       <div class="row">
           <div class="col-xl-3">
-              <app-textfield text="ID" id="id" ([ngModel])="requirementFormGroup.get('id')" [disabled]="true">
+              <app-textfield text="ID" id="id" [control]="requirementFormGroup.get('id')" [disabled]="true">
               </app-textfield>
           </div>
       </div>

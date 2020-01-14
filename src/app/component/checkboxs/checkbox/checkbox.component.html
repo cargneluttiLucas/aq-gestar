@@ -1,5 +1,4 @@
-<div class="checkbox-container"
-     [ngClass]="{'checkbox-container--disabled': checkbox.disabled}">
+<div class="checkbox-container" [ngClass]="{'checkbox-container--disabled': checkbox.disabled}">
   <label class="checkbox-container__checkbox">
     <input type="checkbox" [indeterminate]="checkbox.indeterminate" [checked]="checkbox.selected">
     <span class="checkbox-container__checkbox__checkmark" (click)="checkSelected($event)" [ngClass]="{'checkbox-container__checkbox__checkmark--checked': checkbox.selected,
@@ -8,6 +7,7 @@
   <label class="checkbox-container__text" (click)="checkSelected($event)">{{checkbox.text}}</label>
 </div>
 <div class="checkbox-childrens">
-  <app-checkboxs *ngIf="checkbox.listCheckboxs" (checkboxChange)="checkboxChange($event)" [listCheckboxs]="checkbox.listCheckboxs" [fatherCheckbox]="checkbox">
+  <app-checkboxs *ngIf="checkbox.listCheckboxs" (checkboxChange)="checkboxChange($event)"
+    [listCheckboxs]="checkbox.listCheckboxs" [fatherCheckbox]="checkbox">
   </app-checkboxs>
 </div>

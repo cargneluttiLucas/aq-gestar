@@ -32,6 +32,7 @@ export class NewProjectComponent implements OnInit {
 
 
     ngOnInit() {
+        console.log(this.cookieService.getCookie('http://3.227.233.169'));
         this.createForm();
         this.cargarCombos();
     }
