@@ -45,7 +45,7 @@ export class NewProjectComponent implements OnInit {
     saveAndExitText = 'Guardar y salir';
 
     private sessionId: string;
-    private projectId: number;
+    public projectId: number;
     private proyectAcction: string;
 
     checkbox = { id: 1, disabled: false, selected: false, indeterminate: false, text: 'Sin numero' };
