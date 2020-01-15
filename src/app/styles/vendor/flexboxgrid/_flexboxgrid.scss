@@ -11,8 +11,8 @@ $outer-margin: 2rem !default;
 // $gutter-compensation: $gutter-width * 0.5 * -1;
 $half-gutter-width: $gutter-width * 0.5;
 
-$flexboxgrid-max-width: 1096px !default;
-$flexboxgrid-middle-width: 960px !default;
+$flexboxgrid-max-width: 1096px !default; // tener en cuenta esto para futuros diseños, fija el tamaño del body
+$flexboxgrid-middle-width: 960px !default; // tener en cuenta esto para futuros diseños, fija el tamaño del body
 
 // Syntax:
 // name | min media query | max media query | max-width | margin container | col padding
@@ -21,8 +21,8 @@ $breakpoints:
   xs  $screen-xs-min   $screen-xs-max  auto                      ($gutter-width * 1.5) $gutter-width,
   sm  $screen-s-min    $screen-s-max   auto                      ($gutter-width * 2)   ($gutter-width * 2),
   md  $screen-m-min    $screen-m-max   auto                      ($gutter-width * 2)   ($gutter-width * 2),
-  lg  $screen-l-min    $screen-l-max   $flexboxgrid-middle-width auto                  ($gutter-width * 2),
-  xl  $screen-xl-min   $screen-xl-max  $flexboxgrid-max-width    auto                  ($gutter-width * 2);
+  lg  $screen-l-min    $screen-l-max   auto                      ($gutter-width * 3)   ($gutter-width * 2),
+  xl  $screen-xl-min   $screen-xl-max  auto                      ($gutter-width * 4)   ($gutter-width * 2);
 
 .wrapper {
   box-sizing: border-box;

@@ -10,8 +10,8 @@
         </div>
         <div class="icon box-textfield__inputs__icons"
           [ngClass]="{'box-textfield__inputs__checkbox': checkboxProyection}">
-          <ng-content select="container-icon"></ng-content>
-          <ng-content select="checkbox"></ng-content>
+          <ng-content select="app-container-icon"></ng-content>
+          <ng-content select="app-checkbox"></ng-content>
         </div>
       </div>
       <div class="box-textfield__lines" [ngClass]="{'box-textfield__lines--focus': isFocusLine,
@@ -23,11 +23,10 @@
       </div>
       <div *ngIf="!controlMessagesProyection">
         <app-control-messages (handleControl)="handleControl($event)" [validationMoment]="validationMoment$"
-        hint="{{menssagesHint}}" success="{{menssagesSuccess}}" alternativeError="{{menssagesError}}"
+        hint="{{dispatchHint}}" success="{{dispatchSuccess}}" alternativeError="{{dispatchError}}"
         [control]="control">
       </app-control-messages>
     </div>
   </div>
-  <ng-content select="[ControlMessages]"></ng-content>
   </div>
   

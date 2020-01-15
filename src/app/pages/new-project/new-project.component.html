@@ -1,19 +1,19 @@
 <div class="container">
     <app-header>
         <div right>
-            <app-button type="header" [disabled]="!validForm()" text="Guardar" (clickButton)="save()"></app-button>
-            <app-button type="header" [disabled]="!validForm()" text="Guardar y Salir" (clickButton)="saveAndClose()">
+            <app-button type="header" [disabled]="!validForm()" [text]="saveText" (clickButton)="save()"></app-button>
+            <app-button type="header" [disabled]="!validForm()" [text]="saveAndExitText" (clickButton)="saveAndClose()">
             </app-button>
             <app-button type="header" text="Salir" (clickButton)="close()"></app-button>
         </div>
     </app-header>
     <div [formGroup]="newProyectFormGroup">
-        <!-- <div class="row">
+        <div class="row">
             <div class="col-xl-3">
-                <app-textfield text="ID" id="id" ([ngModel])="newProyectFormGroup.get('id')" [disabled]="true">
+                <app-textfield text="ID" id="id" [control]="newProyectFormGroup.get('id')" [disabled]="true" required="false">
                 </app-textfield>
             </div>
-        </div> -->
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <app-textfield text="Cliente" id="client" [control]="newProyectFormGroup.get('client')">
@@ -34,21 +34,23 @@
 
         <div class="row">
             <div class="col-md-3">
-                <app-select [items]="typeProject" (itemSelected)="selectedItem($event, 'typeProject')"
-                    placeholderDefault="Tipo proyecto"></app-select>
-            </div>
-            <div class="col-md-3">
-                <app-select [items]="stateProject" (itemSelected)="selectedItem($event, 'stateProject')"
-                    placeholderDefault="Estado"></app-select>
-            </div>
-            <div class="col-md-3">
-                <app-select placeholderDefault="Riesgo del peoyecto"
-                    (itemSelected)="selectedItem($event, 'projectRisk')" [items]="projectRisk">
+                <app-select [items]="typeProject" [item]="typeProjectSelected"
+                    (itemSelected)="selectedItem($event, 'typeProject')" placeholderDefault="Tipo proyecto">
                 </app-select>
             </div>
             <div class="col-md-3">
-                <app-select placeholderDefault="Área de gestion a cargo"
-                    (itemSelected)="selectedItem($event, 'managementAreaInCharge')" [items]="managementAreaInCharge">
+                <app-select [items]="stateProject" [item]="stateProjectSelected"
+                    (itemSelected)="selectedItem($event, 'stateProject')" placeholderDefault="Estado"></app-select>
+            </div>
+            <div class="col-md-3">
+                <app-select [items]="projectRisk" [item]="projectRiskSelected"
+                    (itemSelected)="selectedItem($event, 'projectRisk')" placeholderDefault="Riesgo del peoyecto">
+                </app-select>
+            </div>
+            <div class="col-md-3">
+                <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
+                    (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
+                    placeholderDefault="Área de gestion a cargo">
                 </app-select>
             </div>
         </div>
@@ -75,11 +77,11 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <app-textfield [text]="'Horas estimadas'" id="estimatedHours" mask="00"
+                <app-textfield [text]="'Horas estimadas'" id="estimatedHours" mask="000"
                     [control]="newProyectFormGroup.get('estimatedHours')"></app-textfield>
             </div>
             <div class="col-md-3">
-                <app-textfield [text]="'Horas reales'" id="realHours" mask="00"
+                <app-textfield [text]="'Horas reales'" id="realHours" mask="000"
                     [control]="newProyectFormGroup.get('realHours')"></app-textfield>
             </div>
             <div class="col-md-6">
@@ -89,9 +91,9 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <app-textfield text="Número de compra" id="purchaseNumber"
+                <app-textfield text="Número de compra" id="purchaseNumber" [disabled]="disabledPurchaseNumber"
                     [control]="newProyectFormGroup.get('purchaseNumber')">
-                    <app-checkbox [checkbox]="checkbox"></app-checkbox>
+                    <app-checkbox [checkbox]="checkbox" (checkboxChecked)="checkSelectedPurchaseNumber()"></app-checkbox>
                 </app-textfield>
             </div>
             <div class="col-md-6">

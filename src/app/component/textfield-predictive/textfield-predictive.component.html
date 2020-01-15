@@ -1,7 +1,7 @@
 <div class="z-container" zOuterClick (clickOutside)="clickOutside($event)">
   <app-textfield [text]="text" [id]="id" [submit$]="validationMoment$" [control]="selectFormControl"
-    [menssagesSuccess]="menssagesSuccess" [menssagesHint]="menssagesHint" [autocomplete]="autocomplete"
-    [menssagesError]="menssagesError" [disabled]="disabled" (focus)="openDialog($event, id)"
+    [dispatchSuccess]="menssagesSuccess" [dispatchHint]="menssagesHint" [autocomplete]="autocomplete"
+    [dispatchError]="menssagesError" [disabled]="disabled" (focus)="openDialog($event, id)"
     (handlerError)="handleControl($event)">
   </app-textfield>
 
@@ -13,7 +13,7 @@
 <app-modal id="{{id}}">
   <div class="container-textfield-predictive-modal">
     <app-textfield class="container-textfield-predictive-modal__textfield" [text]="text" id="{{id}}-mobile" [submit$]="validationMoment$" [control]="selectFormControl"
-      [menssagesSuccess]="menssagesSuccess" [menssagesHint]="menssagesHint" [menssagesError]="menssagesError"
+      [dispatchSuccess]="menssagesSuccess" [dispatchHint]="menssagesHint" [dispatchError]="menssagesError"
       [disabled]="disabled" (handlerError)="handleControl($event)">
     </app-textfield>
     <div *ngIf="itemsFilter.length > 0" class="container-textfield-predictive-modal__body">

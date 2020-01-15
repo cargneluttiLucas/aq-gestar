@@ -3,7 +3,7 @@ import {
     Component, forwardRef, Input, OnInit, Output,
     EventEmitter, ViewChild, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy
 } from '@angular/core';
-import { FormControl, Validators, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormControl, Validators, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { Observable, Subject, Subscription } from 'rxjs';
 
 export const TextfieldComponentType = {
@@ -29,7 +29,7 @@ export const MomentValidateTexfield = {
     }],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextfieldComponent implements OnInit, AfterViewInit {
+export class TextfieldComponent implements OnInit, AfterViewInit, ControlValueAccessor {
 
     @ViewChild('box', { static: false }) boxTextfield;
 
@@ -46,9 +46,10 @@ export class TextfieldComponent implements OnInit, AfterViewInit {
     @Input() prefix: string;
     @Input() suffix: string;
     @Input() hiddenInput: any;
-    @Input() menssagesSuccess: string;
-    @Input() menssagesHint: string;
-    @Input() menssagesError: string;
+
+    @Input() dispatchSuccess: string;
+    @Input() dispatchHint: string;
+    @Input() dispatchError: string;
     @Input() notControlMessage = false;
 
     @Input() public control: FormControl;
@@ -130,7 +131,7 @@ export class TextfieldComponent implements OnInit, AfterViewInit {
             }
         });
 
-        this.control.statusChanges.subscribe(() => {
+        this.control.valueChanges.subscribe(() => {
             if (this.control.dirty) {
                 this.isFocusLine = true;
                 this.isErrorLine = false;
@@ -193,7 +194,7 @@ export class TextfieldComponent implements OnInit, AfterViewInit {
         this.errors = Object.keys(event);
         this.handlerError.emit(this.errors);
         this.isErrorLine = false;
-        if (this.errors[0] === 'success' && this.menssagesSuccess) {
+        if (this.errors[0] === 'success' && this.dispatchSuccess) {
             this.isSuccessLine = true;
         }
     }
