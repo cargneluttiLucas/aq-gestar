@@ -43,7 +43,6 @@ export class NewProjectComponent implements OnInit {
 
 
     ngOnInit() {
-        console.log('cookie de ssesion id', this.cookieService.getCookie('GESTAR_SESSIONID='));
         this.router.routerState.root.queryParams.forEach((item) => {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;
@@ -54,7 +53,6 @@ export class NewProjectComponent implements OnInit {
             this.saveAndExitText = 'Modificar y salir';
             this.openProyect(this.projectId);
         }
-        console.log('ruta', this.router.routerState.root.queryParams);
         this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.createForm();
         this.cargarCombos();
@@ -103,7 +101,6 @@ export class NewProjectComponent implements OnInit {
     openProyect(projectId: number) {
         this.newProyectService.getOpenProyect(projectId, this.sessionId).subscribe((response) => {
             if (response) {
-                console.log(response);
                 setTimeout(() => {
                     this.loadFilds(response);
                 }, 500);
@@ -296,7 +293,7 @@ export class NewProjectComponent implements OnInit {
                 id: {
                     visible: true,
                     enabled: true,
-                    value: 0
+                    value: this.newProyectFormGroup.get('id').value
                 },
                 displayname: {
                     visible: true,
@@ -329,8 +326,7 @@ export class NewProjectComponent implements OnInit {
                     value: null
                 }
             }
-        }
-
+        };
     }
 
     save() {
