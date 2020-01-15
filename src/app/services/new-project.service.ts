@@ -7,41 +7,69 @@ import { NewProjectModel } from '../models/new-project.model';
 
 export class NewProjectService {
 
+  private url = 'http://3.227.233.169:80/bffgestar/api/v1/Proyectos/';
+
   constructor(private http: HttpClient) {
   }
 
   public getNewProyect(sessionId: string) {
-    // const options = {
-    //   headers: {
-    //     'SessionId': '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
     const options = {
       headers: {
-        SessionId: sessionId,
-      }
+        'SessionId': '33d106236f4a4ad1b7956be58d3167cf',
+      },
+      'Content-Type': 'application/json'
     };
-    return this.http.get<any>('http://3.227.233.169:80/bffgestar/api/v1/Proyectos', options);
+    // const options = {
+    //   headers: {
+    //     SessionId: sessionId,
+    //   }
+    // };
+    return this.http.get<any>(this.url, options);
   }
 
   public getOpenProyect(projectId: number, sessionId: string) {
-    // const options = {
-    //   headers: {
-    //     'SessionId': '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
     const options = {
       headers: {
-        SessionId: sessionId,
-      }
+        'SessionId': '33d106236f4a4ad1b7956be58d3167cf',
+      },
+      'Content-Type': 'application/json'
     };
-    return this.http.get<any>('http://3.227.233.169:80/bffgestar/api/v1/Proyectos/' + projectId, options);
+    // const options = {
+    //   headers: {
+    //     SessionId: sessionId,
+    //   }
+    // };
+    return this.http.get<any>(this.url + 'Doc/' + projectId, options);
   }
 
-  postSaveProject(data: NewProjectModel) {
-    // return this.http.post<any>('');
+  putSaveProject(data: any) {
+    const options = {
+      headers: {
+        'SessionId': '33d106236f4a4ad1b7956be58d3167cf',
+      },
+      'Content-Type': 'application/json'
+    };
+    // const options = {
+    //   headers: {
+    //     SessionId: sessionId,
+    //   }
+    // };
+    return this.http.put<any>(this.url + 'Doc/', data, options);
+  }
+
+  putChangeProject(data: any, projectId: number) {
+    const options = {
+      headers: {
+        'SessionId': '33d106236f4a4ad1b7956be58d3167cf',
+      },
+      'Content-Type': 'application/json'
+    };
+    // const options = {
+    //   headers: {
+    //     SessionId: sessionId,
+    //   }
+    // };
+    return this.http.put<any>(this.url + 'Doc/' + projectId, data, options);
   }
 
 }

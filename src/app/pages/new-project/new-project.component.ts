@@ -155,9 +155,9 @@ export class NewProjectComponent implements OnInit {
             };
         }
         // falta el proyect riesgo id en api
-        if (response.proyecto.projRiesgo.value) {
+        if (response.proyecto.projRiesgoId.value) {
             this.projectRiskSelected = {
-                id: response.proyecto.projRiesgo.value,
+                id: response.proyecto.projRiesgoId.value,
                 description: response.proyecto.projRiesgo.value,
                 disabled: false
             };
@@ -291,6 +291,11 @@ export class NewProjectComponent implements OnInit {
                     enabled: true,
                     value: this.projectRiskSelected.description
                 },
+                projRiesgoId: {
+                    visible: true,
+                    enabled: true,
+                    value: this.projectRiskSelected.id
+                },
                 id: {
                     visible: true,
                     enabled: true,
@@ -325,19 +330,28 @@ export class NewProjectComponent implements OnInit {
                     visible: true,
                     enabled: true,
                     value: null
-                }
+                },
+                keywords: []
             }
         };
     }
 
     save() {
         if (this.validForm()) {
-            console.log(this.buildForm());
+            if (this.projectId) {
+                this.newProyectService.putChangeProject(this.buildForm(), this.projectId);
+            } else {
+                this.newProyectService.putSaveProject(this.buildForm());
+            }
         }
     }
     saveAndClose() {
         if (this.validForm()) {
-            this.buildForm();
+            if (this.projectId) {
+                this.newProyectService.putChangeProject(this.buildForm(), this.projectId);
+            } else {
+                this.newProyectService.putSaveProject(this.buildForm());
+            }
             // y volver atras, ver como hacemos esto.
         }
     }
