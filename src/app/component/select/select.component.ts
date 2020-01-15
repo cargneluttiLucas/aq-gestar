@@ -19,7 +19,7 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy {
   @Input() isDesktop = false;
   @Input() defaultValue = null;
   @Input() required = true;
-  @Input() items = [{ id: 0, text: '', disabled: false }];
+  @Input() items = [{ id: 0, description: '', disabled: false }];
   @Input() messagesSuccess: string;
   @Input() messagesHint: string;
   @Input() messagesError: string;

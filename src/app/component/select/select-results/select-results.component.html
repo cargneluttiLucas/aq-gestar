@@ -2,13 +2,13 @@
   [ngClass]="{'select-result-container--mobile': isMobile}">
   <li appHover [isHover]="true" *ngIf="defaultValue" [stylesEnter]="hoverStylesEnter" [stylesLeave]="hoverStylesLeave"
     class="select-result-container__results" (click)="selectedItem(null)">
-    <p class="select-result-container__results__text">{{defaultValue.text}}</p>
+    <p class="select-result-container__results__text">{{defaultValue.description}}</p>
   </li>
   <ng-container *ngFor="let item of selectedItems; let i = index">
     <li appHover [isHover]="!item.disabled ? true : false"
       [ngClass]="{'select-container__results--disabled': item.disabled}" [stylesEnter]="hoverStylesEnter"
       [stylesLeave]="hoverStylesLeave" class="select-result-container__results" (click)="selectedItem(item)">
-      <p class="select-result-container__results__text">{{item.text}}</p>
+      <p class="select-result-container__results__text">{{item.description}}</p>
     </li>
   </ng-container>
 </ul>

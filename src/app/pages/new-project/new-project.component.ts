@@ -22,6 +22,7 @@ export class NewProjectComponent implements OnInit {
     stateProjectSelected = null;
     projectRiskSelected = null;
     managementAreaInChargeSelected = null;
+    private sessionId: string;
 
     checkbox = { id: 1, disabled: false, selected: false, indeterminate: false, text: 'Sin numero' };
 
@@ -32,7 +33,8 @@ export class NewProjectComponent implements OnInit {
 
 
     ngOnInit() {
-        console.log(this.cookieService.getCookie('http://3.227.233.169'));
+        console.log('cookie de ssesion id', this.cookieService.getCookie('GESTAR_SESSIONID='));
+        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.createForm();
         this.cargarCombos();
     }
@@ -62,27 +64,19 @@ export class NewProjectComponent implements OnInit {
     }
 
     cargarCombos() {
-        this.newProyectService.getTypeProyect().subscribe((response) => {
+        this.newProyectService.getTypeProyect(this.sessionId).subscribe((response) => {
             if (response) {
-                this.typeProject = response;
-            }
-        });
+                this.typeProject = response.proyecto.keywords[0].options;
+                console.log('probando el json', this.typeProject);
 
-        this.newProyectService.getStateProject().subscribe((response) => {
-            if (response) {
-                this.stateProject = response;
-            }
-        });
+                this.stateProject = response.proyecto.keywords[1].options;
+                console.log('probando el json', this.stateProject);
 
-        this.newProyectService.getRiskProyect().subscribe((response) => {
-            if (response) {
-                this.projectRisk = response;
-            }
-        });
+                this.projectRisk = response.proyecto.keywords[2].options;
+                console.log('probando el json', this.projectRisk);
 
-        this.newProyectService.getManagementAreaProject().subscribe((response) => {
-            if (response) {
-                this.managementAreaInCharge = response;
+                this.managementAreaInCharge = response.proyecto.keywords[3].options;
+                console.log('probando el json', this.managementAreaInCharge);
             }
         });
     }

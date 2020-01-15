@@ -6,9 +6,7 @@ export class CookieService {
     constructor() { }
 
     public getCookie(name: string) {
-        console.log(document.cookie);
         const ca: Array<string> = document.cookie.split(';');
-        console.log('ca', ca)
         const caLen: number = ca.length;
         const cookieName = `${name}`;
         let c: string;
@@ -16,7 +14,6 @@ export class CookieService {
         for (let i = 0; i < caLen; i += 1) {
             c = ca[i].replace(/^\s+/g, '');
             if (c.indexOf(cookieName) === 0) {
-                console.log(c.substring(cookieName.length, c.length));
                 return c.substring(cookieName.length, c.length);
             }
         }

@@ -18,7 +18,7 @@ export class SelectResultsComponent implements AfterViewInit, OnInit, OnChanges,
   childComponent?: any;
   placeOnTop?: boolean;
   isOverlay?: boolean;
-  @Input() selectedItems = [{ id: 0, text: '', disabled: false }];
+  @Input() selectedItems = [{ id: 0, description: '', disabled: false }];
   @Input() defaultValue = null;
   @Input() itemsCount;
   @Input() isMobile = true;
