@@ -8,9 +8,9 @@
         </div>
     </app-header>
     <div [formGroup]="newProyectFormGroup">
-        <div class="row">
+        <div class="row" *ngIf="projectId">
             <div class="col-xl-3">
-                <app-textfield text="ID" id="id" [control]="newProyectFormGroup.get('id')" [disabled]="true" [required]=false>
+                <app-textfield text="ID" id="id" [control]="newProyectFormGroup.get('id')" [disabled]="true">
                 </app-textfield>
             </div>
         </div>
@@ -77,17 +77,17 @@
         </div>
         <div class="row">
             <div class="col-md-3">
-                <app-textfield [text]="'Horas estimadas'" id="estimatedHours" mask="000"
+                <app-textfield [text]="'Horas estimadas'" id="estimatedHours"
                     [control]="newProyectFormGroup.get('estimatedHours')"></app-textfield>
             </div>
             <div class="col-md-3">
-                <app-textfield [text]="'Horas reales'" id="realHours" mask="000"
+                <app-textfield [text]="'Horas reales'" id="realHours"
                     [control]="newProyectFormGroup.get('realHours')"></app-textfield>
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <app-textfield text="Repositorio SVN" id="svn" [control]="newProyectFormGroup.get('repositorySVN')">
                 </app-textfield>
-            </div>
+            </div> -->
         </div>
         <div class="row">
             <div class="col-md-6">

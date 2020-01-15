@@ -1,9 +1,17 @@
 
+// import {
+//     Component, forwardRef, Input, OnInit, Output,
+//     EventEmitter, ViewChild, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy
+// } from '@angular/core';
+// import { FormControl, Validators, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+// import { Observable, Subject, Subscription } from 'rxjs';
+
+
 import {
     Component, forwardRef, Input, OnInit, Output,
     EventEmitter, ViewChild, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy
-} from '@angular/core';
-import { FormControl, Validators, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+  } from '@angular/core';
+import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { Observable, Subject, Subscription } from 'rxjs';
 
 export const TextfieldComponentType = {
@@ -29,7 +37,7 @@ export const MomentValidateTexfield = {
     }],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextfieldComponent implements OnInit, AfterViewInit, ControlValueAccessor {
+export class TextfieldComponent implements ControlValueAccessor, OnInit, AfterViewInit {
 
     @ViewChild('box', { static: false }) boxTextfield;
 
@@ -40,7 +48,6 @@ export class TextfieldComponent implements OnInit, AfterViewInit, ControlValueAc
     @Input() id = '';
     @Input() text = '';
     @Input() autocomplete = 'on';
-    @Input() required = true;
     @Input() disabled = false;
     @Input() mask: string;
     @Input() prefix: string;
@@ -143,6 +150,8 @@ export class TextfieldComponent implements OnInit, AfterViewInit, ControlValueAc
                 this.statusLinesErrorSuccess();
                 this.isRequired();
             }
+
+            this.writeValue(this.control.value);
         });
     }
 
@@ -210,15 +219,6 @@ export class TextfieldComponent implements OnInit, AfterViewInit, ControlValueAc
         if (this.control === undefined) {
             this.control = new FormControl('');
         }
-        if (this.required) {
-            this.control.validator ?
-                this.control.setValidators([this.control.validator, Validators.required]) :
-                this.control.setValidators(Validators.required);
-        } else {
-            this.control.validator ?
-                this.control.setValidators([this.control.validator]) :
-                this.control.setValidators(Validators.nullValidator);
-        }
     }
 
     private propagateChange = (_: any) => {
@@ -236,6 +236,7 @@ export class TextfieldComponent implements OnInit, AfterViewInit, ControlValueAc
     }
 
     registerOnTouched(fn: any): void {
+        console.log('asdasd');
     }
 
     setDisabledState?(isDisabled: boolean): void {

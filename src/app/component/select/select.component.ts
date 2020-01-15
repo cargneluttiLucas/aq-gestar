@@ -18,7 +18,7 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy {
   @Input() disabled = false;
   @Input() isDesktop = false;
   @Input() defaultValue = null;
-  @Input() required = true;
+  @Input() required = false;
   @Input() items = [{ id: 0, description: '', disabled: false }];
   @Input() messagesSuccess: string;
   @Input() messagesHint: string;
@@ -105,20 +105,11 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   createForm(): void {
-    this.select = new FormControl(this.item, this.required ? Validators.compose([Validators.required]) : null);
-
-    // if (this.select === undefined) {
-    //   this.select = new FormControl('');
-    // }
-    // if (this.required) {
-    //   this.select.validator ?
-    //     this.select.setValidators([this.select.validator, Validators.required]) :
-    //     this.select.setValidators(Validators.required);
-    // } else {
-    //   this.select.validator ?
-    //     this.select.setValidators([this.select.validator]) :
-    //     this.select.setValidators(Validators.nullValidator);
-    // }
+    if (this.required) {
+      this.select = new FormControl(this.item, Validators.required);
+    } else {
+      this.select = new FormControl(this.item);
+    }
   }
 
   openItemsResult() {

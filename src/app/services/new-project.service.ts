@@ -24,7 +24,7 @@ export class NewProjectService {
     //     SessionId: sessionId,
     //   }
     // };
-    return this.http.get<any>(this.url, options);
+    return this.http.get<any>(this.url + 'New/', options);
   }
 
   public getOpenProyect(projectId: number, sessionId: string) {
@@ -54,7 +54,7 @@ export class NewProjectService {
     //     SessionId: sessionId,
     //   }
     // };
-    return this.http.put<any>(this.url + 'Doc/', data, options);
+    return this.http.post<any>(this.url, data, options);
   }
 
   putChangeProject(data: any, projectId: number) {
