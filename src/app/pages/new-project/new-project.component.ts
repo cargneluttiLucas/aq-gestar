@@ -54,6 +54,7 @@ export class NewProjectComponent implements OnInit {
             this.openProyect(this.projectId);
         }
         this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        console.log('GESTAR_SESSIONID=', this.sessionId);
         this.createForm();
         this.cargarCombos();
     }

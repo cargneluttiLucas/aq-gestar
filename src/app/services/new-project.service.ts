@@ -11,33 +11,33 @@ export class NewProjectService {
   }
 
   public getNewProyect(sessionId: string) {
-    const options = {
-      headers: {
-        'SessionId': '8929ec6c49974e43a47935525a2b5259',
-      },
-      'Content-Type': 'application/json'
-    };
     // const options = {
     //   headers: {
-    //     'SessionId': sessionId,
-    //   }
+    //     'SessionId': '8929ec6c49974e43a47935525a2b5259',
+    //   },
+    //   'Content-Type': 'application/json'
     // };
+    const options = {
+      headers: {
+        SessionId: sessionId,
+      }
+    };
     return this.http.get<any>('http://3.227.233.169:80/bffgestar/api/v1/Proyectos', options);
   }
 
   public getOpenProyect(projectId: number, sessionId: string) {
-    const options = {
-      headers: {
-        'SessionId': '8929ec6c49974e43a47935525a2b5259',
-      },
-      'Content-Type': 'application/json'
-    };
     // const options = {
     //   headers: {
-    //     'SessionId': sessionId,
-    //   }
+    //     'SessionId': '8929ec6c49974e43a47935525a2b5259',
+    //   },
+    //   'Content-Type': 'application/json'
     // };
-    return this.http.get<any>('http://3.227.233.169:80/bffgestar/api/v1/Proyectos/20000', options);
+    const options = {
+      headers: {
+        SessionId: sessionId,
+      }
+    };
+    return this.http.get<any>('http://3.227.233.169:80/bffgestar/api/v1/Proyectos/' + projectId, options);
   }
 
   postSaveProject(data: NewProjectModel) {
