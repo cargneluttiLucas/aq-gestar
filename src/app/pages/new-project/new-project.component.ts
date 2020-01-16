@@ -419,6 +419,6 @@ export class NewProjectComponent implements OnInit {
     }
 
     close() {
-        this.router.navigate(['http://3.227.233.169/c/content.asp']);
+        document.location.href = 'http://3.227.233.169/c/content.asp?fld_id=5811';
     }
 }

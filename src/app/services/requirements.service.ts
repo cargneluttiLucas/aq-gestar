@@ -12,7 +12,22 @@ export class RequierementsService {
   constructor(private http: HttpClient) {
   }
 
-  public getNew(sessionId: string) {
+  public getNewSelects(sessionId: string) {
+    const options = {
+      headers: {
+        'SessionId': '8929ec6c49974e43a47935525a2b5259',
+      },
+      'Content-Type': 'application/json'
+    };
+    // const options = {
+    //   headers: {
+    //     SessionId: sessionId,
+    //   }
+    // };
+    return this.http.get<any>(this.url + 'New/Keywords', options);
+  }
+
+  public getNewRequirements(sessionId: string) {
     const options = {
       headers: {
         'SessionId': '8929ec6c49974e43a47935525a2b5259',
