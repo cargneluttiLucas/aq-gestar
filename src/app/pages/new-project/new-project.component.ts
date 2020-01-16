@@ -402,9 +402,9 @@ export class NewProjectComponent implements OnInit {
     saveAndClose() {
         if (this.validForm()) {
             if (this.projectId) {
-                this.newProyectService.putChangeProject(this.buildForm(), this.projectId);
+                this.newProyectService.putChangeProject(this.buildForm(), this.projectId, this.sessionId);
             } else {
-                this.newProyectService.putSaveProject(this.buildForm());
+                this.newProyectService.putSaveProject(this.buildForm(), this.sessionId);
             }
             // y volver atras, ver como hacemos esto.
         }
