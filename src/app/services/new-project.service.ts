@@ -15,7 +15,7 @@ export class NewProjectService {
   public getNewProyect(sessionId: string) {
     const options = {
       headers: {
-        'SessionId': '33d106236f4a4ad1b7956be58d3167cf',
+        'SessionId': '8929ec6c49974e43a47935525a2b5259',
       },
       'Content-Type': 'application/json'
     };
@@ -30,7 +30,7 @@ export class NewProjectService {
   public getOpenProyect(projectId: number, sessionId: string) {
     const options = {
       headers: {
-        'SessionId': '33d106236f4a4ad1b7956be58d3167cf',
+        'SessionId': '8929ec6c49974e43a47935525a2b5259',
       },
       'Content-Type': 'application/json'
     };
@@ -45,7 +45,7 @@ export class NewProjectService {
   putSaveProject(data: any) {
     const options = {
       headers: {
-        'SessionId': '33d106236f4a4ad1b7956be58d3167cf',
+        'SessionId': '8929ec6c49974e43a47935525a2b5259',
       },
       'Content-Type': 'application/json'
     };
@@ -60,7 +60,7 @@ export class NewProjectService {
   putChangeProject(data: any, projectId: number) {
     const options = {
       headers: {
-        'SessionId': '33d106236f4a4ad1b7956be58d3167cf',
+        'SessionId': '8929ec6c49974e43a47935525a2b5259',
       },
       'Content-Type': 'application/json'
     };

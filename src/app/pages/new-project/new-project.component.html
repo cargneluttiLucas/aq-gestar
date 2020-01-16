@@ -19,15 +19,18 @@
                 <app-textfield text="Cliente" id="client" [control]="newProyectFormGroup.get('client')">
                 </app-textfield>
             </div>
-
+            <div class="col-md-6">
+                <app-textfield text="Nombre" id="name" [control]="newProyectFormGroup.get('name')"></app-textfield>
+            </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <app-textfield text="Nombre" id="name" [control]="newProyectFormGroup.get('name')"></app-textfield>
+                <app-textfield text="Display" id="displayname" [control]="newProyectFormGroup.get('displayname')">
+                </app-textfield>
             </div>
             <div class="col-md-6">
-                <app-textfield text="Display" id="displayname" [control]="newProyectFormGroup.get('displayname')">
+                <app-textfield text="Esponsor" id="sponsor" [control]="newProyectFormGroup.get('sponsor')">
                 </app-textfield>
             </div>
         </div>
@@ -81,25 +84,23 @@
                     [control]="newProyectFormGroup.get('estimatedHours')"></app-textfield>
             </div>
             <div class="col-md-3">
-                <app-textfield [text]="'Horas reales'" id="realHours"
-                    [control]="newProyectFormGroup.get('realHours')"></app-textfield>
+                <app-textfield [text]="'Horas reales'" id="realHours" [control]="newProyectFormGroup.get('realHours')">
+                </app-textfield>
             </div>
+            <div class="col-md-6">
+                <app-textfield text="Número de compra" id="purchaseNumber" [disabled]="disabledPurchaseNumber"
+                    [control]="newProyectFormGroup.get('purchaseNumber')">
+                    <app-checkbox [checkbox]="checkbox" (checkboxChecked)="checkSelectedPurchaseNumber()">
+                    </app-checkbox>
+                </app-textfield>
+            </div>
+
+        </div>
+        <div class="row">
             <!-- <div class="col-md-6">
                 <app-textfield text="Repositorio SVN" id="svn" [control]="newProyectFormGroup.get('repositorySVN')">
                 </app-textfield>
             </div> -->
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <app-textfield text="Número de compra" id="purchaseNumber" [disabled]="disabledPurchaseNumber"
-                    [control]="newProyectFormGroup.get('purchaseNumber')">
-                    <app-checkbox [checkbox]="checkbox" (checkboxChecked)="checkSelectedPurchaseNumber()"></app-checkbox>
-                </app-textfield>
-            </div>
-            <div class="col-md-6">
-                <app-textfield text="Esponsor" id="sponsor" [control]="newProyectFormGroup.get('sponsor')">
-                </app-textfield>
-            </div>
         </div>
         <div class="row">
 

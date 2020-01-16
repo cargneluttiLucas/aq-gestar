@@ -71,7 +71,6 @@ export class NewProjectComponent implements OnInit {
             this.openProyect(this.projectId);
         }
         this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
-        console.log('GESTAR_SESSIONID=', this.sessionId);
         this.createForm();
         this.cargarCombos();
     }
@@ -121,7 +120,7 @@ export class NewProjectComponent implements OnInit {
             if (response) {
                 setTimeout(() => {
                     this.loadFilds(response);
-                }, 500);
+                }, 200);
             }
         });
     }
@@ -299,13 +298,13 @@ export class NewProjectComponent implements OnInit {
                     visible: true,
                     enabled: true,
                     value: this.newProyectFormGroup.get('estimatedHours').value === '' ?
-                    null : this.newProyectFormGroup.get('estimatedHours').value
+                        null : this.newProyectFormGroup.get('estimatedHours').value
                 },
                 realHours: {
                     visible: true,
                     enabled: true,
                     value: this.newProyectFormGroup.get('realHours').value === '' ?
-                    null : this.newProyectFormGroup.get('realHours').value
+                        null : this.newProyectFormGroup.get('realHours').value
                 },
                 realStartDate: {
                     visible: true,
@@ -341,7 +340,7 @@ export class NewProjectComponent implements OnInit {
                     visible: true,
                     enabled: true,
                     value: this.newProyectFormGroup.get('id').value === '' ?
-                    null : this.newProyectFormGroup.get('id').value
+                        null : this.newProyectFormGroup.get('id').value
                 },
                 displayname: {
                     visible: true,
@@ -390,11 +389,16 @@ export class NewProjectComponent implements OnInit {
                 this.newProyectService.putSaveProject(this.buildForm()).subscribe((response) => {
                     if (response) {
                         console.log('se guarda un proyecto nuevo', response);
+                        // controlar que devuelva el id del proyecto y cambiar los textos de los botones.
+                        // setear el projectId con el del response.
+                        this.changeTextButtons();
                     }
                 });
             }
         }
     }
+
+
     saveAndClose() {
         if (this.validForm()) {
             if (this.projectId) {
@@ -405,7 +409,16 @@ export class NewProjectComponent implements OnInit {
             // y volver atras, ver como hacemos esto.
         }
     }
+
+    private changeTextButtons() {
+        if (this.projectId) {
+            this.saveText = 'Modificar';
+            this.saveAndExitText = 'Modificar y salir';
+            this.openProyect(this.projectId);
+        }
+    }
+
     close() {
-        // salir
+        this.router.navigate(['http://3.227.233.169/c/content.asp']);
     }
 }
