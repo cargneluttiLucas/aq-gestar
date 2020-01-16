@@ -380,13 +380,13 @@ export class NewProjectComponent implements OnInit {
     save() {
         if (this.validForm()) {
             if (this.projectId) {
-                this.newProyectService.putChangeProject(this.buildForm(), this.projectId).subscribe((response) => {
+                this.newProyectService.putChangeProject(this.buildForm(), this.projectId, this.sessionId).subscribe((response) => {
                     if (response) {
                         console.log('modificacion de proyecto', response);
                     }
                 });
             } else {
-                this.newProyectService.putSaveProject(this.buildForm()).subscribe((response) => {
+                this.newProyectService.putSaveProject(this.buildForm(), this.sessionId).subscribe((response) => {
                     if (response) {
                         console.log('se guarda un proyecto nuevo', response);
                         // controlar que devuelva el id del proyecto y cambiar los textos de los botones.

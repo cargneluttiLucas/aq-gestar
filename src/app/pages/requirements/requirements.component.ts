@@ -93,7 +93,7 @@ export class RequirementsComponent implements OnInit {
         });
     }
 
-    selectedItem(event, ) { }
+    selectedItem(event, tipe) { }
 
     validForm(): boolean {
         return this.requirementFormGroup.valid;
