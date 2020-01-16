@@ -46,6 +46,7 @@ export class NewProjectComponent implements OnInit {
 
     private sessionId: string;
     public projectId: number;
+    public backtofld: number;
     private proyectAcction: string;
 
     checkbox = { id: 1, disabled: false, selected: false, indeterminate: false, text: 'Sin numero' };
@@ -63,7 +64,8 @@ export class NewProjectComponent implements OnInit {
         this.router.routerState.root.queryParams.forEach((item) => {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;
-            console.log('parametros', [this.projectId, this.proyectAcction]);
+            this.backtofld = item.backtofld;
+            console.log('parametros', [this.projectId, this.proyectAcction, this.backtofld]);
         });
         if (this.projectId && this.proyectAcction === 'open') {
             this.saveText = 'Modificar';
@@ -419,6 +421,6 @@ export class NewProjectComponent implements OnInit {
     }
 
     close() {
-        document.location.href = 'http://3.227.233.169/c/content.asp?fld_id=5811';
+        document.location.href = `http://3.227.233.169/c/content.asp?fld_id=${this.backtofld}`;
     }
 }
