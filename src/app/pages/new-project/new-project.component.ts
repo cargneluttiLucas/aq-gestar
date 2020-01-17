@@ -81,6 +81,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     ngOnInit() {
+        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;
@@ -93,8 +94,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             this.openProyect(this.projectId);
         } else {
             this.cargarNewProject();
-        }
-        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        }        
         this.createForm();
 
         this.newProyectFormGroup.get('sponsor').valueChanges.subscribe((data) => {
