@@ -45,9 +45,9 @@ export class TextfieldPredictiveComponent implements OnInit, AfterViewInit, OnDe
   @Input() minLength = -1;
   @Input() timeFilter = 0;
   @Input() selectFormControl: FormControl;
-  @Input() menssagesSuccess: string;
-  @Input() menssagesHint: string;
-  @Input() menssagesError: string;
+  @Input() dispatchSuccess: string;
+  @Input() dispatchHint: string;
+  @Input() dispatchError: string;
   @Input() disabled = false;
 
   @Output() itemSelected = new EventEmitter<any>();
