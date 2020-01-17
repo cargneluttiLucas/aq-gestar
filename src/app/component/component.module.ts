@@ -5,11 +5,11 @@ import { TextfieldPredictiveModule } from './textfield-predictive/textfield-pred
 import { UtilsModule } from '../utils/utils.module';
 import { ButtonModule } from './button/button.module';
 import { LoadingModule } from './loading/loading.module';
-import { SelectModule } from './select';
-import { ListModule } from './list';
+import { SelectModule } from './select/select.module';
+import { ListModule } from './list/list.module';
 import { ModalsModule } from '../utils/services/modal/modal.module';
-import { HeaderModule } from './header';
-import { CheckboxsModule } from './checkboxs';
+import { HeaderModule } from './header/header.module';
+import { CheckboxsModule } from './checkboxs/checkboxs.module';
 
 @NgModule({
   imports: [

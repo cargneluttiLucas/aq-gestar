@@ -41,6 +41,8 @@ export class NewProjectComponent implements OnInit {
         disabled: false
     };
 
+    errorMessage; string;
+
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
@@ -48,6 +50,16 @@ export class NewProjectComponent implements OnInit {
     public projectId: number;
     public backtofld: number;
     private proyectAcction: string;
+
+    sponsors = [];
+    sponsorSelected = { id: null, description: '', disabled: false };
+    itemDefault: any;
+    itemsFilterDefault = [];
+
+    clients = [];
+    clientSelected = { id: null, description: '', disabled: false };
+    itemDefaultClients: any;
+    itemsFilterDefaultClients = [];
 
     checkbox = { id: 1, disabled: false, selected: false, indeterminate: false, text: 'Sin numero' };
     disabledPurchaseNumber = false;
@@ -77,8 +89,61 @@ export class NewProjectComponent implements OnInit {
         this.cargarCombos();
 
         this.newProyectFormGroup.get('sponsor').valueChanges.subscribe((data) => {
-            if (data.length >= 3) { }
+            if (data && data.length >= 3) {
+                const aux = {
+                    userFilter: data,
+                    userOrder: ''
+                };
+                setTimeout(() => {
+                    this.newProyectService.findSponsor(aux, this.sessionId).subscribe((response) => {
+                        if (response) {
+                            this.buildSponsor(response.usuarios);
+                        }
+                    });
+                }, 300);
+
+            }
         });
+
+        this.newProyectFormGroup.get('client').valueChanges.subscribe((data) => {
+            if (data && data.length >= 3) {
+                const aux = {
+                    filter: data,
+                    filterRequired: 'CONTACTTYPE = 1',
+                    order: 'DOC_ID',
+                    fields: 'DOC_ID,DISPLAYNAME'
+                };
+                setTimeout(() => {
+                    this.newProyectService.findCliend(aux, this.sessionId).subscribe((response) => {
+                        if (response) {
+                            this.buildClient(response.contactos);
+                        }
+                    });
+                }, 300);
+            }
+        });
+    }
+
+    buildClient(client) {
+        this.clients = [];
+        client.forEach((item) => {
+            const aux = { id: 0, description: '', disabled: false };
+            aux.id = item.Values.DOC_ID;
+            aux.description = item.Values.DISPLAYNAME;
+            this.clients.push(aux);
+        });
+        console.log(this.sponsors);
+    }
+
+    private buildSponsor(sponsor) {
+        this.sponsors = [];
+        sponsor.forEach((item) => {
+            const aux = { id: 0, description: '', disabled: false };
+            aux.id = item.userId.value;
+            aux.description = item.userFullName.value;
+            this.sponsors.push(aux);
+        });
+        console.log(this.sponsors);
     }
 
 
@@ -231,12 +296,23 @@ export class NewProjectComponent implements OnInit {
     }
 
     itemSelectedPredictive(event) {
+        this.sponsorSelected = event;
+        this.newProyectFormGroup.get('sponsor').setValue(event.description);
+        this.itemsFilterDefault = this.sponsors;
+        console.log(event);
 
+    }
+
+    itemSelectedPredictiveClients(event) {
+        this.clientSelected = event;
+        this.newProyectFormGroup.get('client').setValue(event.description);
+        this.itemsFilterDefaultClients = this.clients;
+        console.log(event);
     }
 
     validForm(): boolean {
         // tener en cuenta que para esto hay que ver que combos son obligatorios
-        return this.newProyectFormGroup.valid;
+        return this.newProyectFormGroup.valid && this.clientSelected.id !== null;
     }
 
     checkSelectedPurchaseNumber() {
@@ -329,12 +405,12 @@ export class NewProjectComponent implements OnInit {
                 customer: {
                     visible: true,
                     enabled: true,
-                    value: this.newProyectFormGroup.get('client').value
+                    value: this.clientSelected.description ? this.clientSelected.description : null
                 },
                 customerId: {
                     visible: true,
                     enabled: true,
-                    value: null
+                    value: this.clientSelected.id ? this.clientSelected.id : null
                 },
                 projRiesgo: {
                     visible: true,
@@ -375,12 +451,12 @@ export class NewProjectComponent implements OnInit {
                 sponsor: {
                     visible: true,
                     enabled: true,
-                    value: this.newProyectFormGroup.get('sponsor').value
+                    value: this.sponsorSelected.description ? this.sponsorSelected.description : null
                 },
                 sponsorid: {
                     visible: true,
                     enabled: true,
-                    value: null
+                    value: this.sponsorSelected.id ? this.sponsorSelected.id : null
                 },
                 keywords: []
             }
@@ -389,10 +465,15 @@ export class NewProjectComponent implements OnInit {
 
     save() {
         if (this.validForm()) {
+            console.log(this.buildForm());
             if (this.projectId) {
                 this.newProyectService.putChangeProject(this.buildForm(), this.projectId, this.sessionId).subscribe((response) => {
-                    if (response) {
-                        console.log('modificacion de proyecto', response);
+                    if (response.status !== 200 && response.message[0]) {
+                        this.errorMessage = response.message[0];
+                        // this.requirement.stateId = this.requirementLoad.stateId;
+                        // this.openDialog();
+                    } else {
+                        document.location.href = `http://3.227.233.169/c/content.asp?fld_id=${this.backtofld}`;
                     }
                 });
             } else {

@@ -175,7 +175,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             aux.description = item.Values.PROJECT_NAME;
             this.projects.push(aux);
         });
-        console.log(this.projects);
     }
 
     createForm() {
@@ -699,7 +698,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         console.log(item);
         this.requirementLoad.stateId.value = item.stateid;
         this.requirementLoad.state.value = item.state;
-        console.log(this.buildFomr());
+        console.log('guardado por estado', this.buildFomr());
         this.save();
     }
 
@@ -712,9 +711,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                         this.requirement.stateId = this.requirementLoad.stateId;
                         this.openDialog();
                     } else {
-                        // close pero succes
+                        document.location.href = `http://3.227.233.169/c/content.asp?fld_id=${this.backtofld}`;
                     }
-                    console.log(response);
                 }
             });
         } else {
@@ -725,16 +723,17 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                         this.requirement.stateId = this.requirementLoad.stateId;
                         this.openDialog();
                     } else {
-                        // close pero succes
+                        document.location.href = `http://3.227.233.169/c/content.asp?fld_id=${this.backtofld}`;
                     }
-                    console.log(response);
                 }
             });
         }
     }
     saveAndClose() {
+        this.save();
     }
     close() {
+        document.location.href = `http://3.227.233.169/c/content.asp?fld_id=${this.backtofld}`;
     }
 
     // modal

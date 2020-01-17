@@ -16,8 +16,9 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <app-textfield text="Cliente" id="client" [control]="newProyectFormGroup.get('client')">
-                </app-textfield>
+                <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3" id="client"
+                    text="Cliente" [selectFormControl]="newProyectFormGroup.get('client')" [items]="clients"
+                    (itemSelected)="itemSelectedPredictiveClients($event)"></app-textfield-predictive>
             </div>
             <div class="col-md-6">
                 <app-textfield text="Nombre" id="name" [control]="newProyectFormGroup.get('name')"></app-textfield>
@@ -30,31 +31,31 @@
                 </app-textfield>
             </div>
             <div class="col-md-6">
-                <!-- <app-textfield text="Esponsor" id="sponsor" [control]="newProyectFormGroup.get('sponsor')">
-                </app-textfield> -->
-                <app-textfield-predictive [dispatchHint]="'Infrese al menos 3 letras'" [minLength]="3"
-                        text="Esponsor" [selectFormControl]="newProyectFormGroup.get('sponsor')"
-                        (itemSelected)="itemSelectedPredictive($event)"></app-textfield-predictive>
+                <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3" text="Sponsor"
+                    [selectFormControl]="newProyectFormGroup.get('sponsor')" [items]="sponsors"
+                    (itemSelected)="itemSelectedPredictive($event)"></app-textfield-predictive>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-3">
-                <app-select [items]="typeProject" [item]="typeProjectSelected"
+                <app-select [items]="typeProject" [item]="typeProjectSelected" [messagesHint]="'Seleccione un elemento'"
                     (itemSelected)="selectedItem($event, 'typeProject')" placeholderDefault="Tipo proyecto">
                 </app-select>
             </div>
             <div class="col-md-3">
                 <app-select [items]="stateProject" [item]="stateProjectSelected"
-                    (itemSelected)="selectedItem($event, 'stateProject')" placeholderDefault="Estado"></app-select>
+                    [messagesHint]="'Seleccione un elemento'" (itemSelected)="selectedItem($event, 'stateProject')"
+                    placeholderDefault="Estado"></app-select>
             </div>
             <div class="col-md-3">
-                <app-select [items]="projectRisk" [item]="projectRiskSelected"
+                <app-select [items]="projectRisk" [item]="projectRiskSelected" [messagesHint]="'Seleccione un elemento'"
                     (itemSelected)="selectedItem($event, 'projectRisk')" placeholderDefault="Riesgo del peoyecto">
                 </app-select>
             </div>
             <div class="col-md-3">
                 <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
+                    [messagesHint]="'Seleccione un elemento'"
                     (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
                     placeholderDefault="Área de gestion a cargo">
                 </app-select>
@@ -64,21 +65,21 @@
         <div class="row">
             <div class="col-md-6">
                 <app-textfield text="Fecha de Inicio Planificada" id="dateStart" mask="00/00/0000"
-                    [control]="newProyectFormGroup.get('dateStart')"></app-textfield>
+                    [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateStart')"></app-textfield>
             </div>
             <div class="col-md-6">
                 <app-textfield [text]="'Fecha de Fin Planificada'" id="dateEnd" mask="00/00/0000"
-                    [control]="newProyectFormGroup.get('dateEnd')"></app-textfield>
+                    [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateEnd')"></app-textfield>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <app-textfield text="Fecha de Inicio Real" id="dateStartReal" mask="00/00/0000"
-                    [control]="newProyectFormGroup.get('dateStartReal')"></app-textfield>
+                    [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateStartReal')"></app-textfield>
             </div>
             <div class="col-md-6">
                 <app-textfield [text]="'Fecha de Fin Real'" id="dateEndReal" mask="00/00/0000"
-                    [control]="newProyectFormGroup.get('dateEndReal')"></app-textfield>
+                    [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateEndReal')"></app-textfield>
             </div>
         </div>
         <div class="row">

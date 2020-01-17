@@ -84,7 +84,22 @@ export class NewProjectService {
     //     SessionId: sessionId,
     //   }
     // };
-    return this.http.put<any>('http://3.227.233.169:80/bffgestar/api/v1/Contactos', filter, options);
+    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Usuarios', filter, options);
+  }
+
+  findCliend(filter, sessionId) {
+    const options = {
+      headers: {
+        SessionId: '8929ec6c49974e43a47935525a2b5259',
+      },
+      'Content-Type': 'application/json'
+    };
+    // const options = {
+    //   headers: {
+    //     SessionId: sessionId,
+    //   }
+    // };
+    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Contactos', filter, options);
   }
 
 }

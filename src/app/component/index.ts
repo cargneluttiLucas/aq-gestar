@@ -6,3 +6,4 @@ export * from './list/index';
 export * from './modal/index';
 export * from './textfield-predictive/index';
 export * from './checkboxs/index';
+export * from './tabs/index';
