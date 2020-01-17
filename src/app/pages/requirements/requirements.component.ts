@@ -96,7 +96,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     public backtofld: number;
 
     projects = [];
-    proyectSelected = { id: 0, description: '', disabled: false };
+    proyectSelected = { id: null, description: null, disabled: false };
     itemDefault: any;
     itemsFilterDefault = [];
 
@@ -257,7 +257,9 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementFormGroup.get('organization').setValue(response.requerimiento.organization.value);
         this.requirementFormGroup.get('realDateEnd').setValue(this.transformDateToString(response.requerimiento.fechaFinReal.value));
         this.requirementFormGroup.get('description').setValue(response.requerimiento.description.value);
-        // this.requirementFormGroup.get('sprint').setValue(response.requerimiento.id.value);
+        this.requirementFormGroup.get('project').setValue(response.requerimiento.project.value);
+        this.proyectSelected.id = response.requerimiento.projectId.value;
+        this.proyectSelected.description = response.requerimiento.project.value;
         // this.requirementFormGroup.get('createdDateShort').setValue(response.requerimiento.createdDateShort.value);
 
         // combos
@@ -573,12 +575,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 projectId: {
                     visible: true,
                     enabled: true,
-                    value: this.itemDefault.id
+                    value: this.proyectSelected.id
                 },
                 project: {
                     visible: true,
                     enabled: true,
-                    value: this.itemDefault.description
+                    value: this.proyectSelected.description
                 },
                 businessProcessId: {
                     visible: true,
@@ -679,18 +681,18 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // textfield predictive
     itemSelected(event) {
-        this.itemDefault = event;
+        this.proyectSelected = event;
         this.requirementFormGroup.get('project').setValue(event.description);
         this.itemsFilterDefault = this.projects;
         console.log(event);
     }
 
     validFormFromToSave(): boolean {
-        return this.requirementFormGroup.valid && this.requirementLoad.stateId.value !== 1 && this.itemDefault;
+        return this.requirementFormGroup.valid && this.requirementLoad.stateId.value !== 1 && this.proyectSelected.id !== null;
     }
 
     validFormFromToChengeState() {
-        return this.requirementFormGroup.valid && this.itemDefault;
+        return this.requirementFormGroup.valid && this.proyectSelected.id !== null;
     }
 
     chengeState(item) {

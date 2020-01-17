@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NewProjectService } from 'src/app/services/new-project.service';
 import { CookieService } from 'src/app/services/cookie.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { isFormattedError } from '@angular/compiler';
+import { ModalService } from 'src/app/component';
+import { KeypressService, DocumentService, NavigatorService } from 'src/app/utils';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -11,7 +13,7 @@ import { isFormattedError } from '@angular/compiler';
     templateUrl: './new-project.component.html',
     styleUrls: ['./new-project.component.scss']
 })
-export class NewProjectComponent implements OnInit {
+export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
     newProyectFormGroup: FormGroup;
 
@@ -51,6 +53,8 @@ export class NewProjectComponent implements OnInit {
     public backtofld: number;
     private proyectAcction: string;
 
+    keypressSubscription: Subscription;
+
     sponsors = [];
     sponsorSelected = { id: null, description: '', disabled: false };
     itemDefault: any;
@@ -68,6 +72,10 @@ export class NewProjectComponent implements OnInit {
     constructor(
         private newProyectService: NewProjectService,
         private cookieService: CookieService,
+        private modalServiceNg: ModalService,
+        private keypressService: KeypressService,
+        private documentService: DocumentService,
+        private deviceDetector: NavigatorService,
         private route: ActivatedRoute,
         private router: Router) { }
 
@@ -83,10 +91,11 @@ export class NewProjectComponent implements OnInit {
             this.saveText = 'Modificar';
             this.saveAndExitText = 'Modificar y salir';
             this.openProyect(this.projectId);
+        } else {
+            this.cargarNewProject();
         }
         this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.createForm();
-        this.cargarCombos();
 
         this.newProyectFormGroup.get('sponsor').valueChanges.subscribe((data) => {
             if (data && data.length >= 3) {
@@ -122,6 +131,16 @@ export class NewProjectComponent implements OnInit {
                 }, 300);
             }
         });
+    }
+
+    ngAfterViewInit() {
+        if (this.deviceDetector.isBrowser) {
+            this.keypressSubscription = this.keypressService.keyPressEscape().subscribe((response) => {
+                if (response === true) {
+                    this.closeModalForOtherMotive();
+                }
+            });
+        }
     }
 
     buildClient(client) {
@@ -172,24 +191,32 @@ export class NewProjectComponent implements OnInit {
         });
     }
 
-    cargarCombos() {
+    cargarNewProject() {
         this.newProyectService.getNewProyect(this.sessionId).subscribe((response) => {
             if (response) {
-                this.typeProject = response.proyecto.keywords[0].options;
-
-                this.stateProject = response.proyecto.keywords[1].options;
-
-                this.projectRisk = response.proyecto.keywords[2].options;
-
-                this.managementAreaInCharge = response.proyecto.keywords[3].options;
+                this.cargarCombos(response);
             }
         });
+    }
+
+    cargarCombos(response) {
+
+        if (response) {
+            this.typeProject = response.proyecto.keywords[0].options;
+
+            this.stateProject = response.proyecto.keywords[1].options;
+
+            this.projectRisk = response.proyecto.keywords[2].options;
+
+            this.managementAreaInCharge = response.proyecto.keywords[3].options;
+        }
     }
 
     openProyect(projectId: number) {
         this.newProyectService.getOpenProyect(projectId, this.sessionId).subscribe((response) => {
             if (response) {
                 setTimeout(() => {
+                    this.cargarCombos(response);
                     this.loadFilds(response);
                 }, 200);
             }
@@ -199,7 +226,13 @@ export class NewProjectComponent implements OnInit {
     private loadFilds(response) {
         this.newProyectFormGroup.get('id').setValue(response.proyecto.docId.value);
         this.newProyectFormGroup.get('name').setValue(response.proyecto.projectName.value);
+
+
         this.newProyectFormGroup.get('client').setValue(response.proyecto.customer.value);
+        this.clientSelected.id = response.proyecto.customerId.value;
+        this.clientSelected.description = response.proyecto.customer.value;
+
+
         this.newProyectFormGroup.get('displayname').setValue(response.proyecto.displayname.value);
         this.newProyectFormGroup.get('description').setValue(response.proyecto.description.value);
 
@@ -470,10 +503,10 @@ export class NewProjectComponent implements OnInit {
                 this.newProyectService.putChangeProject(this.buildForm(), this.projectId, this.sessionId).subscribe((response) => {
                     if (response.status !== 200 && response.message[0]) {
                         this.errorMessage = response.message[0];
-                        // this.requirement.stateId = this.requirementLoad.stateId;
-                        // this.openDialog();
+                        this.openDialog();
                     } else {
-                        document.location.href = `http://3.227.233.169/c/content.asp?fld_id=${this.backtofld}`;
+                        console.log('se modifica un proyecto', response);
+                        this.close();
                     }
                 });
             } else {
@@ -492,11 +525,8 @@ export class NewProjectComponent implements OnInit {
 
     saveAndClose() {
         if (this.validForm()) {
-            if (this.projectId) {
-                this.newProyectService.putChangeProject(this.buildForm(), this.projectId, this.sessionId);
-            } else {
-                this.newProyectService.putSaveProject(this.buildForm(), this.sessionId);
-            }
+            this.save();
+            this.close();
             // y volver atras, ver como hacemos esto.
         }
     }
@@ -509,7 +539,28 @@ export class NewProjectComponent implements OnInit {
         }
     }
 
+    // modal
     close() {
         document.location.href = `http://3.227.233.169/c/content.asp?fld_id=${this.backtofld}`;
+    }
+
+    openDialog() {
+        this.modalServiceNg.open('requirement');
+    }
+
+    closeModal() {
+        this.modalServiceNg.close('requirement');
+    }
+
+    closeModalForOtherMotive(event?) {
+        if (this.documentService.nativeDocument.body.querySelectorAll('app-modal').length > 0) {
+            this.closeModal();
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.keypressSubscription) {
+            this.keypressSubscription.unsubscribe();
+        }
     }
 }

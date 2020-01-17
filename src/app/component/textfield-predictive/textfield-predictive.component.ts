@@ -126,7 +126,7 @@ export class TextfieldPredictiveComponent implements OnInit, AfterViewInit, OnDe
       debounceTime(this.timeFilter)).subscribe((data) => {
         this.flagDefault = false;
         this.itemsFilter = [];
-        if (data === '') {
+        if (data === '' || data === null) {
           return;
         }
         if (data.length >= this.minLength) {
