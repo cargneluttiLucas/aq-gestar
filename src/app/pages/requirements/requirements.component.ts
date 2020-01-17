@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { RequierementsService } from 'src/app/services/requirements.service';
 import { CookieService } from 'src/app/services/cookie.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { ModalService } from 'src/app/component';
 import { NavigatorService, KeypressService, DocumentService } from 'src/app/utils';
 import { Subscription } from 'rxjs';
@@ -690,7 +689,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         return this.requirementFormGroup.valid && this.requirementLoad.stateId.value !== 1 && this.itemDefault;
     }
 
-    validFormFromToChengeState(item) {
+    validFormFromToChengeState() {
         return this.requirementFormGroup.valid && this.itemDefault;
     }
 
