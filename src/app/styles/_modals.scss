@@ -60,8 +60,8 @@ body.modal-open {
 @media screen and (max-width: $screen-l-min) {
 
   .container-modal__body {
-    height: calc(75% - 32px) !important;
-    width: calc(75% - 33px) !important;
+    height: calc(100% - 32px) !important;
+    width: calc(100% - 33px) !important;
   }
 }
 

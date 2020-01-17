@@ -30,8 +30,11 @@
                 </app-textfield>
             </div>
             <div class="col-md-6">
-                <app-textfield text="Esponsor" id="sponsor" [control]="newProyectFormGroup.get('sponsor')">
-                </app-textfield>
+                <!-- <app-textfield text="Esponsor" id="sponsor" [control]="newProyectFormGroup.get('sponsor')">
+                </app-textfield> -->
+                <app-textfield-predictive [dispatchHint]="'Infrese al menos 3 letras'" [minLength]="3"
+                        text="Esponsor" [selectFormControl]="newProyectFormGroup.get('sponsor')"
+                        (itemSelected)="itemSelectedPredictive($event)"></app-textfield-predictive>
             </div>
         </div>
 

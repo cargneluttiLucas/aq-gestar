@@ -1,11 +1,11 @@
-<div class="z-container" zOuterClick (clickOutside)="clickOutside($event)">
+<div class="container-predictive" zOuterClick (clickOutside)="clickOutside($event)">
   <app-textfield [text]="text" [id]="id" [submit$]="validationMoment$" [control]="selectFormControl"
     [dispatchSuccess]="dispatchSuccess" [dispatchHint]="dispatchHint" [autocomplete]="autocomplete"
     [dispatchError]="dispatchError" [disabled]="disabled" (focus)="openDialog($event, id)"
     (handlerError)="handleControl($event)">
   </app-textfield>
 
-  <app-select-results class="z-container__overlay" *ngIf="itemsFilter && iconOpen" [isMobile]="false"
+  <app-select-results class="container-predictive__overlay" *ngIf="itemsFilter && iconOpen" [isMobile]="false"
     [selectedItems]="itemsFilter" [defaultValue]="defaultValue" (itemSelected)="itemSelect($event)">
   </app-select-results>
 </div>
@@ -20,7 +20,7 @@
       <app-list *ngFor="let item of itemsFilter; let index=index" [index]="index" [item]="item" [disabled]="item.disabled"
         (elementSelected)="itemSelectedList($event)">
         <div primaryTitle>
-          {{item.text}}
+          {{item.description}}
         </div>
         <div primarySubtitle>
         </div>

@@ -174,16 +174,16 @@ export class TextfieldComponent implements ControlValueAccessor, OnInit, AfterVi
 
     focusFunction() {
         this.isFocusLine = true;
-        // this.focus.next({ focusOn: true });
-        this.focus.emit({ focusOn: true });
+        this.focus.next({ focusOn: true });
+        // this.focus.emit({ focusOn: true });
         this.isRequired();
     }
 
     focusOutFunction(event) {
         if (event.type === 'focusout') {
             this.isFocusLine = false;
-            // this.focus.next({ focusOut: true });
-            this.focus.emit({ focusOut: true });
+            this.focus.next({ focusOut: true });
+            // this.focus.emit({ focusOut: true });
         }
 
         if (this.moment === MomentValidateTexfield.OUTFOCUS || this.moment === MomentValidateTexfield.ONFOCUS) {

@@ -75,6 +75,10 @@ export class NewProjectComponent implements OnInit {
         this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.createForm();
         this.cargarCombos();
+
+        this.newProyectFormGroup.get('sponsor').valueChanges.subscribe((data) => {
+            if (data.length >= 3) { }
+        });
     }
 
 
@@ -224,6 +228,10 @@ export class NewProjectComponent implements OnInit {
                 }
             }
         }
+    }
+
+    itemSelectedPredictive(event) {
+
     }
 
     validForm(): boolean {

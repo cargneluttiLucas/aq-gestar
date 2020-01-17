@@ -99,6 +99,6 @@ export class RequierementsService {
     //     SessionId: sessionId,
     //   }
     // };
-    return this.http.put<any>(this.url + 'http://3.227.233.169:80/bffgestar/api/v1/Proyectos/Find', filterData, options);
+    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Proyectos/Find', filterData, options);
   }
 }

@@ -88,7 +88,7 @@
                     </app-select>
                 </div>
                 <div class="col-md-6">
-                    <app-textfield-predictive [dispatchHint]="'Infrese al menos 3 letras'" [minLength]="3"
+                    <app-textfield-predictive id="project" [item]="proyectSelected" [dispatchHint]="'Infrese al menos 3 letras'" [minLength]="3" [items]="projects"
                         text="Proyecto" [selectFormControl]="requirementFormGroup.get('project')"
                         (itemSelected)="itemSelected($event)"></app-textfield-predictive>
                 </div>

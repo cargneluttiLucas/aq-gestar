@@ -72,4 +72,19 @@ export class NewProjectService {
     return this.http.put<any>(this.url + 'Doc/' + projectId, data, options);
   }
 
+  findSponsor(filter, sessionId) {
+    const options = {
+      headers: {
+        SessionId: '8929ec6c49974e43a47935525a2b5259',
+      },
+      'Content-Type': 'application/json'
+    };
+    // const options = {
+    //   headers: {
+    //     SessionId: sessionId,
+    //   }
+    // };
+    return this.http.put<any>('http://3.227.233.169:80/bffgestar/api/v1/Contactos', filter, options);
+  }
+
 }

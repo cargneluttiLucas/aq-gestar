@@ -96,6 +96,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     public requirementAcction: string;
     public backtofld: number;
 
+    projects = [];
+    proyectSelected = { id: 0, description: '', disabled: false };
+    itemDefault: any;
+    itemsFilterDefault = [];
+
     keypressSubscription: Subscription;
 
     saveText = 'Guardar';
@@ -115,6 +120,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         private router: Router) { }
 
     ngOnInit() {
+        const aux = {
+            filter: '',
+            order: 'DOC_ID',
+            fields: 'DOC_ID,project_name'
+        };
+        this.searchProject(aux);
         this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.requirementId = item.doc_id;
@@ -134,16 +145,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.createForm();
         this.requirementFormGroup.get('project').valueChanges.subscribe((data) => {
             if (data.length >= 3) {
-                const aux = {
-                    filter: '',
-                    order: 'DOC_ID',
-                    fields: 'DOC_ID,project_name'
-                };
-                this.requirementService.searchProject(aux, this.sessionId).subscribe((response) => {
-                    if (response) {
-                        console.log(response);
-                    }
-                });
+                this.searchProject(aux);
             }
         });
     }
@@ -157,7 +159,24 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
+    searchProject(aux) {
+        this.requirementService.searchProject(aux, this.sessionId).subscribe((response) => {
+            if (response.proyectos) {
+                this.buildProjectTextfield(response.proyectos);
+            }
+        });
+    }
 
+    buildProjectTextfield(proyects) {
+        this.projects = [];
+        proyects.forEach((item) => {
+            const aux = { id: 0, description: '', disabled: false };
+            aux.id = item.Values.DOC_ID;
+            aux.description = item.Values.PROJECT_NAME;
+            this.projects.push(aux);
+        });
+        console.log(this.projects);
+    }
 
     createForm() {
         this.requirementFormGroup = new FormGroup({
@@ -313,6 +332,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 description: response.requerimiento.requerimentType.value,
                 disabled: false
             };
+        }
+
+        if (response.requerimiento.projectId.value) {
+            this.proyectSelected.id = response.requerimiento.projectId.value;
+            this.proyectSelected.description = response.requerimiento.project.value;
+            console.log(this.proyectSelected);
         }
 
         this.requirementFormGroup.get('requestDate').setValue(this.transformDateToString(response.requerimiento.requestedDate.value));
@@ -550,12 +575,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 projectId: {
                     visible: true,
                     enabled: true,
-                    value: 191026
+                    value: this.itemDefault.id
                 },
                 project: {
                     visible: true,
                     enabled: true,
-                    value: 'Lucas 3'
+                    value: this.itemDefault.description
                 },
                 businessProcessId: {
                     visible: true,
@@ -604,8 +629,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         const year = value.slice(4, 10);
         const month = value.slice(2, 4);
         const date = value.slice(0, 2);
-        console.log(year, month, date);
-        console.log(new Date(year, month - 1, date));
         return new Date(year, month - 1, date);
     }
 
@@ -658,15 +681,18 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // textfield predictive
     itemSelected(event) {
+        this.itemDefault = event;
+        this.requirementFormGroup.get('project').setValue(event.description);
+        this.itemsFilterDefault = this.projects;
         console.log(event);
     }
 
     validFormFromToSave(): boolean {
-        return this.requirementFormGroup.valid && this.requirementLoad.stateId.value !== 1;
+        return this.requirementFormGroup.valid && this.requirementLoad.stateId.value !== 1 && this.itemDefault;
     }
 
     validFormFromToChengeState(item) {
-        return this.requirementFormGroup.valid;
+        return this.requirementFormGroup.valid && this.itemDefault;
     }
 
     chengeState(item) {
