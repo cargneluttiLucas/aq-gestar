@@ -13,92 +13,92 @@ export class NewProjectService {
   }
 
   public getNewProyect(sessionId: string) {
-    const options = {
-      headers: {
-        SessionId: '8929ec6c49974e43a47935525a2b5259',
-      },
-      'Content-Type': 'application/json'
-    };
     // const options = {
     //   headers: {
-    //     SessionId: sessionId,
-    //   }
+    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
+    //   },
+    //   'Content-Type': 'application/json'
     // };
+    const options = {
+      headers: {
+        SessionId: sessionId,
+      }
+    };
     return this.http.get<any>(this.url + 'New/', options);
   }
 
   public getOpenProyect(projectId: number, sessionId: string) {
-    const options = {
-      headers: {
-        SessionId: '8929ec6c49974e43a47935525a2b5259',
-      },
-      'Content-Type': 'application/json'
-    };
     // const options = {
     //   headers: {
-    //     SessionId: sessionId,
-    //   }
+    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
+    //   },
+    //   'Content-Type': 'application/json'
     // };
+    const options = {
+      headers: {
+        SessionId: sessionId,
+      }
+    };
     return this.http.get<any>(this.url + 'Doc/' + projectId, options);
   }
 
   putSaveProject(data: any, sessionId: string) {
-    const options = {
-      headers: {
-        SessionId: '8929ec6c49974e43a47935525a2b5259',
-      },
-      'Content-Type': 'application/json'
-    };
     // const options = {
     //   headers: {
-    //     SessionId: sessionId,
-    //   }
+    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
+    //   },
+    //   'Content-Type': 'application/json'
     // };
+    const options = {
+      headers: {
+        SessionId: sessionId,
+      }
+    };
     return this.http.post<any>(this.url, data, options);
   }
 
   putChangeProject(data: any, projectId: number, sessionId: string) {
-    const options = {
-      headers: {
-        SessionId: '8929ec6c49974e43a47935525a2b5259',
-      },
-      'Content-Type': 'application/json'
-    };
     // const options = {
     //   headers: {
-    //     SessionId: sessionId,
-    //   }
+    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
+    //   },
+    //   'Content-Type': 'application/json'
     // };
+    const options = {
+      headers: {
+        SessionId: sessionId,
+      }
+    };
     return this.http.put<any>(this.url + 'Doc/' + projectId, data, options);
   }
 
   findSponsor(filter, sessionId) {
-    const options = {
-      headers: {
-        SessionId: '8929ec6c49974e43a47935525a2b5259',
-      },
-      'Content-Type': 'application/json'
-    };
     // const options = {
     //   headers: {
-    //     SessionId: sessionId,
-    //   }
+    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
+    //   },
+    //   'Content-Type': 'application/json'
     // };
+    const options = {
+      headers: {
+        SessionId: sessionId,
+      }
+    };
     return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Usuarios', filter, options);
   }
 
   findCliend(filter, sessionId) {
-    const options = {
-      headers: {
-        SessionId: '8929ec6c49974e43a47935525a2b5259',
-      },
-      'Content-Type': 'application/json'
-    };
     // const options = {
     //   headers: {
-    //     SessionId: sessionId,
-    //   }
+    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
+    //   },
+    //   'Content-Type': 'application/json'
     // };
+    const options = {
+      headers: {
+        SessionId: sessionId,
+      }
+    };
     return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Contactos', filter, options);
   }
 
