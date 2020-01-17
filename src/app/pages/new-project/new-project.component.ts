@@ -134,13 +134,13 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     ngAfterViewInit() {
-        if (this.deviceDetector.isBrowser) {
-            this.keypressSubscription = this.keypressService.keyPressEscape().subscribe((response) => {
-                if (response === true) {
-                    this.closeModalForOtherMotive();
-                }
-            });
-        }
+        // if (this.deviceDetector.isBrowser) {
+        //     this.keypressSubscription = this.keypressService.keyPressEscape().subscribe((response) => {
+        //         if (response === true) {
+        //             this.closeModalForOtherMotive();
+        //         }
+        //     });
+        // }
     }
 
     buildClient(client) {
