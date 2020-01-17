@@ -243,10 +243,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         if (this.wkfStates) {
             this.wkfStates = this.wkfStates.filter(x => x.allowed === '1');
-            console.log(this.wkfStates);
         }
         this.requirementLoad = response.requerimiento;
-        console.log('load de requirement', this.requirementLoad);
         this.requirementFormGroup.get('id').setValue(response.requerimiento.id ? response.requerimiento.id.value : null);
         this.requirementFormGroup.get('createdDate').setValue(this.transformDateToString(response.requerimiento.createdDate.value));
         this.requirementFormGroup.get('creator').setValue(response.requerimiento.creator.value);
@@ -337,7 +335,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         if (response.requerimiento.projectId.value) {
             this.proyectSelected.id = response.requerimiento.projectId.value;
             this.proyectSelected.description = response.requerimiento.project.value;
-            console.log(this.proyectSelected);
         }
 
         this.requirementFormGroup.get('requestDate').setValue(this.transformDateToString(response.requerimiento.requestedDate.value));
@@ -351,7 +348,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private buildFomr() {
-        console.log(this.requirementLoad);
         return this.requirement = {
             requerimiento: {
                 createdDate: this.requirementLoad.createdDate,
@@ -684,7 +680,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.proyectSelected = event;
         this.requirementFormGroup.get('project').setValue(event.description);
         this.itemsFilterDefault = this.projects;
-        console.log(event);
     }
 
     validFormFromToSave(): boolean {
@@ -696,10 +691,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     chengeState(item) {
-        console.log(item);
         this.requirementLoad.stateId.value = item.stateid;
         this.requirementLoad.state.value = item.state;
-        console.log('guardado por estado', this.buildFomr());
         this.save();
     }
 

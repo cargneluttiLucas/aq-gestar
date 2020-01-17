@@ -151,7 +151,6 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             aux.description = item.Values.DISPLAYNAME;
             this.clients.push(aux);
         });
-        console.log(this.sponsors);
     }
 
     private buildSponsor(sponsor) {
@@ -162,7 +161,6 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             aux.description = item.userFullName.value;
             this.sponsors.push(aux);
         });
-        console.log(this.sponsors);
     }
 
 
@@ -332,7 +330,6 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
         this.sponsorSelected = event;
         this.newProyectFormGroup.get('sponsor').setValue(event.description);
         this.itemsFilterDefault = this.sponsors;
-        console.log(event);
 
     }
 
@@ -340,7 +337,6 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
         this.clientSelected = event;
         this.newProyectFormGroup.get('client').setValue(event.description);
         this.itemsFilterDefaultClients = this.clients;
-        console.log(event);
     }
 
     validForm(): boolean {
@@ -498,7 +494,6 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
     save() {
         if (this.validForm()) {
-            console.log(this.buildForm());
             if (this.projectId) {
                 this.newProyectService.putChangeProject(this.buildForm(), this.projectId, this.sessionId).subscribe((response) => {
                     if (response.status !== 200 && response.message[0]) {
@@ -513,8 +508,6 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.newProyectService.putSaveProject(this.buildForm(), this.sessionId).subscribe((response) => {
                     if (response) {
                         console.log('se guarda un proyecto nuevo', response);
-                        // controlar que devuelva el id del proyecto y cambiar los textos de los botones.
-                        // setear el projectId con el del response.
                         this.changeTextButtons();
                     }
                 });

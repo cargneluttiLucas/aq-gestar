@@ -236,7 +236,6 @@ export class TextfieldComponent implements ControlValueAccessor, OnInit, AfterVi
     }
 
     registerOnTouched(fn: any): void {
-        console.log('asdasd');
     }
 
     setDisabledState?(isDisabled: boolean): void {

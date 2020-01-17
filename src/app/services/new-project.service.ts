@@ -9,97 +9,45 @@ export class NewProjectService {
 
   private url = 'http://3.227.233.169:80/bffgestar/api/v1/Proyectos/';
 
+  options = {
+    headers: {
+      SessionId: '',
+      // SessionId: '8929ec6c49974e43a47935525a2b5259',
+    },
+    'Content-Type': 'application/json'
+  };
+
   constructor(private http: HttpClient) {
   }
 
   public getNewProyect(sessionId: string) {
-    // const options = {
-    //   headers: {
-    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
-    const options = {
-      headers: {
-        SessionId: sessionId,
-      }
-    };
-    return this.http.get<any>(this.url + 'New/', options);
+    this.options.headers.SessionId = sessionId;
+    return this.http.get<any>(this.url + 'New/', this.options);
   }
 
   public getOpenProyect(projectId: number, sessionId: string) {
-    // const options = {
-    //   headers: {
-    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
-    const options = {
-      headers: {
-        SessionId: sessionId,
-      }
-    };
-    return this.http.get<any>(this.url + 'Doc/' + projectId, options);
+    this.options.headers.SessionId = sessionId;
+    return this.http.get<any>(this.url + 'Doc/' + projectId, this.options);
   }
 
   putSaveProject(data: any, sessionId: string) {
-    // const options = {
-    //   headers: {
-    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
-    const options = {
-      headers: {
-        SessionId: sessionId,
-      }
-    };
-    return this.http.post<any>(this.url, data, options);
+    this.options.headers.SessionId = sessionId;
+    return this.http.post<any>(this.url, data, this.options);
   }
 
   putChangeProject(data: any, projectId: number, sessionId: string) {
-    // const options = {
-    //   headers: {
-    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
-    const options = {
-      headers: {
-        SessionId: sessionId,
-      }
-    };
-    return this.http.put<any>(this.url + 'Doc/' + projectId, data, options);
+    this.options.headers.SessionId = sessionId;
+    return this.http.put<any>(this.url + 'Doc/' + projectId, data, this.options);
   }
 
   findSponsor(filter, sessionId) {
-    // const options = {
-    //   headers: {
-    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
-    const options = {
-      headers: {
-        SessionId: sessionId,
-      }
-    };
-    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Usuarios', filter, options);
+    this.options.headers.SessionId = sessionId;
+    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Usuarios', filter, this.options);
   }
 
   findCliend(filter, sessionId) {
-    // const options = {
-    //   headers: {
-    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
-    const options = {
-      headers: {
-        SessionId: sessionId,
-      }
-    };
-    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Contactos', filter, options);
+    this.options.headers.SessionId = sessionId;
+    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Contactos', filter, this.options);
   }
 
 }

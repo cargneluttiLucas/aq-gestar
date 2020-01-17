@@ -147,7 +147,6 @@ export class TextfieldPredictiveComponent implements OnInit, AfterViewInit, OnDe
     if (this.items) {
       this.items.filter((item) => {
         if (this.normalizeText(item.description).indexOf(searchText) !== -1) {
-          console.log(item);
           aux.push(item);
         }
       });
