@@ -94,7 +94,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             this.openProyect(this.projectId);
         } else {
             this.cargarNewProject();
-        }        
+        }
         this.createForm();
 
         this.newProyectFormGroup.get('sponsor').valueChanges.subscribe((data) => {
