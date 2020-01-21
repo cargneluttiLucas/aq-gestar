@@ -197,12 +197,12 @@
                 </app-tab>
                 <app-tab [title]="'Actividades'">
                     <div class="margin-top-16">
-                        <app-table>
+                        <app-table [list]="activities">
                         </app-table>
                     </div>
 
                     <div class="margin-top-48">
-                        <app-button [text]="'Cargar actividades'"></app-button>
+                        <app-button [text]="'Cargar actividades'" (clickButton)="openUpdateActivities()"></app-button>
                     </div>
                 </app-tab>
             </app-tabs>

@@ -4,7 +4,7 @@ import { RequierementsService } from 'src/app/services/requirements.service';
 import { CookieService } from 'src/app/services/cookie.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'src/app/component';
-import { NavigatorService, KeypressService, DocumentService } from 'src/app/utils';
+import { NavigatorService, KeypressService, DocumentService, WindowService } from 'src/app/utils';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -89,7 +89,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    private sessionId = 'c18a6449f6ca467c909c70b9905ddd05';
+    private sessionId = 'e54bb83ba1694cfe9f1aa001cb3981a5';
     // private sessionId: string;
     public projectId: number;
     public requirementId: number;
@@ -100,6 +100,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     proyectSelected = { id: null, description: null, disabled: false };
     itemDefault: any;
     itemsFilterDefault = [];
+
+    activities = [];
 
     keypressSubscription: Subscription;
 
@@ -208,13 +210,21 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.loadFilds(response);
                 if (this.requirementLoad && this.requirementLoad.id.value) {
                     const aux = {
-                        filter : `id = ${this.requirementLoad.id.value}`,
-                        order : '',
-                        fields : ''
+                        filter: `referencestoid = ${this.requirementLoad.id.value}`,
+                        order: '',
+                        fields: ''
                     };
                     this.requirementService.searchActivities(aux, this.sessionId).subscribe((activities) => {
                         if (activities) {
-                            console.log(activities);
+                            activities.activities.forEach((item) => {
+                                const activitie = { id: '', title: '', responsable: '', state: '', linkHorus: '', linkEdit: '' };
+                                activitie.id = item.Values.ID;
+                                activitie.title = item.Values.SUBJET;
+                                activitie.state = item.Values.STATE;
+                                activitie.responsable = item.Values.RESPONSIBLE;
+                                this.activities.push(activitie);
+                            });
+                            console.log(this.activities);
                         }
                     });
                 }
@@ -763,6 +773,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.keypressSubscription) {
             this.keypressSubscription.unsubscribe();
         }
+    }
+
+    openUpdateActivities() {
+        const displayName = encodeURIComponent(this.requirementLoad.displayName.value);
+        // tslint:disable-next-line: max-line-length
+        const url = `http://3.227.233.169/c/forms/generic3.asp?closeonexit=1&action=new&actionact=newact&fld_id=5213&fldIdReferer=5811&docIdReferer=${this.requirementLoad.docId.value}&id=${this.requirementLoad.id.value}&displayname=${displayName}&customer=${encodeURIComponent('Universal Assistance')}&customerid=51&project=${encodeURIComponent(this.requirementLoad.project.value)}&projectid=${this.requirementLoad.projectId.value}&context=backlog&callbackfunction=refreshgridActHTML`;
+        window.open(url, '_blank');
     }
 
 
