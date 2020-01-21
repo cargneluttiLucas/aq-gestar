@@ -23,7 +23,7 @@
                     </app-textfield>
                 </div>
                 <div class="col-xl-3">
-                    <app-textfield text="Fecha" mask="00/00/0000" id="createdDate" [disabled]="true"
+                    <app-textfield text="Fecha de creación" mask="00/00/0000" id="createdDate" [disabled]="true"
                         [control]="requirementFormGroup.get('createdDate')">
                     </app-textfield>
                 </div>
@@ -42,18 +42,18 @@
                 <app-tab [title]="'Requerimiento'">
                     <div class="row margin-top-16">
                         <div class="col-md-6">
-                            <app-textfield text="Asunto" id="title" [control]="requirementFormGroup.get('title')">
+                            <app-textfield text="Titulo" id="title" [control]="requirementFormGroup.get('title')">
                             </app-textfield>
                         </div>
                         
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
 
                         <div class="col-md-6">
                             <app-textfield text="Mes de creación" id="createdMonth" mask="00/0000"
                                 [control]="requirementFormGroup.get('createdMonth')"></app-textfield>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row">
                         <div class="col-md-6">
                             <app-textfield text="Display" id="displayName"
@@ -66,11 +66,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <app-textfield text="Fecha real" mask="00/00/0000" id="realDateEnd"
-                                [control]="requirementFormGroup.get('realDateEnd')">
-                            </app-textfield>
-                        </div>
+                        
                         <!-- <div class="col-md-6">
                             <app-textfield text="Sprint" id="sprint" [control]="requirementFormGroup.get('sprint')">
                             </app-textfield>
@@ -90,13 +86,13 @@
                         </div>
                         <div class="col-md-3">
                             <app-select [items]="modules" [item]="moduleSelected" [dispatchHint]="'Seleccione un elemento'"
-                                (itemSelected)="selectedItem($event, 'modules')" placeholderDefault="Módulos">
+                                (itemSelected)="selectedItem($event, 'modules')" placeholderDefault="Módulo">
                             </app-select>
                         </div>
                         <div class="col-md-6">
                             <app-textfield-predictive id="project" [item]="proyectSelected"
                                 [dispatchHint]="'Infrese al menos 3 letras'" [minLength]="3" [items]="projects"
-                                text="Proyecto" [selectFormControl]="requirementFormGroup.get('project')"
+                                text="Proyecto / frente de trabajo" [selectFormControl]="requirementFormGroup.get('project')"
                                 (itemSelected)="itemSelected($event)"></app-textfield-predictive>
                         </div>
                     </div>
@@ -122,7 +118,7 @@
                         <div class="col-md-3">
                             <app-select [items]="requirementTypes" [item]="requirementTypeSelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'requirementTypes')"
-                                placeholderDefault="Tipo de Requierimiento">
+                                placeholderDefault="Tipo de requerimiento">
                             </app-select>
                         </div>
                         <div class="col-md-3">
@@ -147,6 +143,11 @@
                         <div class="col-md-3">
                             <app-textfield text="Fecha estimada de fin" mask="00/00/0000" id="estimatedDateEnd"
                                 [dispatchHint]="'dd/MM/yyyy'" [control]="requirementFormGroup.get('estimatedDateEnd')">
+                            </app-textfield>
+                        </div>
+                        <div class="col-md-6">
+                            <app-textfield text="Fecha real" mask="00/00/0000" id="realDateEnd"
+                                [control]="requirementFormGroup.get('realDateEnd')">
                             </app-textfield>
                         </div>
                         <div class="col-md-3">
@@ -174,7 +175,7 @@
                         <div class="col-md-3">
                             <app-select [items]="workAreas" [item]="workAreaSelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'workAreas')"
-                                placeholderDefault="Fuente de trabajo">
+                                placeholderDefault="Frente de trabajo">
                             </app-select>
                         </div>
                         <div class="col-md-3">

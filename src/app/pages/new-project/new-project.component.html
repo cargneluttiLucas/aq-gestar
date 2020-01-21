@@ -25,7 +25,7 @@
                         </app-textfield-predictive>
                     </div>
                     <div class="col-md-6">
-                        <app-textfield text="Nombre" id="name" [control]="newProyectFormGroup.get('name')">
+                        <app-textfield text="Nombre del proyecto" id="name" [control]="newProyectFormGroup.get('name')">
                         </app-textfield>
                     </div>
                 </div>
@@ -60,14 +60,14 @@
                         <app-select [items]="projectRisk" [item]="projectRiskSelected"
                             [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'projectRisk')"
-                            placeholderDefault="Riesgo del peoyecto">
+                            placeholderDefault="Riesgo del proyecto">
                         </app-select>
                     </div>
                     <div class="col-md-3">
                         <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
                             [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
-                            placeholderDefault="Área de gestion a cargo">
+                            placeholderDefault="Gerencia a cargo">
                         </app-select>
                     </div>
                 </div>
