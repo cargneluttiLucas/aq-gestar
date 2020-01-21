@@ -23,7 +23,7 @@
     font-family: $primary-font-stack, helvetica, arial, sans-serif;
     font-size: 18px;
     font-weight: bold;
-    height: 34px;
+    height: 48px;
     justify-content: center;
     letter-spacing: 0.1px;
     // line-height: 2.67;
@@ -183,6 +183,7 @@
 
     @extend .btn-primary;
     border-radius: 0;
+    height: 34px;
     //color: $color-brand-500;
     min-width: inherit;
     padding: 0 16px;

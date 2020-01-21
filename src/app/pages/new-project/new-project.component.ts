@@ -48,7 +48,8 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
-    private sessionId: string;
+    // private sessionId: string;
+    private sessionId = 'e54bb83ba1694cfe9f1aa001cb3981a5';
     public projectId: number;
     public backtofld: number;
     private proyectAcction: string;
@@ -81,7 +82,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     ngOnInit() {
-        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;
@@ -222,7 +223,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private loadFilds(response) {
-        this.newProyectFormGroup.get('id').setValue(response.proyecto.docId.value);
+        this.newProyectFormGroup.get('id').setValue(response.proyecto.id.value);
         this.newProyectFormGroup.get('name').setValue(response.proyecto.projectName.value);
 
 

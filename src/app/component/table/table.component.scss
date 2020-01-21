@@ -1,0 +1,43 @@
+@import "../../styles/variables";
+@import "../../styles/colors";
+@import "../../styles/functions";
+@import "../../styles/typography";
+
+.grid-content {
+    align-items: center;
+    border-color: $color-grayscale-300;
+    border-style: solid;
+    border-width: 0.1px;
+    color: $color-grayscale-800;
+    font-family: "Roboto";
+    font-size: 14px;
+    height: 100%;
+    line-height: 1.57;
+    padding: initial;
+    width: 100%;
+  }
+  
+  .grid-header {
+    align-items: center;
+    background-color: $color-grayscale-200;
+    border-color: $color-grayscale-300;
+    border-style: solid;
+    border-width: 0.1px;
+    font-family: "Roboto";
+    font-size: 14px;
+    line-height: 1.57;
+    height: 100%;
+    padding: initial;
+    width: 100%;
+  }
+
+table {
+    text-align: left;
+    width: 100%;
+  
+    th,
+    td {
+      padding: 14px 13px;
+      border-right: 1px solid $color-grayscale-300;
+    }
+  }

@@ -8,112 +8,134 @@
         </div>
     </app-header>
     <div [formGroup]="newProyectFormGroup">
-        <div class="row" *ngIf="projectId">
-            <div class="col-xl-3">
-                <app-textfield text="ID" id="id" [control]="newProyectFormGroup.get('id')" [disabled]="true">
-                </app-textfield>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3" id="client"
-                    text="Cliente" [selectFormControl]="newProyectFormGroup.get('client')" [items]="clients"
-                    (itemSelected)="itemSelectedPredictiveClients($event)"></app-textfield-predictive>
-            </div>
-            <div class="col-md-6">
-                <app-textfield text="Nombre" id="name" [control]="newProyectFormGroup.get('name')"></app-textfield>
-            </div>
-        </div>
+        <app-tabs>
+            <app-tab [title]="'Proyecto'">
 
-        <div class="row">
-            <div class="col-md-6">
-                <app-textfield text="Display" id="displayname" [control]="newProyectFormGroup.get('displayname')">
-                </app-textfield>
-            </div>
-            <div class="col-md-6">
-                <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3" text="Sponsor"
-                    [selectFormControl]="newProyectFormGroup.get('sponsor')" [items]="sponsors"
-                    (itemSelected)="itemSelectedPredictive($event)"></app-textfield-predictive>
-            </div>
-        </div>
+                <div class="row" *ngIf="projectId">
+                    <div class="col-xl-3 margin-top-16">
+                        <app-textfield text="ID" id="id" [control]="newProyectFormGroup.get('id')" [disabled]="true">
+                        </app-textfield>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
+                            id="client" text="Cliente" [selectFormControl]="newProyectFormGroup.get('client')"
+                            [items]="clients" (itemSelected)="itemSelectedPredictiveClients($event)">
+                        </app-textfield-predictive>
+                    </div>
+                    <div class="col-md-6">
+                        <app-textfield text="Nombre" id="name" [control]="newProyectFormGroup.get('name')">
+                        </app-textfield>
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-md-3">
-                <app-select [items]="typeProject" [item]="typeProjectSelected" [messagesHint]="'Seleccione un elemento'"
-                    (itemSelected)="selectedItem($event, 'typeProject')" placeholderDefault="Tipo proyecto">
-                </app-select>
-            </div>
-            <div class="col-md-3">
-                <app-select [items]="stateProject" [item]="stateProjectSelected"
-                    [messagesHint]="'Seleccione un elemento'" (itemSelected)="selectedItem($event, 'stateProject')"
-                    placeholderDefault="Estado"></app-select>
-            </div>
-            <div class="col-md-3">
-                <app-select [items]="projectRisk" [item]="projectRiskSelected" [messagesHint]="'Seleccione un elemento'"
-                    (itemSelected)="selectedItem($event, 'projectRisk')" placeholderDefault="Riesgo del peoyecto">
-                </app-select>
-            </div>
-            <div class="col-md-3">
-                <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
-                    [messagesHint]="'Seleccione un elemento'"
-                    (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
-                    placeholderDefault="Área de gestion a cargo">
-                </app-select>
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <app-textfield text="Display" id="displayname"
+                            [control]="newProyectFormGroup.get('displayname')">
+                        </app-textfield>
+                    </div>
+                    <div class="col-md-6">
+                        <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
+                            text="Sponsor" [selectFormControl]="newProyectFormGroup.get('sponsor')" [items]="sponsors"
+                            (itemSelected)="itemSelectedPredictive($event)"></app-textfield-predictive>
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <app-textfield text="Fecha de Inicio Planificada" id="dateStart" mask="00/00/0000"
-                    [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateStart')"></app-textfield>
-            </div>
-            <div class="col-md-6">
-                <app-textfield [text]="'Fecha de Fin Planificada'" id="dateEnd" mask="00/00/0000"
-                    [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateEnd')"></app-textfield>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <app-textfield text="Fecha de Inicio Real" id="dateStartReal" mask="00/00/0000"
-                    [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateStartReal')"></app-textfield>
-            </div>
-            <div class="col-md-6">
-                <app-textfield [text]="'Fecha de Fin Real'" id="dateEndReal" mask="00/00/0000"
-                    [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateEndReal')"></app-textfield>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
-                <app-textfield [text]="'Horas estimadas'" id="estimatedHours"
-                    [control]="newProyectFormGroup.get('estimatedHours')"></app-textfield>
-            </div>
-            <div class="col-md-3">
-                <app-textfield [text]="'Horas reales'" id="realHours" [control]="newProyectFormGroup.get('realHours')">
-                </app-textfield>
-            </div>
-            <div class="col-md-6">
-                <app-textfield text="Número de compra" id="purchaseNumber" [disabled]="disabledPurchaseNumber"
-                    [control]="newProyectFormGroup.get('purchaseNumber')">
-                    <app-checkbox [checkbox]="checkbox" (checkboxChecked)="checkSelectedPurchaseNumber()">
-                    </app-checkbox>
-                </app-textfield>
-            </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <app-select [items]="typeProject" [item]="typeProjectSelected"
+                            [messagesHint]="'Seleccione un elemento'"
+                            (itemSelected)="selectedItem($event, 'typeProject')" placeholderDefault="Tipo proyecto">
+                        </app-select>
+                    </div>
+                    <div class="col-md-3">
+                        <app-select [items]="stateProject" [item]="stateProjectSelected"
+                            [messagesHint]="'Seleccione un elemento'"
+                            (itemSelected)="selectedItem($event, 'stateProject')" placeholderDefault="Estado">
+                        </app-select>
+                    </div>
+                    <div class="col-md-3">
+                        <app-select [items]="projectRisk" [item]="projectRiskSelected"
+                            [messagesHint]="'Seleccione un elemento'"
+                            (itemSelected)="selectedItem($event, 'projectRisk')"
+                            placeholderDefault="Riesgo del peoyecto">
+                        </app-select>
+                    </div>
+                    <div class="col-md-3">
+                        <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
+                            [messagesHint]="'Seleccione un elemento'"
+                            (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
+                            placeholderDefault="Área de gestion a cargo">
+                        </app-select>
+                    </div>
+                </div>
 
-        </div>
-        <div class="row">
-            <!-- <div class="col-md-6">
-                <app-textfield text="Repositorio SVN" id="svn" [control]="newProyectFormGroup.get('repositorySVN')">
-                </app-textfield>
-            </div> -->
-        </div>
-        <div class="row">
+                <div class="row">
+                    <div class="col-md-6">
+                        <app-textfield text="Fecha de Inicio Planificada" id="dateStart" mask="00/00/0000"
+                            [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateStart')">
+                        </app-textfield>
+                    </div>
+                    <div class="col-md-6">
+                        <app-textfield [text]="'Fecha de Fin Planificada'" id="dateEnd" mask="00/00/0000"
+                            [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateEnd')">
+                        </app-textfield>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <app-textfield text="Fecha de Inicio Real" id="dateStartReal" mask="00/00/0000"
+                            [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateStartReal')">
+                        </app-textfield>
+                    </div>
+                    <div class="col-md-6">
+                        <app-textfield [text]="'Fecha de Fin Real'" id="dateEndReal" mask="00/00/0000"
+                            [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateEndReal')">
+                        </app-textfield>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <app-textfield [text]="'Horas estimadas'" id="estimatedHours"
+                            [control]="newProyectFormGroup.get('estimatedHours')"></app-textfield>
+                    </div>
+                    <div class="col-md-3">
+                        <app-textfield [text]="'Horas reales'" id="realHours"
+                            [control]="newProyectFormGroup.get('realHours')">
+                        </app-textfield>
+                    </div>
+                    <div class="col-md-6">
+                        <app-textfield text="Número de compra" id="purchaseNumber" [disabled]="disabledPurchaseNumber"
+                            [control]="newProyectFormGroup.get('purchaseNumber')">
+                            <app-checkbox [checkbox]="checkbox" (checkboxChecked)="checkSelectedPurchaseNumber()">
+                            </app-checkbox>
+                        </app-textfield>
+                    </div>
 
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <app-textfield text="Descripcion" id="description" [control]="newProyectFormGroup.get('description')">
-                </app-textfield>
-            </div>
-        </div>
+                </div>
+                <div class="row">
+                    <!-- <div class="col-md-6">
+                        <app-textfield text="Repositorio SVN" id="svn" [control]="newProyectFormGroup.get('repositorySVN')">
+                        </app-textfield>
+                    </div> -->
+                </div>
+                <div class="row">
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <app-textfield text="Descripcion" id="description"
+                            [control]="newProyectFormGroup.get('description')">
+                        </app-textfield>
+                    </div>
+                </div>
+
+            </app-tab>
+            <app-tab [title]="'Requerimiento'" [disabled]="!projectId">
+
+            </app-tab>
+        </app-tabs>
     </div>
 </div>

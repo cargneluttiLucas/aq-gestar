@@ -13,11 +13,13 @@
             <app-button type="header" text="Salir" (clickButton)="close()"></app-button>
         </div>
     </app-header>
+
     <div class="margin-top-16">
         <div [formGroup]="requirementFormGroup">
-            <div class="row">
-                <div class="col-xl-3" *ngIf="projectId">
-                    <app-textfield text="ID" id="id" [control]="requirementFormGroup.get('id')" [disabled]="true">
+            <div class="row margin-top-16">
+                <div class="col-xl-3" *ngIf="requirementId">
+                    <app-textfield text="ID" id="id" [control]="requirementFormGroup.get('id')"
+                        [disabled]="true">
                     </app-textfield>
                 </div>
                 <div class="col-xl-3">
@@ -30,158 +32,180 @@
                         [control]="requirementFormGroup.get('creator')">
                     </app-textfield>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <app-textfield text="Asunto" id="title" [control]="requirementFormGroup.get('title')">
-                    </app-textfield>
-                </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <app-textfield text="Estado" [disabled]="true" id="state"
                         [control]="requirementFormGroup.get('state')">
                     </app-textfield>
                 </div>
             </div>
-            <div class="row">
+            <app-tabs>
+                <app-tab [title]="'Requerimiento'">
+                    <div class="row margin-top-16">
+                        <div class="col-md-6">
+                            <app-textfield text="Asunto" id="title" [control]="requirementFormGroup.get('title')">
+                            </app-textfield>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
 
-                <div class="col-md-6">
-                    <app-textfield text="Mes de creación" id="createdMonth" mask="00/0000"
-                        [control]="requirementFormGroup.get('createdMonth')"></app-textfield>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <app-textfield text="Display" id="displayName" [control]="requirementFormGroup.get('displayName')">
-                    </app-textfield>
-                </div>
-                <div class="col-md-6">
-                    <app-textfield text="Organización" id="organization"
-                        [control]="requirementFormGroup.get('organization')"></app-textfield>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <app-textfield text="Fecha real" mask="00/00/0000" id="realDateEnd"
-                        [control]="requirementFormGroup.get('realDateEnd')">
-                    </app-textfield>
-                </div>
-                <!-- <div class="col-md-6">
-                    <app-textfield text="Sprint" id="sprint" [control]="requirementFormGroup.get('sprint')">
-                    </app-textfield>
-                </div> -->
+                        <div class="col-md-6">
+                            <app-textfield text="Mes de creación" id="createdMonth" mask="00/0000"
+                                [control]="requirementFormGroup.get('createdMonth')"></app-textfield>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <app-textfield text="Display" id="displayName"
+                                [control]="requirementFormGroup.get('displayName')">
+                            </app-textfield>
+                        </div>
+                        <div class="col-md-6">
+                            <app-textfield text="Organización" id="organization"
+                                [control]="requirementFormGroup.get('organization')"></app-textfield>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <app-textfield text="Fecha real" mask="00/00/0000" id="realDateEnd"
+                                [control]="requirementFormGroup.get('realDateEnd')">
+                            </app-textfield>
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <app-textfield text="Sprint" id="sprint" [control]="requirementFormGroup.get('sprint')">
+                            </app-textfield>
+                        </div> -->
 
-            </div>
-            <div class="row">
-                <!-- <div class="col-md-3">
-                    <app-textfield text="Fecha de creación" mask="00/00/0000" id="createdDateShort"
-                        [control]="requirementFormGroup.get('createdDateShort')">
-                    </app-textfield>
-                </div> -->
-                <div class="col-md-3">
-                    <app-select [items]="aplications" [item]="aplicationsSelected"
-                        (itemSelected)="selectedItem($event, 'aplications')" placeholderDefault="Aplicación">
-                    </app-select>
-                </div>
-                <div class="col-md-3">
-                    <app-select [items]="modules" [item]="moduleSelected"
-                        (itemSelected)="selectedItem($event, 'modules')" placeholderDefault="Módulos">
-                    </app-select>
-                </div>
-                <div class="col-md-6">
-                    <app-textfield-predictive id="project" [item]="proyectSelected" [dispatchHint]="'Infrese al menos 3 letras'" [minLength]="3" [items]="projects"
-                        text="Proyecto" [selectFormControl]="requirementFormGroup.get('project')"
-                        (itemSelected)="itemSelected($event)"></app-textfield-predictive>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <app-textfield text="Usuario solicitante" id="requestedByUser"
-                        [control]="requirementFormGroup.get('requestedByUser')">
-                    </app-textfield>
-                </div>
-                <div class="col-md-6">
-                    <app-textfield text="Fecha de solicitud" [dispatchHint]="'dd/MM/yyyy'" mask="00/00/0000"
-                        id="requestDate" [control]="requirementFormGroup.get('requestDate')">
-                    </app-textfield>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <app-select [items]="businessProces" [item]="businesProcesSelected"
-                        (itemSelected)="selectedItem($event, 'businessProces')" placeholderDefault="Proceso de negocio">
-                    </app-select>
-                </div>
-                <div class="col-md-3">
-                    <app-select [items]="requirementTypes" [item]="requirementTypeSelected"
-                        (itemSelected)="selectedItem($event, 'requirementTypes')"
-                        placeholderDefault="Tipo de Requierimiento">
-                    </app-select>
-                </div>
-                <div class="col-md-3">
-                    <app-select [items]="mainObjects" [item]="mainObjectSelected"
-                        (itemSelected)="selectedItem($event, 'mainObjects')" placeholderDefault="Objeto principal">
-                    </app-select>
-                </div>
-                <div class="col-md-3">
-                    <app-select [items]="prioritys" [item]="prioritySelected"
-                        (itemSelected)="selectedItem($event, 'prioritys')" placeholderDefault="Prioridad">
-                    </app-select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <app-textfield text="Fecha estimada de inicio" mask="00/00/0000" id="estimatedDateStart"
-                        [dispatchHint]="'dd/MM/yyyy'" [control]="requirementFormGroup.get('estimatedDateStart')">
-                    </app-textfield>
-                </div>
-                <div class="col-md-3">
-                    <app-textfield text="Fecha estimada de fin" mask="00/00/0000" id="estimatedDateEnd"
-                        [dispatchHint]="'dd/MM/yyyy'" [control]="requirementFormGroup.get('estimatedDateEnd')">
-                    </app-textfield>
-                </div>
-                <div class="col-md-3">
-                    <app-textfield text="Esfuerzo sistemas en horas" id="systemEffortinHours"
-                        [control]="requirementFormGroup.get('systemEffortinHours')">
-                    </app-textfield>
-                </div>
-                <div class="col-md-3">
-                    <app-textfield text="Esfuerzo usuarios en horas" id="usersEffortinHours"
-                        [control]="requirementFormGroup.get('usersEffortinHours')">
-                    </app-textfield>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <app-select [items]="regios" [item]="regioSelected" (itemSelected)="selectedItem($event, 'regions')"
-                        placeholderDefault="Región">
-                    </app-select>
-                </div>
-                <div class="col-md-3">
-                    <app-select [items]="areas" [item]="areaSelected" (itemSelected)="selectedItem($event, 'areas')"
-                        placeholderDefault="Área">
-                    </app-select>
-                </div>
-                <div class="col-md-3">
-                    <app-select [items]="workAreas" [item]="workAreaSelected"
-                        (itemSelected)="selectedItem($event, 'workAreas')" placeholderDefault="Fuente de trabajo">
-                    </app-select>
-                </div>
-                <div class="col-md-3">
-                    <app-select [items]="managementAreas" [item]="managementAreaSelected"
-                        (itemSelected)="selectedItem($event, 'managementAreas')"
-                        placeholderDefault="Gerencia responsable">
-                    </app-select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <app-textfield text="Descripcion" id="description"
-                        [control]="requirementFormGroup.get('description')">
-                    </app-textfield>
-                </div>
-            </div>
+                    </div>
+                    <div class="row">
+                        <!-- <div class="col-md-3">
+                            <app-textfield text="Fecha de creación" mask="00/00/0000" id="createdDateShort"
+                                [control]="requirementFormGroup.get('createdDateShort')">
+                            </app-textfield>
+                        </div> -->
+                        <div class="col-md-3">
+                            <app-select [items]="aplications" [item]="aplicationsSelected"
+                                (itemSelected)="selectedItem($event, 'aplications')" placeholderDefault="Aplicación">
+                            </app-select>
+                        </div>
+                        <div class="col-md-3">
+                            <app-select [items]="modules" [item]="moduleSelected"
+                                (itemSelected)="selectedItem($event, 'modules')" placeholderDefault="Módulos">
+                            </app-select>
+                        </div>
+                        <div class="col-md-6">
+                            <app-textfield-predictive id="project" [item]="proyectSelected"
+                                [dispatchHint]="'Infrese al menos 3 letras'" [minLength]="3" [items]="projects"
+                                text="Proyecto" [selectFormControl]="requirementFormGroup.get('project')"
+                                (itemSelected)="itemSelected($event)"></app-textfield-predictive>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <app-textfield text="Usuario solicitante" id="requestedByUser"
+                                [control]="requirementFormGroup.get('requestedByUser')">
+                            </app-textfield>
+                        </div>
+                        <div class="col-md-6">
+                            <app-textfield text="Fecha de solicitud" [dispatchHint]="'dd/MM/yyyy'" mask="00/00/0000"
+                                id="requestDate" [control]="requirementFormGroup.get('requestDate')">
+                            </app-textfield>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <app-select [items]="businessProces" [item]="businesProcesSelected"
+                                (itemSelected)="selectedItem($event, 'businessProces')"
+                                placeholderDefault="Proceso de negocio">
+                            </app-select>
+                        </div>
+                        <div class="col-md-3">
+                            <app-select [items]="requirementTypes" [item]="requirementTypeSelected"
+                                (itemSelected)="selectedItem($event, 'requirementTypes')"
+                                placeholderDefault="Tipo de Requierimiento">
+                            </app-select>
+                        </div>
+                        <div class="col-md-3">
+                            <app-select [items]="mainObjects" [item]="mainObjectSelected"
+                                (itemSelected)="selectedItem($event, 'mainObjects')"
+                                placeholderDefault="Objeto principal">
+                            </app-select>
+                        </div>
+                        <div class="col-md-3">
+                            <app-select [items]="prioritys" [item]="prioritySelected"
+                                (itemSelected)="selectedItem($event, 'prioritys')" placeholderDefault="Prioridad">
+                            </app-select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <app-textfield text="Fecha estimada de inicio" mask="00/00/0000" id="estimatedDateStart"
+                                [dispatchHint]="'dd/MM/yyyy'"
+                                [control]="requirementFormGroup.get('estimatedDateStart')">
+                            </app-textfield>
+                        </div>
+                        <div class="col-md-3">
+                            <app-textfield text="Fecha estimada de fin" mask="00/00/0000" id="estimatedDateEnd"
+                                [dispatchHint]="'dd/MM/yyyy'" [control]="requirementFormGroup.get('estimatedDateEnd')">
+                            </app-textfield>
+                        </div>
+                        <div class="col-md-3">
+                            <app-textfield text="Esfuerzo sistemas en horas" id="systemEffortinHours"
+                                [control]="requirementFormGroup.get('systemEffortinHours')">
+                            </app-textfield>
+                        </div>
+                        <div class="col-md-3">
+                            <app-textfield text="Esfuerzo usuarios en horas" id="usersEffortinHours"
+                                [control]="requirementFormGroup.get('usersEffortinHours')">
+                            </app-textfield>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <app-select [items]="regios" [item]="regioSelected"
+                                (itemSelected)="selectedItem($event, 'regions')" placeholderDefault="Región">
+                            </app-select>
+                        </div>
+                        <div class="col-md-3">
+                            <app-select [items]="areas" [item]="areaSelected"
+                                (itemSelected)="selectedItem($event, 'areas')" placeholderDefault="Área">
+                            </app-select>
+                        </div>
+                        <div class="col-md-3">
+                            <app-select [items]="workAreas" [item]="workAreaSelected"
+                                (itemSelected)="selectedItem($event, 'workAreas')"
+                                placeholderDefault="Fuente de trabajo">
+                            </app-select>
+                        </div>
+                        <div class="col-md-3">
+                            <app-select [items]="managementAreas" [item]="managementAreaSelected"
+                                (itemSelected)="selectedItem($event, 'managementAreas')"
+                                placeholderDefault="Gerencia responsable">
+                            </app-select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <app-textfield text="Descripcion" id="description"
+                                [control]="requirementFormGroup.get('description')">
+                            </app-textfield>
+                        </div>
+                    </div>
 
 
+
+                </app-tab>
+                <app-tab [title]="'Actividades'" [isActive]="true">
+                    <div class="margin-top-16">
+                        <app-table>
+                        </app-table>
+                    </div>
+
+                    <div class="margin-top-48">
+                        <app-button [text]="'Cargar actividades'"></app-button>
+                    </div>
+                </app-tab>
+            </app-tabs>
         </div>
     </div>
 </div>

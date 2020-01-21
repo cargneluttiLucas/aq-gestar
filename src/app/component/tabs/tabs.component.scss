@@ -41,7 +41,6 @@
 
     &__tab {
       border-bottom: 1px solid $color-grayscale-600;
-      flex-grow: 1;
       padding: 10px 16px 14px 16px;
       transition: 0.2s;
 
@@ -56,7 +55,7 @@
       }
 
       &--active {
-        border-bottom: $color-brand-500 2px solid;
+        border-bottom: #2B3148 2px solid;
       }
 
       &-text {
@@ -74,9 +73,9 @@
         }
 
         &--active {
-          color: $color-brand-500;
+          color: #2B3148;
+          font-weight: 600;
           cursor: pointer;
-          font-weight: 500;
         }
       }
 

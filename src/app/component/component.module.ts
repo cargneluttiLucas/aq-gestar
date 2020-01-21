@@ -10,6 +10,8 @@ import { ListModule } from './list/list.module';
 import { ModalsModule } from '../utils/services/modal/modal.module';
 import { HeaderModule } from './header/header.module';
 import { CheckboxsModule } from './checkboxs/checkboxs.module';
+import { TabsModule } from './tabs/tabs.module';
+import { TableModule } from './table/table.module';
 
 @NgModule({
   imports: [
@@ -23,10 +25,11 @@ import { CheckboxsModule } from './checkboxs/checkboxs.module';
     ModalsModule.forRoot(),
     TextfieldPredictiveModule.forRoot(),
     HeaderModule.forRoot(),
-    CheckboxsModule.forRoot()
+    CheckboxsModule.forRoot(),
+    TabsModule.forRoot(),
+    TableModule.forRoot()
   ],
-  declarations: [
-  ],
+  declarations: [],
   exports: [
     TextfieldModule,
     ButtonModule,
@@ -37,7 +40,9 @@ import { CheckboxsModule } from './checkboxs/checkboxs.module';
     ModalsModule,
     HeaderModule,
     TextfieldPredictiveModule,
-    CheckboxsModule
+    CheckboxsModule,
+    TabsModule,
+    TableModule
   ]
 })
 export class ComponentsModule {

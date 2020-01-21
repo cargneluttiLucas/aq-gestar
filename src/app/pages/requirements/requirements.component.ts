@@ -89,7 +89,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    private sessionId: string;
+    private sessionId = 'e54bb83ba1694cfe9f1aa001cb3981a5';
+    // private sessionId: string;
     public projectId: number;
     public requirementId: number;
     public requirementAcction: string;
@@ -125,7 +126,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             fields: 'DOC_ID,project_name'
         };
         this.searchProject(aux);
-        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.requirementId = item.doc_id;
             this.requirementAcction = item.action;
@@ -148,6 +149,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         });
     }
+
     ngAfterViewInit() {
         if (this.deviceDetector.isBrowser) {
             this.keypressSubscription = this.keypressService.keyPressEscape().subscribe((response) => {
@@ -204,6 +206,18 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementService.getOpenByDocId(requirementId, this.sessionId).subscribe((response) => {
             if (response) {
                 this.loadFilds(response);
+                if (this.requirementLoad && this.requirementLoad.id.value) {
+                    const aux = {
+                        filter : `id = ${this.requirementLoad.id.value}`,
+                        order : '',
+                        fields : ''
+                    };
+                    this.requirementService.searchActivities(aux, this.sessionId).subscribe((activities) => {
+                        if (activities) {
+                            console.log(activities);
+                        }
+                    });
+                }
             }
         });
 
@@ -228,11 +242,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private loadNewRequirement() {
-        this.requirementService.getNewRequirements(this.sessionId).subscribe((response) => {
-            if (response) {
+        this.requirementService.getNewRequirements(this.sessionId).subscribe((requirement) => {
+            if (requirement) {
                 setTimeout(() => {
-                    this.loadFilds(response);
-                }, 500);
+                    this.loadFilds(requirement);
+                }, 200);
             }
         });
     }
@@ -264,7 +278,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         if (response.requerimiento.applicationId.value) {
             this.aplicationsSelected = {
                 id: response.requerimiento.applicationId.value,
-                description: response.requerimiento.projectType.value,
+                description: response.requerimiento.application.value,
                 disabled: false
             };
         }
@@ -347,7 +361,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementFormGroup.get('usersEffortinHours').setValue(response.requerimiento.userEffortInHours.value);
     }
 
-    private buildFomr() {
+    private buildForm() {
         return this.requirement = {
             requerimiento: {
                 createdDate: this.requirementLoad.createdDate,
@@ -698,7 +712,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     save() {
         if (this.requirementId) {
-            this.requirementService.changeRequirementById(this.buildFomr(), this.requirementId, this.sessionId).subscribe((response) => {
+            this.requirementService.changeRequirementById(this.buildForm(), this.requirementId, this.sessionId).subscribe((response) => {
                 if (response) {
                     if (response.status !== 200 && response.message[0]) {
                         this.errorMessage = response.message[0];
@@ -710,7 +724,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
             });
         } else {
-            this.requirementService.saveNewRequirement(this.buildFomr(), this.sessionId).subscribe((response) => {
+            this.requirementService.saveNewRequirement(this.buildForm(), this.sessionId).subscribe((response) => {
                 if (response) {
                     if (response.status !== 200 && response.message[0]) {
                         this.errorMessage = response.message[0];

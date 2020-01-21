@@ -9,96 +9,48 @@ export class RequierementsService {
 
   private url = 'http://3.227.233.169:80/bffgestar/api/v1/Requerimientos/';
 
+  options = {
+    headers: {
+      SessionId: '',
+    },
+    'Content-Type': 'application/json'
+  };
+
   constructor(private http: HttpClient) {
   }
 
   public getNewSelects(sessionId: string) {
-    // const options = {
-    //   headers: {
-    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
-    const options = {
-      headers: {
-        SessionId: sessionId,
-      }
-    };
-    return this.http.get<any>(this.url + 'New/Keywords', options);
+    this.options.headers.SessionId = sessionId;
+    return this.http.get<any>(this.url + 'New/Keywords', this.options);
   }
 
   public getNewRequirements(sessionId: string) {
-    // const options = {
-    //   headers: {
-    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
-    const options = {
-      headers: {
-        SessionId: sessionId,
-      }
-    };
-    return this.http.get<any>(this.url + 'New/', options);
+    this.options.headers.SessionId = sessionId;
+    return this.http.get<any>(this.url + 'New/', this.options);
   }
 
   public getOpenByDocId(requirementId: number, sessionId: string) {
-    // const options = {
-    //   headers: {
-    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
-    const options = {
-      headers: {
-        SessionId: sessionId,
-      }
-    };
-    return this.http.get<any>(this.url + 'Doc/' + requirementId, options);
+    this.options.headers.SessionId = sessionId;
+    return this.http.get<any>(this.url + 'Doc/' + requirementId, this.options);
   }
 
   saveNewRequirement(data: any, sessionId) {
-    // const options = {
-    //   headers: {
-    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
-    const options = {
-      headers: {
-        SessionId: sessionId,
-      }
-    };
-    return this.http.post<any>(this.url, data, options);
+    this.options.headers.SessionId = sessionId;
+    return this.http.post<any>(this.url, data, this.options);
   }
 
   changeRequirementById(data: any, requirementId: number, sessionId) {
-    // const options = {
-    //   headers: {
-    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
-    const options = {
-      headers: {
-        SessionId: sessionId,
-      }
-    };
-    return this.http.put<any>(this.url + 'Doc/' + requirementId, data, options);
+    this.options.headers.SessionId = sessionId;
+    return this.http.put<any>(this.url + 'Doc/' + requirementId, data, this.options);
   }
 
   searchProject(filterData, sessionId) {
-    // const options = {
-    //   headers: {
-    //     SessionId: '8929ec6c49974e43a47935525a2b5259',
-    //   },
-    //   'Content-Type': 'application/json'
-    // };
-    const options = {
-      headers: {
-        SessionId: sessionId,
-      }
-    };
-    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Proyectos/Find', filterData, options);
+    this.options.headers.SessionId = sessionId;
+    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Proyectos/Find', filterData, this.options);
+  }
+
+  searchActivities(filterData, sessionId) {
+    this.options.headers.SessionId = sessionId;
+    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Actividades', filterData, this.options);
   }
 }

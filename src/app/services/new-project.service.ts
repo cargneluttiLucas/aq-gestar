@@ -10,7 +10,6 @@ export class NewProjectService {
   options = {
     headers: {
       SessionId: '',
-      // SessionId: '8929ec6c49974e43a47935525a2b5259',
     },
     'Content-Type': 'application/json'
   };

@@ -12,14 +12,16 @@ import { Browser } from '../../utils/util/browser/browser';
 export class TabsComponent implements AfterContentInit {
 
   @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
-  @ViewChild('tabContent', { static: true }) tabContent;
+  @ViewChild('tabContent', { static: false }) tabContent;
 
   constructor(private deviceDetector: NavigatorService, private windowsService: WindowService) {
   }
 
   ngAfterContentInit() {
     this.tabs.reset(this.tabs.filter(x => !x.isHidden));
-    this.selectTab(this.tabs.find(x => x.isActive) ? this.tabs.find(x => x.isActive) : this.tabs.first, 0);
+    setTimeout(() => {
+      this.selectTab(this.tabs.find(x => x.isActive) ? this.tabs.find(x => x.isActive) : this.tabs.first, 0);
+    }, 500);
   }
 
   selectTab(tab: ITab, indexSelect: number) {
@@ -28,9 +30,9 @@ export class TabsComponent implements AfterContentInit {
       tab.isActive = true;
     }
     const browser = new Browser(this.windowsService);
-    if (browser.getBrowser() === 'ie') {
-      this.scrollTabs(indexSelect);
-    }
+    // if (browser.getBrowser() === 'ie') {
+    // }
+    this.scrollTabs(indexSelect);
   }
 
   scrollTabs(indexSelect: number) {
