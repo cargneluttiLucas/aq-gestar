@@ -84,12 +84,12 @@
                             </app-textfield>
                         </div> -->
                         <div class="col-md-3">
-                            <app-select [items]="aplications" [item]="aplicationsSelected"
+                            <app-select [items]="aplications" [item]="aplicationsSelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'aplications')" placeholderDefault="Aplicación">
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-select [items]="modules" [item]="moduleSelected"
+                            <app-select [items]="modules" [item]="moduleSelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'modules')" placeholderDefault="Módulos">
                             </app-select>
                         </div>
@@ -114,25 +114,25 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3">
-                            <app-select [items]="businessProces" [item]="businesProcesSelected"
+                            <app-select [items]="businessProces" [item]="businesProcesSelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'businessProces')"
                                 placeholderDefault="Proceso de negocio">
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-select [items]="requirementTypes" [item]="requirementTypeSelected"
+                            <app-select [items]="requirementTypes" [item]="requirementTypeSelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'requirementTypes')"
                                 placeholderDefault="Tipo de Requierimiento">
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-select [items]="mainObjects" [item]="mainObjectSelected"
+                            <app-select [items]="mainObjects" [item]="mainObjectSelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'mainObjects')"
                                 placeholderDefault="Objeto principal">
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-select [items]="prioritys" [item]="prioritySelected"
+                            <app-select [items]="prioritys" [item]="prioritySelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'prioritys')" placeholderDefault="Prioridad">
                             </app-select>
                         </div>
@@ -167,18 +167,18 @@
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-select [items]="areas" [item]="areaSelected"
+                            <app-select [items]="areas" [item]="areaSelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'areas')" placeholderDefault="Área">
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-select [items]="workAreas" [item]="workAreaSelected"
+                            <app-select [items]="workAreas" [item]="workAreaSelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'workAreas')"
                                 placeholderDefault="Fuente de trabajo">
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-select [items]="managementAreas" [item]="managementAreaSelected"
+                            <app-select [items]="managementAreas" [item]="managementAreaSelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'managementAreas')"
                                 placeholderDefault="Gerencia responsable">
                             </app-select>
@@ -195,7 +195,7 @@
 
 
                 </app-tab>
-                <app-tab [title]="'Actividades'" [isActive]="true">
+                <app-tab [title]="'Actividades'">
                     <div class="margin-top-16">
                         <app-table>
                         </app-table>

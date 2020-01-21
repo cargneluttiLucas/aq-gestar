@@ -46,26 +46,26 @@
                 <div class="row">
                     <div class="col-md-3">
                         <app-select [items]="typeProject" [item]="typeProjectSelected"
-                            [messagesHint]="'Seleccione un elemento'"
+                            [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'typeProject')" placeholderDefault="Tipo proyecto">
                         </app-select>
                     </div>
                     <div class="col-md-3">
                         <app-select [items]="stateProject" [item]="stateProjectSelected"
-                            [messagesHint]="'Seleccione un elemento'"
+                            [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'stateProject')" placeholderDefault="Estado">
                         </app-select>
                     </div>
                     <div class="col-md-3">
                         <app-select [items]="projectRisk" [item]="projectRiskSelected"
-                            [messagesHint]="'Seleccione un elemento'"
+                            [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'projectRisk')"
                             placeholderDefault="Riesgo del peoyecto">
                         </app-select>
                     </div>
                     <div class="col-md-3">
                         <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
-                            [messagesHint]="'Seleccione un elemento'"
+                            [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
                             placeholderDefault="Área de gestion a cargo">
                         </app-select>
@@ -133,9 +133,9 @@
                 </div>
 
             </app-tab>
-            <app-tab [title]="'Requerimiento'" [disabled]="!projectId">
-
-            </app-tab>
+            <!-- <app-tab [title]="'Requerimiento'" [disabled]="!projectId">
+                <app-requirements></app-requirements>
+            </app-tab> -->
         </app-tabs>
     </div>
 </div>

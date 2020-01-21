@@ -1,5 +1,6 @@
 @import "../../styles/variables";
 @import "../../styles/colors";
+@import "../../styles/spaces";
 
 label {
   color: $color-grayscale-600;
@@ -58,6 +59,7 @@ input {
   display: flex;
   flex-direction: column;
   height: 88px;
+  margin-top: 10px;
   max-width: 100%;
   min-width: 80px;
 

@@ -1,6 +1,6 @@
 import {
   Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild,
-  ElementRef, AfterContentInit
+  ElementRef, AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, Subject, Subscription, fromEvent } from 'rxjs';
@@ -13,21 +13,22 @@ import { NavigatorService } from '../../utils/services/navigator/navigator.servi
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss']
 })
-export class SelectComponent implements OnInit, AfterContentInit, OnDestroy {
+export class SelectComponent implements OnInit, AfterContentInit, OnDestroy, OnChanges {
   @Input() placeholderDefault = 'Seleccione una opción';
   @Input() disabled = false;
   @Input() isDesktop = false;
   @Input() defaultValue = null;
   @Input() required = false;
   @Input() items = [{ id: 0, description: '', disabled: false }];
-  @Input() messagesSuccess: string;
-  @Input() messagesHint: string;
-  @Input() messagesError: string;
   @Input() submit: Observable<boolean>;
   @Output() itemSelected = new EventEmitter<any>();
   @Output() handlerError = new EventEmitter<any>();
   @Input() item = null;
   @Input() dropUp = true;
+
+  @Input() dispatchSuccess: string;
+  @Input() dispatchHint: string;
+  @Input() dispatchError: string;
 
   @Input() select: FormControl;
 
@@ -84,6 +85,10 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy {
     });
   }
 
+  ngOnChanges() {
+    this.widthSelectResults();
+  }
+
   widthSelectResults(): void {
     this.selectResultsWidth = this.selectRef.nativeElement.offsetWidth;
   }
@@ -113,6 +118,7 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   openItemsResult() {
+    this.widthSelectResults();
     if (!this.disabled) {
       this.inFocus = true;
       if (this.isMobileSelect) {

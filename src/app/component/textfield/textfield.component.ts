@@ -1,12 +1,3 @@
-
-// import {
-//     Component, forwardRef, Input, OnInit, Output,
-//     EventEmitter, ViewChild, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy
-// } from '@angular/core';
-// import { FormControl, Validators, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-// import { Observable, Subject, Subscription } from 'rxjs';
-
-
 import {
     Component, forwardRef, Input, OnInit, Output,
     EventEmitter, ViewChild, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy

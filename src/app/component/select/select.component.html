@@ -22,7 +22,7 @@
   <div class="select-container__border"></div>
   <div class="select-container__messages" [style.width.px]="selectResultsWidth">
     <app-control-messages (handleControl)="handleControl($event)" [validationMoment]="validationMoment"
-                        hint="{{messagesHint}}" success="{{messagesSuccess}}" alternativeError="{{messagesError}}"
+                        hint="{{dispatchHint}}" success="{{dispatchSuccess}}" alternativeError="{{dispatchError}}"
                         [control]="select">
     </app-control-messages>
   </div>

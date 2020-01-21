@@ -5,6 +5,7 @@ import { NewProjectRoutingModule } from './new-project.routing';
 import { ComponentsModule } from 'src/app/component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ServiceModule } from 'src/app/services/service.module';
+import { RequirementsModule } from '../requirements';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { ServiceModule } from 'src/app/services/service.module';
     ComponentsModule,
     NewProjectRoutingModule,
     ReactiveFormsModule,
-    ServiceModule
+    ServiceModule,
+    RequirementsModule.forRoot()
   ],
   declarations: [
     NewProjectComponent
