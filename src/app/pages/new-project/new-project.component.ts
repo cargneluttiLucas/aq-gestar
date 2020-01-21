@@ -414,13 +414,13 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                     visible: true,
                     enabled: true,
                     value: this.newProyectFormGroup.get('estimatedHours').value === '' ?
-                        null : this.newProyectFormGroup.get('estimatedHours').value
+                        null : +this.newProyectFormGroup.get('estimatedHours').value
                 },
                 realHours: {
                     visible: true,
                     enabled: true,
                     value: this.newProyectFormGroup.get('realHours').value === '' ?
-                        null : this.newProyectFormGroup.get('realHours').value
+                        null : +this.newProyectFormGroup.get('realHours').value
                 },
                 realStartDate: {
                     visible: true,

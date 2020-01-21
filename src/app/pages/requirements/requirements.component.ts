@@ -579,12 +579,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 systemEffortInHours: {
                     visible: true,
                     enabled: true,
-                    value: this.requirementFormGroup.get('systemEffortinHours').value
+                    value: +this.requirementFormGroup.get('systemEffortinHours').value
                 },
                 userEffortInHours: {
                     visible: true,
                     enabled: true,
-                    value: this.requirementFormGroup.get('usersEffortinHours').value
+                    value: +this.requirementFormGroup.get('usersEffortinHours').value
                 },
                 previousStates: {
                     visible: true,
