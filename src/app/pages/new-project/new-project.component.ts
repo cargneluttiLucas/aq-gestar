@@ -5,7 +5,9 @@ import { CookieService } from 'src/app/services/cookie.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'src/app/component';
 import { KeypressService, DocumentService, NavigatorService } from 'src/app/utils';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
+import { EventEmitter } from 'protractor';
+import { emit } from 'cluster';
 
 
 @Component({
@@ -48,11 +50,13 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
-    // private sessionId: string;
-    private sessionId = 'e54bb83ba1694cfe9f1aa001cb3981a5';
+    private sessionId: string;
+    // private sessionId = 'e54bb83ba1694cfe9f1aa001cb3981a5';
     public projectId: number;
     public backtofld: number;
     private proyectAcction: string;
+
+    private flagClose = false;
 
     keypressSubscription: Subscription;
 
@@ -82,7 +86,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     ngOnInit() {
-        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;
@@ -251,8 +255,10 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             this.transformDateToString(response.proyecto.realStartDate.value));
         this.newProyectFormGroup.get('dateEndReal').setValue(
             this.transformDateToString(response.proyecto.realEndDate.value));
-        this.newProyectFormGroup.get('estimatedHours').setValue(response.proyecto.estimatedHours.value);
-        this.newProyectFormGroup.get('realHours').setValue(response.proyecto.realHours.value);
+        this.newProyectFormGroup.get('estimatedHours').setValue(
+            response.proyecto.estimatedHours.value === 0 ? '' : response.proyecto.estimatedHours.value);
+        this.newProyectFormGroup.get('realHours').setValue(
+            response.proyecto.realHours.value === 0 ? '' : response.proyecto.realHours.value);
 
         // combos
         if (response.proyecto.projectTypeId.value) {
@@ -497,19 +503,29 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.validForm()) {
             if (this.projectId) {
                 this.newProyectService.putChangeProject(this.buildForm(), this.projectId, this.sessionId).subscribe((response) => {
-                    if (response.status !== 200 && response.message[0]) {
-                        this.errorMessage = response.message[0];
-                        this.openDialog();
-                    } else {
-                        console.log('se modifica un proyecto', response);
-                        this.close();
+                    if (response) {
+                        if (response.message) {
+                            window.alert(response.message[0] + 'ID' + response.docId);
+                        }
+                        if (response.message === null) {
+                            window.alert('Se modificó el documento de manera exitosa.');
+                        }
+                        if (response.status === 200 && this.flagClose) {
+                            this.close();
+                        }
                     }
                 });
             } else {
                 this.newProyectService.putSaveProject(this.buildForm(), this.sessionId).subscribe((response) => {
                     if (response) {
-                        console.log('se guarda un proyecto nuevo', response);
-                        this.changeTextButtons();
+                        window.alert(response.message[0] + 'ID' + response.docId);
+                        if (response.status === 200) {
+                            this.projectId = response.docId;
+                            this.changeTextButtons();
+                        }
+                        if (this.flagClose) {
+                            this.close();
+                        }
                     }
                 });
             }
@@ -520,8 +536,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     saveAndClose() {
         if (this.validForm()) {
             this.save();
-            this.close();
-            // y volver atras, ver como hacemos esto.
+            this.flagClose = true;
         }
     }
 
@@ -535,6 +550,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // modal
     close() {
+        this.flagClose = false;
         document.location.href = `http://3.227.233.169/c/content.asp?fld_id=${this.backtofld}`;
     }
 

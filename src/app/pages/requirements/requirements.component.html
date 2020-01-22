@@ -40,24 +40,9 @@
             </div>
             <app-tabs>
                 <app-tab [title]="'Requerimiento'">
-                    <div class="row margin-top-16">
+                    <div class="row  margin-top-16">
                         <div class="col-md-6">
                             <app-textfield text="Titulo" id="title" [control]="requirementFormGroup.get('title')">
-                            </app-textfield>
-                        </div>
-                        
-                    </div>
-                    <!-- <div class="row">
-
-                        <div class="col-md-6">
-                            <app-textfield text="Mes de creación" id="createdMonth" mask="00/0000"
-                                [control]="requirementFormGroup.get('createdMonth')"></app-textfield>
-                        </div>
-                    </div> -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <app-textfield text="Display" id="displayName"
-                                [control]="requirementFormGroup.get('displayName')">
                             </app-textfield>
                         </div>
                         <div class="col-md-6">
@@ -66,19 +51,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        
-                        <!-- <div class="col-md-6">
-                            <app-textfield text="Sprint" id="sprint" [control]="requirementFormGroup.get('sprint')">
-                            </app-textfield>
-                        </div> -->
-
-                    </div>
-                    <div class="row">
-                        <!-- <div class="col-md-3">
-                            <app-textfield text="Fecha de creación" mask="00/00/0000" id="createdDateShort"
-                                [control]="requirementFormGroup.get('createdDateShort')">
-                            </app-textfield>
-                        </div> -->
                         <div class="col-md-3">
                             <app-select [items]="aplications" [item]="aplicationsSelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'aplications')" placeholderDefault="Aplicación">
@@ -98,9 +70,9 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <app-textfield text="Usuario solicitante" id="requestedByUser"
-                                [control]="requirementFormGroup.get('requestedByUser')">
-                            </app-textfield>
+                            <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
+                            text="Usuario solicitante" [selectFormControl]="requirementFormGroup.get('requestedByUser')" [items]="users"
+                            (itemSelected)="itemSelectedPredictive($event)"></app-textfield-predictive>
                         </div>
                         <div class="col-md-6">
                             <app-textfield text="Fecha de solicitud" [dispatchHint]="'dd/MM/yyyy'" mask="00/00/0000"
@@ -143,11 +115,6 @@
                         <div class="col-md-3">
                             <app-textfield text="Fecha estimada de fin" mask="00/00/0000" id="estimatedDateEnd"
                                 [dispatchHint]="'dd/MM/yyyy'" [control]="requirementFormGroup.get('estimatedDateEnd')">
-                            </app-textfield>
-                        </div>
-                        <div class="col-md-6">
-                            <app-textfield text="Fecha real" mask="00/00/0000" id="realDateEnd"
-                                [control]="requirementFormGroup.get('realDateEnd')">
                             </app-textfield>
                         </div>
                         <div class="col-md-3">

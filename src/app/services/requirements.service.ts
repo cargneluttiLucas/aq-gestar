@@ -49,6 +49,11 @@ export class RequierementsService {
     return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Proyectos/Find', filterData, this.options);
   }
 
+  searchUsers(filterData, sessionId) {
+    this.options.headers.SessionId = sessionId;
+    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Usuarios', filterData, this.options);
+  }
+
   searchActivities(filterData, sessionId) {
     this.options.headers.SessionId = sessionId;
     return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Actividades', filterData, this.options);
