@@ -71,12 +71,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         disabled: false
     };
 
-    workAreas = [];
-    workAreaSelected = {
-        id: null,
-        description: null,
-        disabled: false
-    };
+    // workAreas = [];
+    // workAreaSelected = {
+    //     id: null,
+    //     description: null,
+    //     disabled: false
+    // };
 
     managementAreas = [];
     managementAreaSelected = {
@@ -89,8 +89,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    // private sessionId = 'e54bb83ba1694cfe9f1aa001cb3981a5';
-    private sessionId: string;
+    private sessionId = '088d4c39517040c7bf9470cab5e847a5';
+    // private sessionId: string;
     public projectId: number;
     public requirementId: number;
     public requirementAcction: string;
@@ -139,7 +139,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             userOrder: ''
         };
         this.searchProject(auxProyect);
-        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.requirementId = item.doc_id;
             this.requirementAcction = item.action;
@@ -278,7 +278,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.prioritys = response.reqKeywords.keywords[5].options;
                 this.regios = response.reqKeywords.keywords[6].options;
                 this.areas = response.reqKeywords.keywords[7].options;
-                this.workAreas = response.reqKeywords.keywords[8].options;
                 this.managementAreas = response.reqKeywords.keywords[9].options;
             }
         });
@@ -355,13 +354,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.regioSelected = {
                 id: response.requerimiento.regionId.value,
                 description: response.requerimiento.region.value,
-                disabled: false
-            };
-        }
-        if (response.requerimiento.workAreaId.value) {
-            this.workAreaSelected = {
-                id: response.requerimiento.workAreaId.value,
-                description: response.requerimiento.workArea.value,
                 disabled: false
             };
         }
@@ -608,12 +600,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 workAreaId: {
                     visible: true,
                     enabled: true,
-                    value: this.workAreaSelected.id ? +this.workAreaSelected.id : null
+                    value: null
                 },
                 workArea: {
                     visible: true,
                     enabled: true,
-                    value: this.workAreaSelected.description ? this.workAreaSelected.description : null
+                    value: null
                 },
                 systemEffortInHours: {
                     visible: true,
@@ -726,10 +718,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.areaSelected = item;
                     break;
                 }
-                case 'workAreas': {
-                    this.workAreaSelected = item;
-                    break;
-                }
                 case 'managementAreas': {
                     this.managementAreaSelected = item;
                     break;
@@ -835,6 +823,29 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         // tslint:disable-next-line: max-line-length
         const url = `http://3.227.233.169/c/forms/generic3.asp?closeonexit=1&action=new&actionact=newact&fld_id=5213&fldIdReferer=5811&docIdReferer=${this.requirementLoad.docId.value}&id=${this.requirementLoad.id.value}&displayname=${displayName}&customer=${encodeURIComponent('Universal Assistance')}&customerid=51&project=${encodeURIComponent(this.requirementLoad.project.value)}&projectid=${this.requirementLoad.projectId.value}&context=backlog&callbackfunction=refreshgridActHTML`;
         window.open(url, '_blank');
+    }
+
+    reloadActivities() {
+        if (this.requirementLoad && this.requirementLoad.id.value) {
+            const aux = {
+                filter: `referencestoid = ${this.requirementLoad.id.value}`,
+                order: '',
+                fields: ''
+            };
+            this.requirementService.searchActivities(aux, this.sessionId).subscribe((activities) => {
+                if (activities) {
+                    activities.activities.forEach((item) => {
+                        const activitie = { id: '', title: '', responsable: '', state: '', linkHorus: '', linkEdit: '' };
+                        activitie.id = item.Values.ID;
+                        activitie.title = item.Values.SUBJET;
+                        activitie.state = item.Values.STATE;
+                        activitie.responsable = item.Values.RESPONSIBLE;
+                        this.activities.push(activitie);
+                    });
+                    console.log(this.activities);
+                }
+            });
+        }
     }
 
 

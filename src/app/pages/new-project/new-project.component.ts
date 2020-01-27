@@ -50,11 +50,13 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
-    private sessionId: string;
-    // private sessionId = 'e54bb83ba1694cfe9f1aa001cb3981a5';
+    // private sessionId: string;
+    private sessionId = '088d4c39517040c7bf9470cab5e847a5';
     public projectId: number;
     public backtofld: number;
     private proyectAcction: string;
+
+    managementAreaInChargeDisabled = false;
 
     private flagClose = false;
 
@@ -86,7 +88,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     ngOnInit() {
-        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;
@@ -227,6 +229,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private loadFilds(response) {
+        this.managementAreaInChargeDisabled = false;
         this.newProyectFormGroup.get('id').setValue(response.proyecto.id.value);
         this.newProyectFormGroup.get('name').setValue(response.proyecto.projectName.value);
 
@@ -276,6 +279,8 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             };
         }
         if (response.proyecto.managementAreaInChargeId.value) {
+            this.managementAreaInChargeDisabled =
+            this.typeProjectSelected.id === 4370 && this.projectId ? true : false;
             this.managementAreaInChargeSelected = {
                 id: response.proyecto.managementAreaInChargeId.value,
                 description: response.proyecto.managementAreaInCharge.value,
@@ -393,12 +398,14 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                 startDate: {
                     visible: true,
                     enabled: true,
-                    value: this.transformStringToDate(this.newProyectFormGroup.get('dateStart').value)
+                    value: this.newProyectFormGroup.get('dateStart').value === '' ? null :
+                        this.transformStringToDate(this.newProyectFormGroup.get('dateStart').value)
                 },
                 endDate: {
                     visible: true,
                     enabled: true,
-                    value: this.transformStringToDate(this.newProyectFormGroup.get('dateEnd').value)
+                    value: this.newProyectFormGroup.get('dateEnd').value === '' ? null :
+                        this.transformStringToDate(this.newProyectFormGroup.get('dateEnd').value)
                 },
                 sinOrdenCompra: {
                     visible: true,
@@ -431,12 +438,14 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                 realStartDate: {
                     visible: true,
                     enabled: true,
-                    value: this.transformStringToDate(this.newProyectFormGroup.get('dateStartReal').value)
+                    value: this.newProyectFormGroup.get('dateStartReal').value === '' ? null :
+                        this.transformStringToDate(this.newProyectFormGroup.get('dateStartReal').value)
                 },
                 realEndDate: {
                     visible: true,
                     enabled: true,
-                    value: this.transformStringToDate(this.newProyectFormGroup.get('dateEndReal').value)
+                    value: this.newProyectFormGroup.get('dateEndReal').value === '' ? null :
+                        this.transformStringToDate(this.newProyectFormGroup.get('dateEndReal').value)
                 },
                 customer: {
                     visible: true,

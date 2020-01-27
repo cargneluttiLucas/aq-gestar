@@ -66,6 +66,7 @@
                     <div class="col-md-3">
                         <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
                             [dispatchHint]="'Seleccione un elemento'"
+                            [disabled]="managementAreaInChargeDisabled"
                             (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
                             placeholderDefault="Gerencia a cargo">
                         </app-select>
@@ -129,6 +130,11 @@
                         <app-textfield text="Descripcion" id="description"
                             [control]="newProyectFormGroup.get('description')">
                         </app-textfield>
+                    </div>
+                </div>
+                <div class="row margin-bottom-24">
+                    <div class="col-md-12">
+                        <app-show-text [description]="newProyectFormGroup.get('description').value"></app-show-text>
                     </div>
                 </div>
 

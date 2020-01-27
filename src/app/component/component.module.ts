@@ -12,6 +12,7 @@ import { HeaderModule } from './header/header.module';
 import { CheckboxsModule } from './checkboxs/checkboxs.module';
 import { TabsModule } from './tabs/tabs.module';
 import { TableModule } from './table/table.module';
+import { ShowTextModule } from './show-text';
 
 @NgModule({
   imports: [
@@ -27,11 +28,13 @@ import { TableModule } from './table/table.module';
     HeaderModule.forRoot(),
     CheckboxsModule.forRoot(),
     TabsModule.forRoot(),
-    TableModule.forRoot()
+    TableModule.forRoot(),
+    ShowTextModule.forRoot()
   ],
   declarations: [],
   exports: [
     TextfieldModule,
+    ShowTextModule,
     ButtonModule,
     LoadingModule,
     SelectModule,

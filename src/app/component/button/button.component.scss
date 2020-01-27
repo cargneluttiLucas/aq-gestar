@@ -157,14 +157,9 @@
 
     @extend .btn-primary;
     background: transparent;
-    color: $color-brand-500;
+    color: #2B3148;
     min-width: inherit;
     padding: 0 16px;
-
-    &:hover {
-      background: $color-brand-200;
-      box-shadow: none;
-    }
 
     &:focus {
       box-shadow: none;

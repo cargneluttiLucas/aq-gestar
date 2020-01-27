@@ -90,7 +90,7 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy, OnC
   }
 
   widthSelectResults(): void {
-    this.selectResultsWidth = this.selectRef.nativeElement.offsetWidth;
+    this.selectResultsWidth = this.selectRef.nativeElement.offsetWidth === 0 ? undefined : this.selectRef.nativeElement.offsetWidth;
   }
 
   ngOnDestroy(): void {

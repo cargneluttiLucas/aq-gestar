@@ -18,8 +18,7 @@
         <div [formGroup]="requirementFormGroup">
             <div class="row margin-top-16">
                 <div class="col-xl-3" *ngIf="requirementId">
-                    <app-textfield text="ID" id="id" [control]="requirementFormGroup.get('id')"
-                        [disabled]="true">
+                    <app-textfield text="ID" id="id" [control]="requirementFormGroup.get('id')" [disabled]="true">
                     </app-textfield>
                 </div>
                 <div class="col-xl-3">
@@ -45,34 +44,34 @@
                             <app-textfield text="Titulo" id="title" [control]="requirementFormGroup.get('title')">
                             </app-textfield>
                         </div>
-                        <div class="col-md-6">
-                            <app-textfield text="Organización" id="organization"
-                                [control]="requirementFormGroup.get('organization')"></app-textfield>
-                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3">
-                            <app-select [items]="aplications" [item]="aplicationsSelected" [dispatchHint]="'Seleccione un elemento'"
+                            <app-select [items]="aplications" [item]="aplicationsSelected"
+                                [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'aplications')" placeholderDefault="Aplicación">
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-select [items]="modules" [item]="moduleSelected" [dispatchHint]="'Seleccione un elemento'"
+                            <app-select [items]="modules" [item]="moduleSelected"
+                                [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'modules')" placeholderDefault="Módulo">
                             </app-select>
                         </div>
                         <div class="col-md-6">
                             <app-textfield-predictive id="project" [item]="proyectSelected"
                                 [dispatchHint]="'Infrese al menos 3 letras'" [minLength]="3" [items]="projects"
-                                text="Proyecto / frente de trabajo" [selectFormControl]="requirementFormGroup.get('project')"
+                                text="Proyecto / frente de trabajo"
+                                [selectFormControl]="requirementFormGroup.get('project')"
                                 (itemSelected)="itemSelected($event)"></app-textfield-predictive>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
-                            text="Usuario solicitante" [selectFormControl]="requirementFormGroup.get('requestedByUser')" [items]="users"
-                            (itemSelected)="itemSelectedPredictive($event)"></app-textfield-predictive>
+                                text="Usuario solicitante"
+                                [selectFormControl]="requirementFormGroup.get('requestedByUser')" [items]="users"
+                                (itemSelected)="itemSelectedPredictive($event)"></app-textfield-predictive>
                         </div>
                         <div class="col-md-6">
                             <app-textfield text="Fecha de solicitud" [dispatchHint]="'dd/MM/yyyy'" mask="00/00/0000"
@@ -82,25 +81,29 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3">
-                            <app-select [items]="businessProces" [item]="businesProcesSelected" [dispatchHint]="'Seleccione un elemento'"
+                            <app-select [items]="businessProces" [item]="businesProcesSelected"
+                                [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'businessProces')"
                                 placeholderDefault="Proceso de negocio">
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-select [items]="requirementTypes" [item]="requirementTypeSelected" [dispatchHint]="'Seleccione un elemento'"
+                            <app-select [items]="requirementTypes" [item]="requirementTypeSelected"
+                                [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'requirementTypes')"
                                 placeholderDefault="Tipo de requerimiento">
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-select [items]="mainObjects" [item]="mainObjectSelected" [dispatchHint]="'Seleccione un elemento'"
+                            <app-select [items]="mainObjects" [item]="mainObjectSelected"
+                                [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'mainObjects')"
                                 placeholderDefault="Objeto principal">
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-select [items]="prioritys" [item]="prioritySelected" [dispatchHint]="'Seleccione un elemento'"
+                            <app-select [items]="prioritys" [item]="prioritySelected"
+                                [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'prioritys')" placeholderDefault="Prioridad">
                             </app-select>
                         </div>
@@ -140,13 +143,8 @@
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-select [items]="workAreas" [item]="workAreaSelected" [dispatchHint]="'Seleccione un elemento'"
-                                (itemSelected)="selectedItem($event, 'workAreas')"
-                                placeholderDefault="Frente de trabajo">
-                            </app-select>
-                        </div>
-                        <div class="col-md-3">
-                            <app-select [items]="managementAreas" [item]="managementAreaSelected" [dispatchHint]="'Seleccione un elemento'"
+                            <app-select [items]="managementAreas" [item]="managementAreaSelected"
+                                [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'managementAreas')"
                                 placeholderDefault="Gerencia responsable">
                             </app-select>
@@ -154,9 +152,14 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <app-textfield text="Descripcion" id="description"
+                            <app-textfield text="Descripción" id="description"
                                 [control]="requirementFormGroup.get('description')">
                             </app-textfield>
+                        </div>
+                    </div>
+                    <div class="row margin-bottom-24">
+                        <div class="col-md-12">
+                            <app-show-text [description]="requirementFormGroup.get('description').value"></app-show-text>
                         </div>
                     </div>
 
@@ -165,8 +168,15 @@
                 </app-tab>
                 <app-tab [title]="'Actividades'">
                     <div class="margin-top-16">
-                        <app-table [list]="activities">
-                        </app-table>
+                        <div class="row">
+                            <div class="col-md-11">
+                                <app-table [list]="activities">
+                                </app-table>
+                            </div>
+                            <div class="col-md-1">
+                                <app-button type="link" text="Recargar" (clickButton)="reloadActivities()"></app-button>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="margin-top-48">

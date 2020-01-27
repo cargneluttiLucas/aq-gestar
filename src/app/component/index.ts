@@ -8,3 +8,4 @@ export * from './textfield-predictive/index';
 export * from './checkboxs/index';
 export * from './tabs/index';
 export * from './table/index';
+export * from './show-text/index';
