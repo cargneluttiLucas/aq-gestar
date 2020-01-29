@@ -23,7 +23,13 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     stateProject = [];
     projectRisk = [];
     managementAreaInCharge = [];
+    priority = [];
 
+    prioritySelected = {
+        id: null,
+        description: null,
+        disabled: false
+    };
     typeProjectSelected = {
         id: null,
         description: null,
@@ -193,6 +199,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             description: new FormControl(''),
             sponsor: new FormControl(''),
             displayname: new FormControl(''),
+            priority: new FormControl(''),
         });
     }
 
@@ -214,6 +221,8 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             this.projectRisk = response.proyecto.keywords[2].options;
 
             this.managementAreaInCharge = response.proyecto.keywords[3].options;
+
+            this.priority = response.proyecto.keywords[4].options;
         }
     }
 
@@ -295,6 +304,14 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+
+        if (response.proyecto.priorityId.value) {
+            this.prioritySelected = {
+                id: response.proyecto.priorityId.value,
+                description: response.proyecto.priority.value,
+                disabled: false
+            };
+        }
     }
 
     private transformDateToString(value): any {
@@ -332,6 +349,10 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
                 case 'managementAreaInCharge': {
                     this.managementAreaInChargeSelected = item;
+                    break;
+                }
+                case 'priority': {
+                    this.prioritySelected = item;
                     break;
                 }
             }
@@ -502,6 +523,16 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                     visible: true,
                     enabled: true,
                     value: this.sponsorSelected.id ? this.sponsorSelected.id : null
+                },
+                priority: {
+                    visible: true,
+                    enabled: true,
+                    value: this.prioritySelected.description ? this.prioritySelected.description : null
+                },
+                priorityId: {
+                    visible: true,
+                    enabled: true,
+                    value: this.prioritySelected.id ? this.prioritySelected.id : null
                 },
                 keywords: []
             }
