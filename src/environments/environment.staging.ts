@@ -1,4 +1,4 @@
-const API_DOMAIN = 'http://3.227.233.169:80/bffgestar/api/v1';
+const API_DOMAIN = 'http://3.231.217.94:80/bffgestar/api/v1';
 
 export const environmentProd = {
   production: false,
@@ -28,3 +28,4 @@ export const environmentProd = {
     }
   },
 };
+

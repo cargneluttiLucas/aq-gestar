@@ -51,7 +51,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     saveAndExitText = 'Guardar y salir';
 
     private sessionId: string;
-    // private sessionId = '088d4c39517040c7bf9470cab5e847a5';
+    // private sessionId = '47fe6b949ca34657952b32c5acc1a211';
     public projectId: number;
     public backtofld: number;
     private proyectAcction: string;

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+// import { environmentStaging } from 'src/environments/environment.staging';
+import { environmentProd } from 'src/environments/environment.prod';
 
 @Injectable()
 
 export class NewProjectService {
-
-  private url = 'http://3.227.233.169:80/bffgestar/api/v1/Proyectos/';
 
   options = {
     headers: {
@@ -19,32 +19,32 @@ export class NewProjectService {
 
   public getNewProyect(sessionId: string) {
     this.options.headers.SessionId = sessionId;
-    return this.http.get<any>(this.url + 'New/', this.options);
+    return this.http.get<any>(environmentProd.addresses.project.getNewProyect, this.options);
   }
 
   public getOpenProyect(projectId: number, sessionId: string) {
     this.options.headers.SessionId = sessionId;
-    return this.http.get<any>(this.url + 'Doc/' + projectId, this.options);
+    return this.http.get<any>(environmentProd.addresses.project.getOpenProyect + projectId, this.options);
   }
 
   putSaveProject(data: any, sessionId: string) {
     this.options.headers.SessionId = sessionId;
-    return this.http.post<any>(this.url, data, this.options);
+    return this.http.post<any>(environmentProd.addresses.project.putSaveProject, data, this.options);
   }
 
   putChangeProject(data: any, projectId: number, sessionId: string) {
     this.options.headers.SessionId = sessionId;
-    return this.http.put<any>(this.url + 'Doc/' + projectId, data, this.options);
+    return this.http.put<any>(environmentProd.addresses.project.putChangeProject + projectId, data, this.options);
   }
 
   findSponsor(filter, sessionId) {
     this.options.headers.SessionId = sessionId;
-    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Usuarios', filter, this.options);
+    return this.http.post<any>(environmentProd.addresses.user.findUser, filter, this.options);
   }
 
   findCliend(filter, sessionId) {
     this.options.headers.SessionId = sessionId;
-    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Contactos', filter, this.options);
+    return this.http.post<any>(environmentProd.addresses.contact.findCliend, filter, this.options);
   }
 
 }
