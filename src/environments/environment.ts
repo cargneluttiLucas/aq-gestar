@@ -3,18 +3,28 @@ const API_DOMAIN = '';
 export const environment = {
   production: false,
   addresses: {
-    digitalPayments: {
-      authsById: `${API_DOMAIN}digital_payments/auths/`,
-      authsFilter: `${API_DOMAIN}digital_payments/auths/filter`,
-      waitingAuthsById: `${API_DOMAIN}digital_payments/waiting_auths/`,
-      waitingAuths: `${API_DOMAIN}digital_payments/waiting_auths`,
-      transactions: `${API_DOMAIN}digital_payments/transactions`,
+    project: {
+      getNewProyect: `${API_DOMAIN}/Proyectos/New/`,
+      getOpenProyect: `${API_DOMAIN}/Proyectos/Doc/`,
+      putSaveProject: `${API_DOMAIN}/Proyectos`,
+      putChangeProject: `${API_DOMAIN}Proyectos/`,
+      searchProject: `${API_DOMAIN}Proyectos/Find`
     },
-  },
-  seo: {
-    gtmId : 'GTM-T9B7BT2',
-    gtmSecretKey: '',
-    logging : true,
-    canonicalDomain: 'https://www.naranja.com',
+    requirement: {
+      getNewSelects: `${API_DOMAIN}/Requerimientos/New/Keywords`,
+      getNewRequirements: `${API_DOMAIN}/Requerimientos/New`,
+      getOpenByDocId: `${API_DOMAIN}/Requerimientos/Doc`,
+      saveNewRequirement: `${API_DOMAIN}/Requerimientos`,
+      changeRequirementById: `${API_DOMAIN}/Requerimientos/Doc`,
+    },
+    user: {
+      findUser: `${API_DOMAIN}/Usuarios`,
+    },
+    contact: {
+      findCliend: `${API_DOMAIN}/Contactos`,
+    },
+    activities: {
+      searchActivities: `${API_DOMAIN}/Actividades`
+    }
   },
 };
