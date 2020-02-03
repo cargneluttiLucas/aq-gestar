@@ -56,8 +56,8 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
-    // private sessionId: string;
-    private sessionId = '90c9f20872484a2b92c5840a58cda196';
+    private sessionId: string;
+    // private sessionId = '90c9f20872484a2b92c5840a58cda196';
     public projectId: number;
     public backtofld: number;
     private proyectAcction: string;
@@ -132,7 +132,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                             this.buildSponsor(response.usuarios);
                         }
                     });
-                }, 300);
+                }, 1000);
 
             }
         });
@@ -146,12 +146,14 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                     fields: 'DOC_ID,DISPLAYNAME'
                 };
                 setTimeout(() => {
+                    debugger;
                     this.newProyectService.findCliend(aux, this.sessionId).subscribe((response) => {
                         if (response) {
-                            this.buildClient(response.usuarios);
+                            debugger;
+                            this.buildClient(response.contactos);
                         }
                     });
-                }, 300);
+                }, 1000);
             }
         });
 
@@ -167,7 +169,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                             this.buildCoordinator(response.usuarios);
                         }
                     });
-                }, 300);
+                }, 1000);
 
             }
         });
@@ -184,7 +186,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                             this.buildRequestedByUser(response.usuarios);
                         }
                     });
-                }, 300);
+                }, 1000);
 
             }
         });
