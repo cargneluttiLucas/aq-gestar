@@ -19,12 +19,6 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
-                            id="client" text="Cliente" [selectFormControl]="newProyectFormGroup.get('client')"
-                            [items]="clients" (itemSelected)="itemSelectedPredictiveClients($event)">
-                        </app-textfield-predictive>
-                    </div>
-                    <div class="col-md-6">
                         <app-textfield text="Nombre del proyecto" id="name" [control]="newProyectFormGroup.get('name')">
                         </app-textfield>
                     </div>
@@ -38,8 +32,27 @@
                     </div> -->
                     <div class="col-md-6">
                         <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
+                            id="client" text="Cliente" [selectFormControl]="newProyectFormGroup.get('client')"
+                            [items]="clients" (itemSelected)="itemSelectedPredictiveClients($event)">
+                        </app-textfield-predictive>
+                    </div>
+                    <div class="col-md-6">
+                        <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
                             text="Sponsor" [selectFormControl]="newProyectFormGroup.get('sponsor')" [items]="sponsors"
-                            (itemSelected)="itemSelectedPredictive($event)"></app-textfield-predictive>
+                            (itemSelected)="itemSelectedPredictiveSponsor($event)"></app-textfield-predictive>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
+                            text="Coordinador" [required]="false" [selectFormControl]="newProyectFormGroup.get('coordinator')" [items]="coordinators"
+                            (itemSelected)="itemSelectedPredictiveCoordinators($event)"></app-textfield-predictive>
+                    </div>
+                    <div class="col-md-6">
+                        <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
+                            text="Solicitado por" [required]="false" [selectFormControl]="newProyectFormGroup.get('requestedbyuser')" [items]="requestedbyusers"
+                            (itemSelected)="itemSelectedPredictiveRequestedByUsers($event)"></app-textfield-predictive>
                     </div>
                 </div>
 
@@ -70,6 +83,62 @@
                             (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
                             placeholderDefault="Gerencia a cargo">
                         </app-select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <app-select [items]="priority" [item]="prioritySelected"
+                            [dispatchHint]="'Seleccione un elemento'"
+                            (itemSelected)="selectedItem($event, 'priority')" placeholderDefault="Prioridad">
+                        </app-select>
+                    </div>
+                    <div class="col-md-3">
+                        <app-select [items]="stateProject" [item]="stateProjectSelected"
+                            [dispatchHint]="'Seleccione un elemento'"
+                            (itemSelected)="selectedItem($event, 'stateProject')" placeholderDefault="Nivel de Complejidad">
+                        </app-select>
+                    </div>
+                    <div class="col-md-3">
+                        <app-select [items]="projectRisk" [item]="projectRiskSelected"
+                            [dispatchHint]="'Seleccione un elemento'"
+                            (itemSelected)="selectedItem($event, 'projectRisk')"
+                            placeholderDefault="Área">
+                        </app-select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
+                            [dispatchHint]="'Seleccione un elemento'"
+                            [disabled]="managementAreaInChargeDisabled"
+                            (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
+                            placeholderDefault="Región">
+                        </app-select>
+                    </div>
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <app-textfield text="Beneficio Cualitativo" id="name" [control]="newProyectFormGroup.get('qualitativebenefits')">
+                        </app-textfield>
+                        <!-- <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
+                            [dispatchHint]="'Seleccione un elemento'"
+                            [disabled]="managementAreaInChargeDisabled"
+                            (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
+                            placeholderDefault="Beneficio Cualitativo">
+                        </app-select> -->
+                    </div>
+
+                    <div class="col-md-6">
+                        <app-textfield text="Beneficio Cuantitativo" id="name" [control]="newProyectFormGroup.get('quantitativebenefits')">
+                        </app-textfield>
+                        <!-- <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
+                            [dispatchHint]="'Seleccione un elemento'"
+                            [disabled]="managementAreaInChargeDisabled"
+                            (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
+                            placeholderDefault="Beneficio Cuantitativo">
+                        </app-select> -->
                     </div>
                 </div>
 
