@@ -1,16 +1,30 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
+// const API_DOMAIN = '';
 
-export const environment = {
-  production: false
-};
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// export const environment = {
+//   production: false,
+//   addresses: {
+//     project: {
+//       getNewProyect: `${API_DOMAIN}/Proyectos/New/`,
+//       getOpenProyect: `${API_DOMAIN}/Proyectos/Doc/`,
+//       putSaveProject: `${API_DOMAIN}/Proyectos`,
+//       putChangeProject: `${API_DOMAIN}/Proyectos/`,
+//       searchProject: `${API_DOMAIN}/Proyectos/Find`
+//     },
+//     requirement: {
+//       getNewSelects: `${API_DOMAIN}/Requerimientos/New/Keywords`,
+//       getNewRequirements: `${API_DOMAIN}/Requerimientos/New`,
+//       getOpenByDocId: `${API_DOMAIN}/Requerimientos/Doc/`,
+//       saveNewRequirement: `${API_DOMAIN}/Requerimientos`,
+//       changeRequirementById: `${API_DOMAIN}/Requerimientos/Doc/`,
+//     },
+//     user: {
+//       findUser: `${API_DOMAIN}/Usuarios`,
+//     },
+//     contact: {
+//       findCliend: `${API_DOMAIN}/Contactos`,
+//     },
+//     activities: {
+//       searchActivities: `${API_DOMAIN}/Actividades`
+//     }
+//   },
+// };

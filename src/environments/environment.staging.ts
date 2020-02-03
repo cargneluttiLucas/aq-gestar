@@ -1,6 +1,6 @@
-const API_DOMAIN = 'http://3.231.217.94:80/bffgestar/api/v1';
+/* const API_DOMAIN = 'http://3.231.217.94:80/bffgestar/api/v1';
 
-export const environmentProd = {
+export const environmentStaging = {
   production: false,
   addresses: {
     project: {
@@ -28,3 +28,5 @@ export const environmentProd = {
     }
   },
 };
+
+ */
