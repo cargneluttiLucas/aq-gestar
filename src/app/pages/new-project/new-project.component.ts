@@ -323,8 +323,8 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
         this.newProyectFormGroup.get('displayname').setValue(response.proyecto.displayname.value);
         this.newProyectFormGroup.get('description').setValue(response.proyecto.description.value);
 
-        this.newProyectFormGroup.get('qualitativebenefits').setValue(response.proyecto.displayname.value);
-        this.newProyectFormGroup.get('quantitativebenefits').setValue(response.proyecto.description.value);
+        this.newProyectFormGroup.get('qualitativebenefits').setValue(response.proyecto.qualitativeBenefits.value);
+        this.newProyectFormGroup.get('quantitativebenefits').setValue(response.proyecto.quantitativeBenefits.value);
 
         // queda armar la parte de que si viene el sin 'sinOrdenCompra'
         this.newProyectFormGroup.get('purchaseNumber').setValue(response.proyecto.nDeCompra.value);
