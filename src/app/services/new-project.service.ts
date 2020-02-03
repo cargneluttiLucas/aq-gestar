@@ -42,6 +42,11 @@ export class NewProjectService {
     return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Usuarios', filter, this.options);
   }
 
+  findUser(filter, sessionId) {
+    this.options.headers.SessionId = sessionId;
+    return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Usuarios', filter, this.options);
+  }
+
   findCliend(filter, sessionId) {
     this.options.headers.SessionId = sessionId;
     return this.http.post<any>('http://3.227.233.169:80/bffgestar/api/v1/Contactos', filter, this.options);
