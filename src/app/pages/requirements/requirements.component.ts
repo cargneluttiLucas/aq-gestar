@@ -138,8 +138,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             userFilter: '',
             userOrder: ''
         };
-        this.searchProject(auxProyect);
         this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        this.searchProject(auxProyect);
         this.router.routerState.root.queryParams.forEach((item) => {
             this.requirementId = item.doc_id;
             this.requirementAcction = item.action;
@@ -350,13 +350,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
-        if (response.requerimiento.regionId.value) {
+        /* if (response.requerimiento.regionId.value) {
             this.regioSelected = {
                 id: response.requerimiento.regionId.value,
                 description: response.requerimiento.region.value,
                 disabled: false
             };
-        }
+        } */
         if (response.requerimiento.areaId.value) {
             this.areaSelected = {
                 id: response.requerimiento.areaId.value,
@@ -638,7 +638,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     enabled: true,
                     value: this.businesProcesSelected.description ? this.businesProcesSelected.description : null
                 },
-                regionId: {
+                /* regionId: {
                     visible: true,
                     enabled: true,
                     value: this.regioSelected.id ? +this.regioSelected.id : null
@@ -647,7 +647,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     visible: true,
                     enabled: true,
                     value: this.regioSelected.description ? this.regioSelected.description : null
-                },
+                }, */
                 managementAreaInCharge: {
                     visible: true,
                     enabled: true,
@@ -705,10 +705,10 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.prioritySelected = item;
                     break;
                 }
-                case 'regions': {
+                /* case 'regions': {
                     this.regioSelected = item;
                     break;
-                }
+                } */
                 case 'areas': {
                     this.areaSelected = item;
                     break;
