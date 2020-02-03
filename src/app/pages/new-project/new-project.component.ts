@@ -250,6 +250,9 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             projectType: new FormControl(''),
             state: new FormControl(''),
 
+            qualitativebenefits: new FormControl(''),
+            quantitativebenefits: new FormControl(''),
+
             dateStart: new FormControl(''),
             dateEnd: new FormControl(''),
             dateStartReal: new FormControl(''),
@@ -317,6 +320,9 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.newProyectFormGroup.get('displayname').setValue(response.proyecto.displayname.value);
         this.newProyectFormGroup.get('description').setValue(response.proyecto.description.value);
+
+        this.newProyectFormGroup.get('qualitativebenefits').setValue(response.proyecto.displayname.value);
+        this.newProyectFormGroup.get('quantitativebenefits').setValue(response.proyecto.description.value);
 
         // queda armar la parte de que si viene el sin 'sinOrdenCompra'
         this.newProyectFormGroup.get('purchaseNumber').setValue(response.proyecto.nDeCompra.value);
@@ -634,6 +640,16 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                     visible: true,
                     enabled: true,
                     value: this.requestedByUserSelected.id ? this.requestedByUserSelected.id : null
+                },
+                qualitativeBenefits: {
+                    visible: true,
+                    enabled: true,
+                    value: this.newProyectFormGroup.get('qualitativebenefits').value
+                },
+                quantitativeBenefits: {
+                    visible: true,
+                    enabled: true,
+                    value: this.newProyectFormGroup.get('quantitativebenefits').value
                 },
                 keywords: []
             }

@@ -87,30 +87,27 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <app-select [items]="priority" [item]="prioritySelected"
                             [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'priority')" placeholderDefault="Prioridad">
                         </app-select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <app-select [items]="stateProject" [item]="stateProjectSelected"
                             [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'stateProject')" placeholderDefault="Nivel de Complejidad">
                         </app-select>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <app-select [items]="projectRisk" [item]="projectRiskSelected"
                             [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'projectRisk')"
                             placeholderDefault="Área">
                         </app-select>
                     </div>
-                    
-                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
                             [dispatchHint]="'Seleccione un elemento'"
                             [disabled]="managementAreaInChargeDisabled"
@@ -118,23 +115,30 @@
                             placeholderDefault="Región">
                         </app-select>
                     </div>
+                    
+                </div>
 
-                    <div class="col-md-4">
-                        <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
+                <div class="row">
+                    <div class="col-md-6">
+                        <app-textfield text="Beneficio Cualitativo" id="name" [control]="newProyectFormGroup.get('qualitativebenefits')">
+                        </app-textfield>
+                        <!-- <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
                             [dispatchHint]="'Seleccione un elemento'"
                             [disabled]="managementAreaInChargeDisabled"
                             (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
                             placeholderDefault="Beneficio Cualitativo">
-                        </app-select>
+                        </app-select> -->
                     </div>
 
-                    <div class="col-md-4">
-                        <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
+                    <div class="col-md-6">
+                        <app-textfield text="Beneficio Cuantitativo" id="name" [control]="newProyectFormGroup.get('quantitativebenefits')">
+                        </app-textfield>
+                        <!-- <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
                             [dispatchHint]="'Seleccione un elemento'"
                             [disabled]="managementAreaInChargeDisabled"
                             (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
                             placeholderDefault="Beneficio Cuantitativo">
-                        </app-select>
+                        </app-select> -->
                     </div>
                 </div>
 
