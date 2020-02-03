@@ -57,7 +57,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     saveAndExitText = 'Guardar y salir';
 
     // private sessionId: string;
-    private sessionId = '088d4c39517040c7bf9470cab5e847a5';
+    private sessionId = '90c9f20872484a2b92c5840a58cda196';
     public projectId: number;
     public backtofld: number;
     private proyectAcction: string;
@@ -77,6 +77,16 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     clientSelected = { id: null, description: '', disabled: false };
     itemDefaultClients: any;
     itemsFilterDefaultClients = [];
+
+    coordinators = [];
+    coordinatorSelected = { id: null, description: '', disabled: false };
+    itemDefaultCoordinators: any;
+    itemsFilterDefaultCoordinators = [];
+
+    requestedbyusers = [];
+    requestedByUserSelected = { id: null, description: '', disabled: false };
+    itemDefaultRequestedByUser: any;
+    itemsFilterDefaultRequestedByUser = [];
 
     checkbox = { id: 1, disabled: false, selected: false, indeterminate: false, text: 'Sin numero' };
     disabledPurchaseNumber = false;
@@ -138,10 +148,44 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                 setTimeout(() => {
                     this.newProyectService.findCliend(aux, this.sessionId).subscribe((response) => {
                         if (response) {
-                            this.buildClient(response.contactos);
+                            this.buildClient(response.usuarios);
                         }
                     });
                 }, 300);
+            }
+        });
+
+        this.newProyectFormGroup.get('coordinator').valueChanges.subscribe((data) => {
+            if (data && data.length >= 3) {
+                const aux = {
+                    userFilter: data,
+                    userOrder: ''
+                };
+                setTimeout(() => {
+                    this.newProyectService.findUser(aux, this.sessionId).subscribe((response) => {
+                        if (response) {
+                            this.buildCoordinator(response.usuarios);
+                        }
+                    });
+                }, 300);
+
+            }
+        });
+
+        this.newProyectFormGroup.get('requestedbyuser').valueChanges.subscribe((data) => {
+            if (data && data.length >= 3) {
+                const aux = {
+                    userFilter: data,
+                    userOrder: ''
+                };
+                setTimeout(() => {
+                    this.newProyectService.findUser(aux, this.sessionId).subscribe((response) => {
+                        if (response) {
+                            this.buildRequestedByUser(response.usuarios);
+                        }
+                    });
+                }, 300);
+
             }
         });
     }
@@ -176,6 +220,27 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
+    private buildCoordinator(coordinator) {
+        this.coordinators = [];
+        coordinator.forEach((item) => {
+            const aux = { id: 0, description: '', disabled: false };
+            aux.id = item.userId.value;
+            aux.description = item.userFullName.value;
+            this.coordinators.push(aux);
+        });
+    }
+
+    private buildRequestedByUser(requestedbyuser) {
+        this.requestedbyusers = [];
+        requestedbyuser.forEach((item) => {
+            const aux = { id: 0, description: '', disabled: false };
+            aux.id = item.userId.value;
+            aux.description = item.userFullName.value;
+            this.requestedbyusers.push(aux);
+        });
+    }
+
+
 
     createForm() {
         this.newProyectFormGroup = new FormGroup({
@@ -198,6 +263,8 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             managementAreaInCharge: new FormControl(''),
             description: new FormControl(''),
             sponsor: new FormControl(''),
+            coordinator: new FormControl(''),
+            requestedbyuser: new FormControl(''),
             displayname: new FormControl(''),
             priority: new FormControl(''),
         });
@@ -258,6 +325,8 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.newProyectFormGroup.get('repositorySVN').setValue(response.proyecto.repositorioSvn.value);
         this.newProyectFormGroup.get('sponsor').setValue(response.proyecto.sponsor.value);
+        this.newProyectFormGroup.get('coordinator').setValue(response.proyecto.coordinator.value);
+        this.newProyectFormGroup.get('requestedbyuser').setValue(response.proyecto.requestedbyuser.value);
 
         this.newProyectFormGroup.get('dateStart').setValue(
             this.transformDateToString(response.proyecto.startDate.value));
@@ -359,7 +428,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    itemSelectedPredictive(event) {
+    itemSelectedPredictiveSponsor(event) {
         this.sponsorSelected = event;
         this.newProyectFormGroup.get('sponsor').setValue(event.description);
         this.itemsFilterDefault = this.sponsors;
@@ -370,6 +439,18 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
         this.clientSelected = event;
         this.newProyectFormGroup.get('client').setValue(event.description);
         this.itemsFilterDefaultClients = this.clients;
+    }
+
+    itemSelectedPredictiveCoordinators(event) {
+        this.coordinatorSelected = event;
+        this.newProyectFormGroup.get('coordinator').setValue(event.description);
+        this.itemsFilterDefaultCoordinators = this.coordinators;
+    }
+
+    itemSelectedPredictiveRequestedByUsers(event) {
+        this.requestedByUserSelected = event;
+        this.newProyectFormGroup.get('requestedbyuser').setValue(event.description);
+        this.itemsFilterDefaultRequestedByUser = this.requestedbyusers;
     }
 
     validForm(): boolean {
@@ -533,6 +614,26 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                     visible: true,
                     enabled: true,
                     value: this.prioritySelected.id ? this.prioritySelected.id : null
+                },
+                coordinator: {
+                    visible: true,
+                    enabled: true,
+                    value: this.coordinatorSelected.description ? this.coordinatorSelected.description : null
+                },
+                coordinatorid: {
+                    visible: true,
+                    enabled: true,
+                    value: this.coordinatorSelected.id ? this.coordinatorSelected.id : null
+                },
+                requestedbyuser: {
+                    visible: true,
+                    enabled: true,
+                    value: this.requestedByUserSelected.description ? this.requestedByUserSelected.description : null
+                },
+                requestedbyuserid: {
+                    visible: true,
+                    enabled: true,
+                    value: this.requestedByUserSelected.id ? this.requestedByUserSelected.id : null
                 },
                 keywords: []
             }
