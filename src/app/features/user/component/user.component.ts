@@ -41,7 +41,7 @@ export class UserComponent implements OnInit, OnChanges {
       userOrder: ''
     };
     this.userService.findUser(aux, this.isSession).subscribe((response) => {
-      if (response) {
+      if (response.usuarios) {
         this.buildUser(response.usuarios);
       }
     });

@@ -24,6 +24,9 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     projectRisk = [];
     managementAreaInCharge = [];
     priority = [];
+    complexityLevels = [];
+    areas = [];
+    regions = [];
 
     typeProjectSelected = {
         id: null,
@@ -50,6 +53,21 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         description: null,
         disabled: false
     };
+    complexityLevelSelected = {
+        id: null,
+        description: null,
+        disabled: false
+    };
+    areaSelected = {
+        id: null,
+        description: null,
+        disabled: false
+    };
+    regionSelected = {
+        id: null,
+        description: null,
+        disabled: false
+    };
 
     errorMessage; string;
 
@@ -57,7 +75,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     saveAndExitText = 'Guardar y salir';
 
     sessionId: string;
-    // private sessionId = 'a511db4b22c445b0962bf8fb84217665';
+    // private sessionId = '39f9ffb0e4b94ee98af5517f33a34e2c';
     public projectId: number;
     public backtofld: number;
     private proyectAcction: string;
@@ -160,6 +178,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             this.managementAreaInCharge = response.proyecto.keywords[3].options;
 
             this.priority = response.proyecto.keywords[4].options;
+
+            this.complexityLevels = response.proyecto.keywords[5].options;
+
+            this.areas = response.proyecto.keywords[6].options;
+
+            this.regions = response.proyecto.keywords[7].options;
         }
     }
 
@@ -184,6 +208,17 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.clientSelected.id = response.proyecto.customerId.value;
         this.clientSelected.description = response.proyecto.customer.value;
 
+        this.newProyectFormGroup.get('sponsor').setValue(response.proyecto.sponsor.value);
+        this.sponsorSelected.id = response.proyecto.sponsorid.value;
+        this.sponsorSelected.description = response.proyecto.sponsor.value;
+
+        this.newProyectFormGroup.get('coordinator').setValue(response.proyecto.coordinator.value);
+        this.coordinatorSelected.id = response.proyecto.coordinatorId.value;
+        this.coordinatorSelected.description = response.proyecto.coordinator.value;
+
+        this.newProyectFormGroup.get('requestedbyuser').setValue(response.proyecto.requestedByUser.value);
+        this.requestedByUserSelected.id = response.proyecto.requestedByUserId.value;
+        this.requestedByUserSelected.description = response.proyecto.requestedByUser.value;
 
         this.newProyectFormGroup.get('displayname').setValue(response.proyecto.displayname.value);
 
@@ -200,9 +235,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.checkbox.selected = response.proyecto.sinOrdenCompra.value === 1 ? false : true;
 
         this.newProyectFormGroup.get('repositorySVN').setValue(response.proyecto.repositorioSvn.value);
-        this.newProyectFormGroup.get('sponsor').setValue(response.proyecto.sponsor.value);
-        this.newProyectFormGroup.get('coordinator').setValue(response.proyecto.coordinator.value);
-        this.newProyectFormGroup.get('requestedbyuser').setValue(response.proyecto.requestedbyuser.value);
 
         this.newProyectFormGroup.get('dateStart').setValue(
             this.transformDateToString(response.proyecto.startDate.value));
@@ -294,6 +326,18 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 }
                 case 'priority': {
                     this.prioritySelected = item;
+                    break;
+                }
+                case 'complexityLevel': {
+                    this.complexityLevelSelected = item;
+                    break;
+                }
+                case 'area': {
+                    this.areaSelected = item;
+                    break;
+                }
+                case 'region': {
+                    this.regionSelected = item;
                     break;
                 }
             }
@@ -563,6 +607,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     }
 
     save() {
+        console.log('proyecto', this.buildForm());
         if (this.validForm()) {
             if (this.projectId) {
                 this.newProyectService.putChangeProject(this.buildForm(), this.projectId, this.sessionId).subscribe((response) => {
