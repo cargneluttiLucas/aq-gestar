@@ -15,7 +15,7 @@ import { emit } from 'cluster';
     templateUrl: './new-project.component.html',
     styleUrls: ['./new-project.component.scss']
 })
-export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
+export class NewProjectComponent implements OnInit, OnDestroy {
 
     newProyectFormGroup: FormGroup;
 
@@ -25,11 +25,6 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     managementAreaInCharge = [];
     priority = [];
 
-    prioritySelected = {
-        id: null,
-        description: null,
-        disabled: false
-    };
     typeProjectSelected = {
         id: null,
         description: null,
@@ -50,14 +45,19 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
         description: null,
         disabled: false
     };
+    prioritySelected = {
+        id: null,
+        description: null,
+        disabled: false
+    };
 
     errorMessage; string;
 
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
-    private sessionId: string;
-    // private sessionId = '90c9f20872484a2b92c5840a58cda196';
+    sessionId: string;
+    // private sessionId = 'a511db4b22c445b0962bf8fb84217665';
     public projectId: number;
     public backtofld: number;
     private proyectAcction: string;
@@ -68,29 +68,18 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
     keypressSubscription: Subscription;
 
-    sponsors = [];
     sponsorSelected = { id: null, description: '', disabled: false };
-    itemDefault: any;
-    itemsFilterDefault = [];
 
-    clients = [];
     clientSelected = { id: null, description: '', disabled: false };
-    itemDefaultClients: any;
-    itemsFilterDefaultClients = [];
 
-    coordinators = [];
     coordinatorSelected = { id: null, description: '', disabled: false };
-    itemDefaultCoordinators: any;
-    itemsFilterDefaultCoordinators = [];
 
-    requestedbyusers = [];
     requestedByUserSelected = { id: null, description: '', disabled: false };
-    itemDefaultRequestedByUser: any;
-    itemsFilterDefaultRequestedByUser = [];
 
     checkbox = { id: 1, disabled: false, selected: false, indeterminate: false, text: 'Sin numero' };
     disabledPurchaseNumber = false;
 
+    historicalDescription: string;
 
     constructor(
         private newProyectService: NewProjectService,
@@ -109,7 +98,6 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;
             this.backtofld = item.backtofld;
-            console.log('parametros', [this.projectId, this.proyectAcction, this.backtofld]);
         });
         if (this.projectId && this.proyectAcction === 'open') {
             this.saveText = 'Modificar';
@@ -119,130 +107,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
             this.cargarNewProject();
         }
         this.createForm();
-
-        this.newProyectFormGroup.get('sponsor').valueChanges.subscribe((data) => {
-            if (data && data.length >= 3) {
-                const aux = {
-                    userFilter: data,
-                    userOrder: ''
-                };
-                setTimeout(() => {
-                    this.newProyectService.findSponsor(aux, this.sessionId).subscribe((response) => {
-                        if (response) {
-                            this.buildSponsor(response.usuarios);
-                        }
-                    });
-                }, 1000);
-
-            }
-        });
-
-        this.newProyectFormGroup.get('client').valueChanges.subscribe((data) => {
-            if (data && data.length >= 3) {
-                const aux = {
-                    filter: data,
-                    filterRequired: 'CONTACTTYPE = 1',
-                    order: 'DOC_ID',
-                    fields: 'DOC_ID,DISPLAYNAME'
-                };
-                setTimeout(() => {
-                    debugger;
-                    this.newProyectService.findCliend(aux, this.sessionId).subscribe((response) => {
-                        if (response) {
-                            debugger;
-                            this.buildClient(response.contactos);
-                        }
-                    });
-                }, 1000);
-            }
-        });
-
-        this.newProyectFormGroup.get('coordinator').valueChanges.subscribe((data) => {
-            if (data && data.length >= 3) {
-                const aux = {
-                    userFilter: data,
-                    userOrder: ''
-                };
-                setTimeout(() => {
-                    this.newProyectService.findUser(aux, this.sessionId).subscribe((response) => {
-                        if (response) {
-                            this.buildCoordinator(response.usuarios);
-                        }
-                    });
-                }, 1000);
-
-            }
-        });
-
-        this.newProyectFormGroup.get('requestedbyuser').valueChanges.subscribe((data) => {
-            if (data && data.length >= 3) {
-                const aux = {
-                    userFilter: data,
-                    userOrder: ''
-                };
-                setTimeout(() => {
-                    this.newProyectService.findUser(aux, this.sessionId).subscribe((response) => {
-                        if (response) {
-                            this.buildRequestedByUser(response.usuarios);
-                        }
-                    });
-                }, 1000);
-
-            }
-        });
     }
-
-    ngAfterViewInit() {
-        // if (this.deviceDetector.isBrowser) {
-        //     this.keypressSubscription = this.keypressService.keyPressEscape().subscribe((response) => {
-        //         if (response === true) {
-        //             this.closeModalForOtherMotive();
-        //         }
-        //     });
-        // }
-    }
-
-    buildClient(client) {
-        this.clients = [];
-        client.forEach((item) => {
-            const aux = { id: 0, description: '', disabled: false };
-            aux.id = item.Values.DOC_ID;
-            aux.description = item.Values.DISPLAYNAME;
-            this.clients.push(aux);
-        });
-    }
-
-    private buildSponsor(sponsor) {
-        this.sponsors = [];
-        sponsor.forEach((item) => {
-            const aux = { id: 0, description: '', disabled: false };
-            aux.id = item.userId.value;
-            aux.description = item.userFullName.value;
-            this.sponsors.push(aux);
-        });
-    }
-
-    private buildCoordinator(coordinator) {
-        this.coordinators = [];
-        coordinator.forEach((item) => {
-            const aux = { id: 0, description: '', disabled: false };
-            aux.id = item.userId.value;
-            aux.description = item.userFullName.value;
-            this.coordinators.push(aux);
-        });
-    }
-
-    private buildRequestedByUser(requestedbyuser) {
-        this.requestedbyusers = [];
-        requestedbyuser.forEach((item) => {
-            const aux = { id: 0, description: '', disabled: false };
-            aux.id = item.userId.value;
-            aux.description = item.userFullName.value;
-            this.requestedbyusers.push(aux);
-        });
-    }
-
-
 
     createForm() {
         this.newProyectFormGroup = new FormGroup({
@@ -321,7 +186,10 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
         this.newProyectFormGroup.get('displayname').setValue(response.proyecto.displayname.value);
-        this.newProyectFormGroup.get('description').setValue(response.proyecto.description.value);
+
+        // historicalDescription
+        this.historicalDescription = response.proyecto.description.value;
+        // this.newProyectFormGroup.get('description').setValue(response.proyecto.description.value);
 
         this.newProyectFormGroup.get('qualitativebenefits').setValue(response.proyecto.qualitativeBenefits.value);
         this.newProyectFormGroup.get('quantitativebenefits').setValue(response.proyecto.quantitativeBenefits.value);
@@ -366,14 +234,13 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         if (response.proyecto.managementAreaInChargeId.value) {
             this.managementAreaInChargeDisabled =
-            this.typeProjectSelected.id === 4370 && this.projectId ? true : false;
+                this.typeProjectSelected.id === 4370 && this.projectId ? true : false;
             this.managementAreaInChargeSelected = {
                 id: response.proyecto.managementAreaInChargeId.value,
                 description: response.proyecto.managementAreaInCharge.value,
                 disabled: false
             };
         }
-        // falta el proyect riesgo id en api
         if (response.proyecto.projRiesgoId.value) {
             this.projectRiskSelected = {
                 id: response.proyecto.projRiesgoId.value,
@@ -381,7 +248,6 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
-
         if (response.proyecto.priorityId.value) {
             this.prioritySelected = {
                 id: response.proyecto.priorityId.value,
@@ -404,8 +270,6 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
         const year = value.slice(4, 10);
         const month = value.slice(2, 4);
         const date = value.slice(0, 2);
-        console.log(year, month, date);
-        console.log(new Date(year, month - 1, date));
         return new Date(year, month - 1, date);
     }
 
@@ -437,28 +301,27 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     itemSelectedPredictiveSponsor(event) {
-        this.sponsorSelected = event;
-        this.newProyectFormGroup.get('sponsor').setValue(event.description);
-        this.itemsFilterDefault = this.sponsors;
-
+        if (event.id) {
+            this.sponsorSelected = event;
+        }
     }
 
     itemSelectedPredictiveClients(event) {
-        this.clientSelected = event;
-        this.newProyectFormGroup.get('client').setValue(event.description);
-        this.itemsFilterDefaultClients = this.clients;
+        if (event.id) {
+            this.clientSelected = event;
+        }
     }
 
     itemSelectedPredictiveCoordinators(event) {
-        this.coordinatorSelected = event;
-        this.newProyectFormGroup.get('coordinator').setValue(event.description);
-        this.itemsFilterDefaultCoordinators = this.coordinators;
+        if (event.id) {
+            this.coordinatorSelected = event;
+        }
     }
 
     itemSelectedPredictiveRequestedByUsers(event) {
-        this.requestedByUserSelected = event;
-        this.newProyectFormGroup.get('requestedbyuser').setValue(event.description);
-        this.itemsFilterDefaultRequestedByUser = this.requestedbyusers;
+        if (event.id) {
+            this.requestedByUserSelected = event;
+        }
     }
 
     validForm(): boolean {
@@ -591,7 +454,7 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                 description: {
                     visible: true,
                     enabled: true,
-                    value: this.newProyectFormGroup.get('description').value
+                    value: this.buildDescription(),
                 },
                 managementAreaInCharge: {
                     visible: true,
@@ -613,16 +476,6 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                     enabled: true,
                     value: this.sponsorSelected.id ? this.sponsorSelected.id : null
                 },
-                priority: {
-                    visible: true,
-                    enabled: true,
-                    value: this.prioritySelected.description ? this.prioritySelected.description : null
-                },
-                priorityId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.prioritySelected.id ? this.prioritySelected.id : null
-                },
                 coordinator: {
                     visible: true,
                     enabled: true,
@@ -633,15 +486,45 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                     enabled: true,
                     value: this.coordinatorSelected.id ? this.coordinatorSelected.id : null
                 },
-                requestedbyuser: {
+                priority: {
                     visible: true,
                     enabled: true,
-                    value: this.requestedByUserSelected.description ? this.requestedByUserSelected.description : null
+                    value: this.prioritySelected.description ? this.prioritySelected.description : null
                 },
-                requestedbyuserid: {
+                priorityId: {
                     visible: true,
                     enabled: true,
-                    value: this.requestedByUserSelected.id ? this.requestedByUserSelected.id : null
+                    value: this.prioritySelected.id ? this.prioritySelected.id : null
+                },
+                complexitylevel: {
+                    visible: true,
+                    enabled: true,
+                    value: null
+                },
+                complexityLevelId: {
+                    visible: true,
+                    enabled: true,
+                    value: null
+                },
+                area: {
+                    visible: true,
+                    enabled: true,
+                    value: null
+                },
+                areaId: {
+                    visible: true,
+                    enabled: true,
+                    value: null
+                },
+                region: {
+                    visible: true,
+                    enabled: true,
+                    value: null
+                },
+                regionId: {
+                    visible: true,
+                    enabled: true,
+                    value: null
                 },
                 qualitativeBenefits: {
                     visible: true,
@@ -653,9 +536,30 @@ export class NewProjectComponent implements OnInit, AfterViewInit, OnDestroy {
                     enabled: true,
                     value: this.newProyectFormGroup.get('quantitativebenefits').value
                 },
+                comments: {
+                    visible: true,
+                    enabled: true,
+                    value: null
+                },
+                requestedbyuser: {
+                    visible: true,
+                    enabled: true,
+                    value: this.requestedByUserSelected.description ? this.requestedByUserSelected.description : null
+                },
+                requestedbyuserid: {
+                    visible: true,
+                    enabled: true,
+                    value: this.requestedByUserSelected.id ? this.requestedByUserSelected.id : null
+                },
                 keywords: []
             }
         };
+    }
+
+    buildDescription() {
+        let aux = this.historicalDescription;
+        aux += `${new Date().toLocaleDateString()} : ${this.newProyectFormGroup.get('description').value}`;
+        return aux;
     }
 
     save() {

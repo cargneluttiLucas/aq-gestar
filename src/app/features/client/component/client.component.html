@@ -1,0 +1,4 @@
+<app-textfield-predictive [id]="'client'" text="Cliente"
+    [selectFormControl]="selectedFormControl" [items]="clients" (handlerError)="handlerError($event)"
+    (itemSelected)="itemSelected($event)">
+</app-textfield-predictive>

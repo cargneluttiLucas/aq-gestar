@@ -1,12 +1,13 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TextfieldPredictiveModule, ComponentsModule } from 'src/app/component';
+import { UserService } from './service/user.service';
 import { UserComponent } from './component/user.component';
-import { TextfieldPredictiveModule } from 'src/app/component';
 
 @NgModule({
   imports: [
     CommonModule,
-    TextfieldPredictiveModule.forRoot()
+    ComponentsModule
   ],
   declarations: [
     UserComponent
@@ -14,7 +15,7 @@ import { TextfieldPredictiveModule } from 'src/app/component';
   exports: [
     UserComponent
   ],
-  providers: []
+  providers: [UserService]
 })
 export class UserModule {
   static forRoot(): ModuleWithProviders {

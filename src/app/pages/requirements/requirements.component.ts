@@ -89,7 +89,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    // private sessionId = '088d4c39517040c7bf9470cab5e847a5';
+    // private sessionId = 'a511db4b22c445b0962bf8fb84217665';
     private sessionId: string;
     public projectId: number;
     public requirementId: number;
@@ -144,7 +144,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.requirementId = item.doc_id;
             this.requirementAcction = item.action;
             this.backtofld = item.backtofld;
-            console.log('parametros', [this.requirementId, this.requirementAcction, this.backtofld]);
         });
         this.loadSelects();
         if (this.requirementId && this.requirementAcction === 'open') {
@@ -258,7 +257,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                                 activitie.responsable = item.Values.RESPONSIBLE;
                                 this.activities.push(activitie);
                             });
-                            console.log(this.activities);
                         }
                     });
                 }
@@ -837,7 +835,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                         activitie.responsable = item.Values.RESPONSIBLE;
                         this.activities.push(activitie);
                     });
-                    console.log(this.activities);
                 }
             });
         }

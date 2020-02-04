@@ -209,9 +209,18 @@ export class TextfieldPredictiveComponent implements OnInit, AfterViewInit, OnDe
   }
 
   handleControl(event) {
-    this.errors = Object.keys(event);
+    this.errors = event;
+
     this.handlerError.emit(this.errors);
     this.isErrorLine = false;
+    if (event[0] === 'success' && this.item === null) {
+      this.selectFormControl.setValidators([this.selectFormControl.validator, this.itemsFilterEmpty]);
+      this.selectFormControl.updateValueAndValidity();
+    }
+    if (event[0] === 'itemsFilterEmpty' && this.item !== null) {
+      this.selectFormControl.setValidators([Validators.required]);
+      this.selectFormControl.updateValueAndValidity();
+    }
   }
 
   openDialog(event, id: string) {

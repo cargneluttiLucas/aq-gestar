@@ -25,34 +25,24 @@
                 </div>
 
                 <div class="row">
-                    <!-- <div class="col-md-6">
-                        <app-textfield text="Display" id="displayname"
-                            [control]="newProyectFormGroup.get('displayname')">
-                        </app-textfield>
-                    </div> -->
                     <div class="col-md-6">
-                        <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
-                            id="client" text="Cliente" [selectFormControl]="newProyectFormGroup.get('client')"
-                            [items]="clients" (itemSelected)="itemSelectedPredictiveClients($event)">
-                        </app-textfield-predictive>
+                        <app-client [isSession]="sessionId" [selectedFormControl]="newProyectFormGroup.get('client')"
+                            (clientSelectedData)="itemSelectedPredictiveClients($event)"></app-client>
                     </div>
                     <div class="col-md-6">
-                        <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
-                            text="Sponsor" [selectFormControl]="newProyectFormGroup.get('sponsor')" [items]="sponsors"
-                            (itemSelected)="itemSelectedPredictiveSponsor($event)"></app-textfield-predictive>
+                        <app-user [text]="'Sponsor'" [id]="'sponsor'" [isSession]="sessionId" (userSelectedData)="itemSelectedPredictiveSponsor($event)"
+                        [selectedFormControl]="newProyectFormGroup.get('sponsor')"></app-user>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
-                        <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
-                            text="Coordinador" [required]="false" [selectFormControl]="newProyectFormGroup.get('coordinator')" [items]="coordinators"
-                            (itemSelected)="itemSelectedPredictiveCoordinators($event)"></app-textfield-predictive>
+                        <app-user [text]="'Codinador'" [id]="'coordinator'" [isSession]="sessionId" (userSelectedData)="itemSelectedPredictiveCoordinators($event)"
+                        [selectedFormControl]="newProyectFormGroup.get('coordinator')"></app-user>
                     </div>
                     <div class="col-md-6">
-                        <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
-                            text="Solicitado por" [required]="false" [selectFormControl]="newProyectFormGroup.get('requestedbyuser')" [items]="requestedbyusers"
-                            (itemSelected)="itemSelectedPredictiveRequestedByUsers($event)"></app-textfield-predictive>
+                        <app-user [text]="'Solicitado por'" [id]="'requestedbyuser'" [isSession]="sessionId" (userSelectedData)="itemSelectedPredictiveRequestedByUsers($event)"
+                        [selectedFormControl]="newProyectFormGroup.get('requestedbyuser')"></app-user>
                     </div>
                 </div>
 
@@ -78,8 +68,7 @@
                     </div>
                     <div class="col-md-3">
                         <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
-                            [dispatchHint]="'Seleccione un elemento'"
-                            [disabled]="managementAreaInChargeDisabled"
+                            [dispatchHint]="'Seleccione un elemento'" [disabled]="managementAreaInChargeDisabled"
                             (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
                             placeholderDefault="Gerencia a cargo">
                         </app-select>
@@ -89,56 +78,44 @@
                 <div class="row">
                     <div class="col-md-3">
                         <app-select [items]="priority" [item]="prioritySelected"
-                            [dispatchHint]="'Seleccione un elemento'"
-                            (itemSelected)="selectedItem($event, 'priority')" placeholderDefault="Prioridad">
+                            [dispatchHint]="'Seleccione un elemento'" (itemSelected)="selectedItem($event, 'priority')"
+                            placeholderDefault="Prioridad">
                         </app-select>
                     </div>
                     <div class="col-md-3">
                         <app-select [items]="stateProject" [item]="stateProjectSelected"
                             [dispatchHint]="'Seleccione un elemento'"
-                            (itemSelected)="selectedItem($event, 'stateProject')" placeholderDefault="Nivel de Complejidad">
+                            (itemSelected)="selectedItem($event, 'stateProject')"
+                            placeholderDefault="Nivel de Complejidad">
                         </app-select>
                     </div>
                     <div class="col-md-3">
                         <app-select [items]="projectRisk" [item]="projectRiskSelected"
                             [dispatchHint]="'Seleccione un elemento'"
-                            (itemSelected)="selectedItem($event, 'projectRisk')"
-                            placeholderDefault="Área">
+                            (itemSelected)="selectedItem($event, 'projectRisk')" placeholderDefault="Área">
                         </app-select>
                     </div>
 
                     <div class="col-md-3">
                         <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
-                            [dispatchHint]="'Seleccione un elemento'"
-                            [disabled]="managementAreaInChargeDisabled"
-                            (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
-                            placeholderDefault="Región">
+                            [dispatchHint]="'Seleccione un elemento'" [disabled]="managementAreaInChargeDisabled"
+                            (itemSelected)="selectedItem($event, 'managementAreaInCharge')" placeholderDefault="Región">
                         </app-select>
                     </div>
-                    
+
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
-                        <app-textfield text="Beneficio Cualitativo" id="name" [control]="newProyectFormGroup.get('qualitativebenefits')">
+                        <app-textfield text="Beneficio Cualitativo" id="qualitativebenefits"
+                            [control]="newProyectFormGroup.get('qualitativebenefits')">
                         </app-textfield>
-                        <!-- <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
-                            [dispatchHint]="'Seleccione un elemento'"
-                            [disabled]="managementAreaInChargeDisabled"
-                            (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
-                            placeholderDefault="Beneficio Cualitativo">
-                        </app-select> -->
                     </div>
 
                     <div class="col-md-6">
-                        <app-textfield text="Beneficio Cuantitativo" id="name" [control]="newProyectFormGroup.get('quantitativebenefits')">
+                        <app-textfield text="Beneficio Cuantitativo" id="quantitativebenefits"
+                            [control]="newProyectFormGroup.get('quantitativebenefits')">
                         </app-textfield>
-                        <!-- <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
-                            [dispatchHint]="'Seleccione un elemento'"
-                            [disabled]="managementAreaInChargeDisabled"
-                            (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
-                            placeholderDefault="Beneficio Cuantitativo">
-                        </app-select> -->
                     </div>
                 </div>
 
@@ -203,7 +180,7 @@
                 </div>
                 <div class="row margin-bottom-24">
                     <div class="col-md-12">
-                        <app-show-text [description]="newProyectFormGroup.get('description').value"></app-show-text>
+                        <app-show-text [description]="historicalDescription"></app-show-text>
                     </div>
                 </div>
 
