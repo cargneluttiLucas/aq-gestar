@@ -85,6 +85,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         disabled: false
     };
 
+    complexityLevels = [];
+    complexityLevelSelected = {
+        id: null,
+        description: null,
+        disabled: false
+    };
+
     wkfStates = [];
 
     errorMessage: string;
@@ -142,7 +149,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.searchProject(auxProyect);
         this.router.routerState.root.queryParams.forEach((item) => {
             this.requirementId = item.doc_id;
-            this.requirementAcction = item.action;
+            this.requirementAcction = "new";
             this.backtofld = item.backtofld;
         });
         this.loadSelects();
@@ -277,6 +284,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.regios = response.reqKeywords.keywords[6].options;
                 this.areas = response.reqKeywords.keywords[7].options;
                 this.managementAreas = response.reqKeywords.keywords[9].options;
+                this.complexityLevels = response.reqKeywords.keywords[10].options;
             }
         });
 
@@ -345,6 +353,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.managementAreaSelected = {
                 id: response.requerimiento.managementAreaInChargeId.value,
                 description: response.requerimiento.managementAreaInCharge.value,
+                disabled: false
+            };
+        }
+        if (response.requerimiento.complexityLevelInChargeId.value) {
+            this.complexityLevelSelected = {
+                id: response.requerimiento.complexityLevelInChargeId.value,
+                description: response.requerimiento.complexityLevelInCharge.value,
                 disabled: false
             };
         }
@@ -655,6 +670,16 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     visible: true,
                     enabled: true,
                     value: this.managementAreaSelected.id ? +this.managementAreaSelected.id : null
+                },
+                complexityLevelInCharge: {
+                    visible: true,
+                    enabled: true,
+                    value: this.complexityLevelSelected.description ? this.complexityLevelSelected.description : null
+                },
+                complexityLevelInChargeId: {
+                    visible: true,
+                    enabled: true,
+                    value: this.complexityLevelSelected.id ? +this.complexityLevelSelected.id : null
                 }
             }
         };
@@ -713,6 +738,10 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
                 case 'managementAreas': {
                     this.managementAreaSelected = item;
+                    break;
+                }
+                case 'complexityLevel': {
+                    this.complexityLevelSelected = item;
                     break;
                 }
             }

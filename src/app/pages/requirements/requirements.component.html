@@ -149,6 +149,13 @@
                                 placeholderDefault="Gerencia responsable">
                             </app-select>
                         </div>
+                        <div class="col-md-3">
+                            <app-select [items]="complexityLevels" [item]="complexityLevelSelected"
+                                [dispatchHint]="'Seleccione un elemento'"
+                                (itemSelected)="selectedItem($event, 'complexityLevel')"
+                                placeholderDefault="Nivel de Complejidad">
+                            </app-select>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
