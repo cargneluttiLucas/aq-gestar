@@ -149,7 +149,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.searchProject(auxProyect);
         this.router.routerState.root.queryParams.forEach((item) => {
             this.requirementId = item.doc_id;
-            this.requirementAcction = "new";
+            this.requirementAcction = item.action;
             this.backtofld = item.backtofld;
         });
         this.loadSelects();
