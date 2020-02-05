@@ -240,6 +240,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             estimatedDateEnd: new FormControl(''),
             systemEffortinHours: new FormControl(''),
             usersEffortinHours: new FormControl(''),
+            releaseNumber: new FormControl(''),
             project: new FormControl('', Validators.required),
         });
     }
@@ -318,7 +319,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementFormGroup.get('organization').setValue(response.requerimiento.organization.value);
         this.requirementFormGroup.get('realDateEnd').setValue(this.transformDateToString(response.requerimiento.fechaFinReal.value));
         this.requirementFormGroup.get('description').setValue(response.requerimiento.description.value);
-
+        this.requirementFormGroup.get('releaseNumber').setValue(response.requerimiento.releaseNumber.value);
         this.requirementFormGroup.get('project').setValue(response.requerimiento.project.value);
         this.proyectSelected.id = response.requerimiento.projectId.value;
         this.proyectSelected.description = response.requerimiento.project.value;
@@ -356,10 +357,10 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
-        if (response.requerimiento.complexityLevelInChargeId.value) {
+        if (response.requerimiento.complexityLevelId.value) {
             this.complexityLevelSelected = {
-                id: response.requerimiento.complexityLevelInChargeId.value,
-                description: response.requerimiento.complexityLevelInCharge.value,
+                id: response.requerimiento.complexityLevelId.value,
+                description: response.requerimiento.complexityLevel.value,
                 disabled: false
             };
         }
@@ -503,6 +504,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     visible: true,
                     enabled: true,
                     value: this.requirementFormGroup.get('description').value
+                },
+                releaseNumber: {
+                    visible: true,
+                    enabled: true,
+                    value: this.requirementFormGroup.get('releaseNumber').value
                 },
                 sprintId: {
                     visible: true,
