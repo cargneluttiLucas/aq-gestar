@@ -730,7 +730,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         if (item && tipe) {
             switch (tipe) {
                 case 'aplications': {
-                    this.aplications = item;
+                    this.aplicationsSelected = item;
                     break;
                 }
                 case 'modules': {
