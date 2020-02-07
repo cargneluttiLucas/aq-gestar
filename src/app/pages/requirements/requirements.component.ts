@@ -85,6 +85,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         disabled: false
     };
 
+    complexityLevels = [];
+    complexityLevelSelected = {
+        id: null,
+        description: null,
+        disabled: false
+    };
+
     wkfStates = [];
 
     errorMessage: string;
@@ -97,7 +104,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     public backtofld: number;
 
     projects = [];
-    proyectSelected = { id: null, description: null, disabled: false };
+    proyectSelected = { id: null, description: null, disabled: false, customer: null, customerid: null };
     itemDefault: any;
     itemsFilterDefault = [];
 
@@ -132,7 +139,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         const auxProyect = {
             filter: '',
             order: 'DOC_ID',
-            fields: 'DOC_ID,project_name'
+            fields: 'DOC_ID,project_name,customer,customerid'
         };
         const auxUsers = {
             userFilter: '',
@@ -198,9 +205,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     buildProjectTextfield(proyects) {
         this.projects = [];
         proyects.forEach((item) => {
-            const aux = { id: 0, description: '', disabled: false };
+            const aux = { id: 0, description: '', disabled: false, customer: null, customerid: null };
             aux.id = item.Values.DOC_ID;
             aux.description = item.Values.PROJECT_NAME;
+            aux.customerid = item.Values.CUSTOMERID;
+            aux.customer = item.Values.CUSTOMER;
+
             this.projects.push(aux);
         });
     }
@@ -233,6 +243,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             estimatedDateEnd: new FormControl(''),
             systemEffortinHours: new FormControl(''),
             usersEffortinHours: new FormControl(''),
+            releaseNumber: new FormControl(''),
             project: new FormControl('', Validators.required),
         });
     }
@@ -277,6 +288,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.regios = response.reqKeywords.keywords[6].options;
                 this.areas = response.reqKeywords.keywords[7].options;
                 this.managementAreas = response.reqKeywords.keywords[9].options;
+                this.complexityLevels = response.reqKeywords.keywords[10].options;
             }
         });
 
@@ -310,15 +322,16 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementFormGroup.get('organization').setValue(response.requerimiento.organization.value);
         this.requirementFormGroup.get('realDateEnd').setValue(this.transformDateToString(response.requerimiento.fechaFinReal.value));
         this.requirementFormGroup.get('description').setValue(response.requerimiento.description.value);
-
+        this.requirementFormGroup.get('releaseNumber').setValue(response.requerimiento.releaseNumber.value);
         this.requirementFormGroup.get('project').setValue(response.requerimiento.project.value);
         this.proyectSelected.id = response.requerimiento.projectId.value;
         this.proyectSelected.description = response.requerimiento.project.value;
-
+        this.proyectSelected.customerid = response.requerimiento.customerId.value;
+        this.proyectSelected.customer = response.requerimiento.customer.value;
         this.requirementFormGroup.get('requestedByUser').setValue(response.requerimiento.requestedByUser.value);
-        // this.userSelected.id = response.requerimiento.requestedByUser.value;
+        this.userSelected.id = response.requerimiento.requestedByUserId.value;
         this.userSelected.description = response.requerimiento.requestedByUser.value;
-
+        
         // combos
         if (response.requerimiento.applicationId.value) {
             this.aplicationsSelected = {
@@ -345,6 +358,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.managementAreaSelected = {
                 id: response.requerimiento.managementAreaInChargeId.value,
                 description: response.requerimiento.managementAreaInCharge.value,
+                disabled: false
+            };
+        }
+        if (response.requerimiento.complexityLevelId.value) {
+            this.complexityLevelSelected = {
+                id: response.requerimiento.complexityLevelId.value,
+                description: response.requerimiento.complexityLevel.value,
                 disabled: false
             };
         }
@@ -489,6 +509,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     enabled: true,
                     value: this.requirementFormGroup.get('description').value
                 },
+                releaseNumber: {
+                    visible: true,
+                    enabled: true,
+                    value: this.requirementFormGroup.get('releaseNumber').value
+                },
                 sprintId: {
                     visible: true,
                     enabled: true,
@@ -539,6 +564,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     visible: true,
                     enabled: true,
                     value: this.userSelected.description
+                },
+                requestedByUserId: {
+                    visible: true,
+                    enabled: true,
+                    value: this.userSelected.id
                 },
                 requerimentTypeId: {
                     visible: true,
@@ -626,6 +656,16 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     enabled: true,
                     value: this.proyectSelected.description
                 },
+                customerId: {
+                    visible: false,
+                    enabled: true,
+                    value: this.proyectSelected.customerid
+                },
+                customer: {
+                    visible: false,
+                    enabled: true,
+                    value: this.proyectSelected.customer
+                },
                 businessProcessId: {
                     visible: true,
                     enabled: true,
@@ -655,6 +695,16 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     visible: true,
                     enabled: true,
                     value: this.managementAreaSelected.id ? +this.managementAreaSelected.id : null
+                },
+                complexityLevel: {
+                    visible: true,
+                    enabled: true,
+                    value: this.complexityLevelSelected.description ? this.complexityLevelSelected.description : null
+                },
+                complexityLevelId: {
+                    visible: true,
+                    enabled: true,
+                    value: this.complexityLevelSelected.id ? +this.complexityLevelSelected.id : null
                 }
             }
         };
@@ -713,6 +763,10 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
                 case 'managementAreas': {
                     this.managementAreaSelected = item;
+                    break;
+                }
+                case 'complexityLevel': {
+                    this.complexityLevelSelected = item;
                     break;
                 }
             }
