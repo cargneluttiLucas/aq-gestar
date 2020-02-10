@@ -287,6 +287,30 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 disabled: false
             };
         }
+
+        if (response.proyecto.areaId.value) {
+            this.areaSelected = {
+                id: response.proyecto.areaId.value,
+                description: response.proyecto.area.value,
+                disabled: false
+            };
+        }
+
+        if (response.proyecto.regionId.value) {
+            this.regionSelected = {
+                id: response.proyecto.regionId.value,
+                description: response.proyecto.region.value,
+                disabled: false
+            };
+        }
+
+        if (response.proyecto.complexityLevelId.value) {
+            this.complexityLevelSelected = {
+                id: response.proyecto.complexityLevelId.value,
+                description: response.proyecto.complexitylevel.value,
+                disabled: false
+            };
+        }
     }
 
     private transformDateToString(value): any {
@@ -543,32 +567,32 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 complexitylevel: {
                     visible: true,
                     enabled: true,
-                    value: null
+                    value: this.complexityLevelSelected.description ? this.complexityLevelSelected.description : null
                 },
                 complexityLevelId: {
                     visible: true,
                     enabled: true,
-                    value: null
+                    value: this.complexityLevelSelected.id ? this.complexityLevelSelected.id : null
                 },
                 area: {
                     visible: true,
                     enabled: true,
-                    value: null
+                    value: this.areaSelected.description ? this.areaSelected.description : null
                 },
                 areaId: {
                     visible: true,
                     enabled: true,
-                    value: null
+                    value: this.areaSelected.id ? this.areaSelected.id : null
                 },
                 region: {
                     visible: true,
                     enabled: true,
-                    value: null
+                    value: this.regionSelected.description ? this.regionSelected.description : null
                 },
                 regionId: {
                     visible: true,
                     enabled: true,
-                    value: null
+                    value: this.regionSelected.id ? this.regionSelected.id : null
                 },
                 qualitativeBenefits: {
                     visible: true,

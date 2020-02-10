@@ -8,7 +8,7 @@ export const environment = {
       getNewProyect: `${API_DOMAIN}/Proyectos/New/`,
       getOpenProyect: `${API_DOMAIN}/Proyectos/Doc/`,
       putSaveProject: `${API_DOMAIN}/Proyectos`,
-      putChangeProject: `${API_DOMAIN}/Proyectos/`,
+      putChangeProject: `${API_DOMAIN}/Proyectos/Doc/`,
       searchProject: `${API_DOMAIN}/Proyectos/Find`
     },
     requirement: {
