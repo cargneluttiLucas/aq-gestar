@@ -96,7 +96,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    // private sessionId = 'a511db4b22c445b0962bf8fb84217665';
+    // private sessionId = 'a63c063aaf6c49f48b757c3babca8ebe';
     private sessionId: string;
     public projectId: number;
     public requirementId: number;
@@ -124,6 +124,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     private requirementLoad: any;
 
     private flagClose = false;
+
+    historicalDescription: string;
 
     constructor(
         private requirementService: RequierementsService,
@@ -321,7 +323,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementFormGroup.get('displayName').setValue(response.requerimiento.displayName.value);
         this.requirementFormGroup.get('organization').setValue(response.requerimiento.organization.value);
         this.requirementFormGroup.get('realDateEnd').setValue(this.transformDateToString(response.requerimiento.fechaFinReal.value));
-        this.requirementFormGroup.get('description').setValue(response.requerimiento.description.value);
+
+        // historicalDescription
+        this.historicalDescription = response.requerimiento.description.value;
+        // this.requirementFormGroup.get('description').setValue(response.requerimiento.description.value);
+
         this.requirementFormGroup.get('releaseNumber').setValue(response.requerimiento.releaseNumber.value);
         this.requirementFormGroup.get('project').setValue(response.requerimiento.project.value);
         this.proyectSelected.id = response.requerimiento.projectId.value;
@@ -331,7 +337,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementFormGroup.get('requestedByUser').setValue(response.requerimiento.requestedByUser.value);
         this.userSelected.id = response.requerimiento.requestedByUserId.value;
         this.userSelected.description = response.requerimiento.requestedByUser.value;
-        
+
         // combos
         if (response.requerimiento.applicationId.value) {
             this.aplicationsSelected = {
@@ -368,13 +374,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
-        /* if (response.requerimiento.regionId.value) {
-            this.regioSelected = {
-                id: response.requerimiento.regionId.value,
-                description: response.requerimiento.region.value,
-                disabled: false
-            };
-        } */
         if (response.requerimiento.areaId.value) {
             this.areaSelected = {
                 id: response.requerimiento.areaId.value,
@@ -413,6 +412,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             response.requerimiento.systemEffortInHours.value === 0 ? '' : response.requerimiento.systemEffortInHours.value);
         this.requirementFormGroup.get('usersEffortinHours').setValue(
             response.requerimiento.userEffortInHours.value === 0 ? '' : response.requerimiento.userEffortInHours.value);
+    }
+
+    buildDescription() {
+        let aux = this.historicalDescription;
+        aux += `${new Date().toLocaleDateString()} - ${this.requirementFormGroup.get('creator').value} :
+        ${this.requirementFormGroup.get('description').value} :  \n`;
+        return aux;
     }
 
     private buildForm() {
@@ -507,7 +513,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 description: {
                     visible: true,
                     enabled: true,
-                    value: this.requirementFormGroup.get('description').value
+                    value: this.buildDescription(),
                 },
                 releaseNumber: {
                     visible: true,
