@@ -97,7 +97,7 @@
                     </div>
 
                     <div class="col-md-3">
-                        <app-select [item]="regions" [items]="regionSelected"
+                        <app-select [items]="regions" [item]="regionSelected"
                             [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'region')" placeholderDefault="Región">
                         </app-select>
