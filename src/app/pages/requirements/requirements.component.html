@@ -180,17 +180,17 @@
                 <app-tab [title]="'Actividades'">
                     <div class="margin-top-16">
                         <div class="row">
-                            <div class="col-md-11">
+                            <div class="col-md-10">
                                 <app-table [list]="activities">
                                 </app-table>
                             </div>
-                            <div class="col-md-1">
-                                <app-button type="link" text="Recargar" (clickButton)="reloadActivities()"></app-button>
+                            <div class="col-md-2">
+                                <app-button type="button" text="Recargar" (clickButton)="reloadActivities()"></app-button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="margin-top-48">
+                    <div *ngIf="0==1" class="margin-top-48" style="margin-right: 20px;">
                         <app-button [text]="'Cargar actividades'" (clickButton)="openUpdateActivities()"></app-button>
                     </div>
                 </app-tab>

@@ -323,8 +323,10 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementFormGroup.get('displayName').setValue(response.requerimiento.displayName.value);
         this.requirementFormGroup.get('organization').setValue(response.requerimiento.organization.value);
         this.requirementFormGroup.get('realDateEnd').setValue(this.transformDateToString(response.requerimiento.fechaFinReal.value));
-
-        // historicalDescription
+        this.requirementFormGroup.get('requestDate').setValue(this.transformDateToString(response.requerimiento.requestedDate.value));
+        this.requirementFormGroup.get('estimatedDateStart').setValue(this.transformDateToString(response.requerimiento.estimatedStartDate.value));
+        this.requirementFormGroup.get('estimatedDateEnd').setValue(this.transformDateToString(response.requerimiento.estimatedEndDate.value));
+        // historicalDescription systemEffortInHours userEffortInHours usersEffortinHours
         this.historicalDescription = response.requerimiento.description.value;
         // this.requirementFormGroup.get('description').setValue(response.requerimiento.description.value);
 
@@ -337,6 +339,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementFormGroup.get('requestedByUser').setValue(response.requerimiento.requestedByUser.value);
         this.userSelected.id = response.requerimiento.requestedByUserId.value;
         this.userSelected.description = response.requerimiento.requestedByUser.value;
+        this.requirementFormGroup.get('systemEffortinHours').setValue(
+            response.requerimiento.systemEffortInHours.value === 0 ? '' : response.requerimiento.systemEffortInHours.value);
+        this.requirementFormGroup.get('usersEffortinHours').setValue(
+            response.requerimiento.userEffortInHours.value === 0 ? '' : response.requerimiento.userEffortInHours.value);
+
 
         // combos
         if (response.requerimiento.applicationId.value) {
@@ -403,15 +410,18 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             };
         }
 
-        this.requirementFormGroup.get('requestDate').setValue(this.transformDateToString(response.requerimiento.requestedDate.value));
-        this.requirementFormGroup.get('estimatedDateStart').setValue(
-            this.transformDateToString(response.requerimiento.estimatedStartDate.value));
-        this.requirementFormGroup.get('estimatedDateEnd').setValue(
-            this.transformDateToString(response.requerimiento.estimatedEndDate.value));
-        this.requirementFormGroup.get('systemEffortinHours').setValue(
-            response.requerimiento.systemEffortInHours.value === 0 ? '' : response.requerimiento.systemEffortInHours.value);
-        this.requirementFormGroup.get('usersEffortinHours').setValue(
-            response.requerimiento.userEffortInHours.value === 0 ? '' : response.requerimiento.userEffortInHours.value);
+
+
+        
+        // this.requirementFormGroup.get('requestDate').setValue(this.transformDateToString(response.requerimiento.requestedDate.value));
+        // this.requirementFormGroup.get('estimatedDateStart').setValue(
+        //     this.transformDateToString(response.requerimiento.estimatedStartDate.value));
+        // this.requirementFormGroup.get('estimatedDateEnd').setValue(
+        //     this.transformDateToString(response.requerimiento.estimatedEndDate.value));
+        // this.requirementFormGroup.get('systemEffortinHours').setValue(
+        //     response.requerimiento.systemEffortInHours.value === 0 ? '' : response.requerimiento.systemEffortInHours.value);
+        // this.requirementFormGroup.get('usersEffortinHours').setValue(
+        //     response.requerimiento.userEffortInHours.value === 0 ? '' : response.requerimiento.userEffortInHours.value);
     }
 
     buildDescription() {
@@ -887,6 +897,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             };
             this.requirementService.searchActivities(aux, this.sessionId).subscribe((activities) => {
                 if (activities) {
+                    this.activities = [];
                     activities.activities.forEach((item) => {
                         const activitie = { id: '', title: '', responsable: '', state: '', linkHorus: '', linkEdit: '' };
                         activitie.id = item.Values.ID;
