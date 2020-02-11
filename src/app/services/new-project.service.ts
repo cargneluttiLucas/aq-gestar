@@ -53,7 +53,7 @@ export class NewProjectService {
 
   loggedUserInfo(sessionId) {
     this.options.headers.SessionId = sessionId;
-    return this.http.post<any>(environment.addresses.loggedUserInfo.loggedUserInfo, this.options);
+    return this.http.get<any>(environment.addresses.loggedUserInfo.loggedUserInfo, this.options);
   }
 
 }

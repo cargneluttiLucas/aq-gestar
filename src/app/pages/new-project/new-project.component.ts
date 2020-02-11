@@ -74,8 +74,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
-    // sessionId: string;
-    public sessionId = 'a63c063aaf6c49f48b757c3babca8ebe';
+    public sessionId: string;
+    // public sessionId = 'a63c063aaf6c49f48b757c3babca8ebe';
     public projectId: number;
     public backtofld: number;
     private proyectAcction: string;
@@ -113,7 +113,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
-        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;

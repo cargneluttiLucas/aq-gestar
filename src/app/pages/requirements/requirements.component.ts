@@ -71,13 +71,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         disabled: false
     };
 
-    // workAreas = [];
-    // workAreaSelected = {
-    //     id: null,
-    //     description: null,
-    //     disabled: false
-    // };
-
     managementAreas = [];
     managementAreaSelected = {
         id: null,
@@ -96,8 +89,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    public sessionId = 'a63c063aaf6c49f48b757c3babca8ebe';
-    // private sessionId: string;
+    // public sessionId = 'a63c063aaf6c49f48b757c3babca8ebe';
+    public sessionId: string;
     public projectId: number;
     public requirementId: number;
     public requirementAcction: string;
@@ -147,7 +140,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             userFilter: '',
             userOrder: ''
         };
-        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.searchProject(auxProyect);
         this.router.routerState.root.queryParams.forEach((item) => {
             this.requirementId = item.doc_id;
@@ -415,13 +408,15 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     buildDescription() {
+        console.log('historicalDescription in requirement', this.historicalDescription);
         if (this.requirementFormGroup.get('description').value !== '') {
+            const valueNewDescription = this.requirementFormGroup.get('description').value;
             let aux = this.historicalDescription;
-            aux += `${new Date().toLocaleDateString()} - ${this.requirementFormGroup.get('creator').value} :
-            ${this.requirementFormGroup.get('description').value};`;
+            aux += `${new Date().toLocaleDateString()} - ${this.requirementFormGroup.get('creator').value}: ${valueNewDescription} ; `;
             return aux;
+        } else {
+            return this.historicalDescription;
         }
-        return this.historicalDescription;
     }
 
     private buildForm() {

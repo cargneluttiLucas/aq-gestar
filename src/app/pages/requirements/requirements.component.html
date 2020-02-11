@@ -131,11 +131,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        <!-- <div class="col-md-3">
-                            <app-select [items]="regios" [item]="regioSelected"
-                                (itemSelected)="selectedItem($event, 'regions')" placeholderDefault="Región">
-                            </app-select>
-                        </div> -->
                         <div class="col-md-3">
                             <app-select [items]="areas" [item]="areaSelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'areas')" placeholderDefault="Área">
@@ -172,9 +167,6 @@
                             <app-show-text [description]="historicalDescription"></app-show-text>
                         </div>
                     </div>
-
-
-
                 </app-tab>
                 <app-tab [title]="'Actividades'">
                     <div class="margin-top-16">
@@ -189,7 +181,7 @@
                         </div>
                     </div>
 
-                    <div *ngIf="0==1" class="margin-top-48 margin-right-24">
+                    <div *ngIf="false" class="margin-top-48 margin-right-24">
                         <app-button [text]="'Cargar actividades'" (clickButton)="openUpdateActivities()"></app-button>
                     </div>
                 </app-tab>

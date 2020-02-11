@@ -18,7 +18,8 @@ export class ShowTextComponent implements OnChanges {
       // tslint:disable-next-line: prefer-for-of
       for (let i = 0; i < this.description.length; i = i + 1) {
         if (REGEXP.test(this.description[i])) {
-          this.historicalDescription.push(this.description.substr(index, i).replace(/;/g, ''));
+          const aux = this.description.substr(index, i - index);
+          this.historicalDescription.push(aux.replace(/;/g, ' '));
           index = i;
         }
       }
