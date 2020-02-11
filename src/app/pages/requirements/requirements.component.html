@@ -68,10 +68,9 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <app-textfield-predictive [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3"
-                                text="Usuario solicitante"
-                                [selectFormControl]="requirementFormGroup.get('requestedByUser')" [items]="users"
-                                (itemSelected)="itemSelectedPredictive($event)"></app-textfield-predictive>
+                            <app-user [text]="'Usuario solicitante'" [id]="'requestedByUser'"
+                            [isSession]="sessionId" (userSelectedData)="itemSelectedPredictive($event)"
+                            [selectedFormControl]="requirementFormGroup.get('requestedByUser')"></app-user>
                         </div>
                         <div class="col-md-6">
                             <app-textfield text="Fecha de solicitud" [dispatchHint]="'dd/MM/yyyy'" mask="00/00/0000"
@@ -185,12 +184,12 @@
                                 </app-table>
                             </div>
                             <div class="col-md-2">
-                                <app-button type="button" text="Recargar" (clickButton)="reloadActivities()"></app-button>
+                                <app-button text="Recargar" (clickButton)="reloadActivities()"></app-button>
                             </div>
                         </div>
                     </div>
 
-                    <div *ngIf="0==1" class="margin-top-48" style="margin-right: 20px;">
+                    <div *ngIf="0==1" class="margin-top-48 margin-right-24">
                         <app-button [text]="'Cargar actividades'" (clickButton)="openUpdateActivities()"></app-button>
                     </div>
                 </app-tab>

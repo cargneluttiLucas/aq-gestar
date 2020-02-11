@@ -96,8 +96,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    // private sessionId = 'a63c063aaf6c49f48b757c3babca8ebe';
-    private sessionId: string;
+    public sessionId = 'a63c063aaf6c49f48b757c3babca8ebe';
+    // private sessionId: string;
     public projectId: number;
     public requirementId: number;
     public requirementAcction: string;
@@ -147,7 +147,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             userFilter: '',
             userOrder: ''
         };
-        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.searchProject(auxProyect);
         this.router.routerState.root.queryParams.forEach((item) => {
             this.requirementId = item.doc_id;
@@ -324,8 +324,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementFormGroup.get('organization').setValue(response.requerimiento.organization.value);
         this.requirementFormGroup.get('realDateEnd').setValue(this.transformDateToString(response.requerimiento.fechaFinReal.value));
         this.requirementFormGroup.get('requestDate').setValue(this.transformDateToString(response.requerimiento.requestedDate.value));
-        this.requirementFormGroup.get('estimatedDateStart').setValue(this.transformDateToString(response.requerimiento.estimatedStartDate.value));
-        this.requirementFormGroup.get('estimatedDateEnd').setValue(this.transformDateToString(response.requerimiento.estimatedEndDate.value));
+        this.requirementFormGroup.get('estimatedDateStart').setValue(
+            this.transformDateToString(response.requerimiento.estimatedStartDate.value));
+        this.requirementFormGroup.get('estimatedDateEnd').setValue(
+            this.transformDateToString(response.requerimiento.estimatedEndDate.value));
+
         // historicalDescription systemEffortInHours userEffortInHours usersEffortinHours
         this.historicalDescription = response.requerimiento.description.value;
         // this.requirementFormGroup.get('description').setValue(response.requerimiento.description.value);
@@ -409,26 +412,16 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
-
-
-
-        
-        // this.requirementFormGroup.get('requestDate').setValue(this.transformDateToString(response.requerimiento.requestedDate.value));
-        // this.requirementFormGroup.get('estimatedDateStart').setValue(
-        //     this.transformDateToString(response.requerimiento.estimatedStartDate.value));
-        // this.requirementFormGroup.get('estimatedDateEnd').setValue(
-        //     this.transformDateToString(response.requerimiento.estimatedEndDate.value));
-        // this.requirementFormGroup.get('systemEffortinHours').setValue(
-        //     response.requerimiento.systemEffortInHours.value === 0 ? '' : response.requerimiento.systemEffortInHours.value);
-        // this.requirementFormGroup.get('usersEffortinHours').setValue(
-        //     response.requerimiento.userEffortInHours.value === 0 ? '' : response.requerimiento.userEffortInHours.value);
     }
 
     buildDescription() {
-        let aux = this.historicalDescription;
-        aux += `${new Date().toLocaleDateString()} - ${this.requirementFormGroup.get('creator').value} :
-        ${this.requirementFormGroup.get('description').value} :  \n`;
-        return aux;
+        if (this.requirementFormGroup.get('description').value !== '') {
+            let aux = this.historicalDescription;
+            aux += `${new Date().toLocaleDateString()} - ${this.requirementFormGroup.get('creator').value} :
+            ${this.requirementFormGroup.get('description').value};`;
+            return aux;
+        }
+        return this.historicalDescription;
     }
 
     private buildForm() {

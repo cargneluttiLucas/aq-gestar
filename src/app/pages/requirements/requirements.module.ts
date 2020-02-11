@@ -5,6 +5,7 @@ import { RequirementsRoutingModule } from './requirements.routing';
 import { ComponentsModule, ModalModule } from 'src/app/component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ServiceModule } from 'src/app/services/service.module';
+import { UserModule } from 'src/app/features/user';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { ServiceModule } from 'src/app/services/service.module';
     ModalModule,
     ReactiveFormsModule,
     ServiceModule,
-    RequirementsRoutingModule
+    RequirementsRoutingModule,
+    UserModule.forRoot()
   ],
   declarations: [
     RequirementsComponent

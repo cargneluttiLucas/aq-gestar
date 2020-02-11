@@ -74,8 +74,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
-    sessionId: string;
-    // public sessionId = 'a63c063aaf6c49f48b757c3babca8ebe';
+    // sessionId: string;
+    public sessionId = 'a63c063aaf6c49f48b757c3babca8ebe';
     public projectId: number;
     public backtofld: number;
     private proyectAcction: string;
@@ -99,6 +99,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     historicalDescription: string;
 
+    private loggedUserInfo: any;
+
     constructor(
         private newProyectService: NewProjectService,
         private cookieService: CookieService,
@@ -111,7 +113,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
-        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;
@@ -125,6 +127,13 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             this.cargarNewProject();
         }
         this.createForm();
+
+        this.newProyectService.loggedUserInfo(this.sessionId).subscribe((response) => {
+            if (response) {
+                console.log('usuario logueado', response);
+                this.loggedUserInfo = response.usuario.userFullName.value;
+            }
+        });
     }
 
     createForm() {
@@ -625,9 +634,13 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     }
 
     buildDescription() {
-        let aux = this.historicalDescription;
-        aux += `${new Date().toLocaleDateString()} : ${this.newProyectFormGroup.get('description').value}`;
-        return aux;
+        if (this.newProyectFormGroup.get('description').value !== '') {
+            let aux = this.historicalDescription;
+            aux += `${new Date().toLocaleDateString()} - ${this.loggedUserInfo} :
+            ${this.newProyectFormGroup.get('description').value};`;
+            return aux;
+        }
+        return this.historicalDescription;
     }
 
     save() {

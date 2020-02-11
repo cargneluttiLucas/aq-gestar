@@ -51,4 +51,9 @@ export class NewProjectService {
     return this.http.post<any>(environment.addresses.contact.findCliend, filter, this.options);
   }
 
+  loggedUserInfo(sessionId) {
+    this.options.headers.SessionId = sessionId;
+    return this.http.post<any>(environment.addresses.loggedUserInfo.loggedUserInfo, this.options);
+  }
+
 }

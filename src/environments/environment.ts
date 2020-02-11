@@ -26,6 +26,9 @@ export const environment = {
     },
     activities: {
       searchActivities: `${API_DOMAIN}/Actividades`
+    },
+    loggedUserInfo: {
+      loggedUserInfo: `${API_DOMAIN}/Usuarios/loggedUserInfo`
     }
   },
 };
