@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'src/app/component';
 import { NavigatorService, KeypressService, DocumentService, WindowService } from 'src/app/utils';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-requirements',
@@ -89,7 +90,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    // public sessionId = 'a63c063aaf6c49f48b757c3babca8ebe';
+    // public sessionId = 'f00850c5d5bc4637bb2aa77ebcfe25be';
     public sessionId: string;
     public projectId: number;
     public requirementId: number;
@@ -408,11 +409,10 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     buildDescription() {
-        console.log('historicalDescription in requirement', this.historicalDescription);
         if (this.requirementFormGroup.get('description').value !== '') {
             const valueNewDescription = this.requirementFormGroup.get('description').value;
-            let aux = this.historicalDescription;
-            aux += `${new Date().toLocaleDateString()} - ${this.requirementFormGroup.get('creator').value}: ${valueNewDescription} ; `;
+            let aux = `${new Date().toLocaleString()} - ${this.requirementFormGroup.get('creator').value}: ${valueNewDescription} ; `;
+            aux += this.historicalDescription;
             return aux;
         } else {
             return this.historicalDescription;
@@ -587,12 +587,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 mainObjectId: {
                     visible: true,
                     enabled: true,
-                    value: this.moduleSelected.id ? +this.moduleSelected.id : null
+                    value: this.mainObjectSelected.id ? +this.mainObjectSelected.id : null
                 },
                 mainObject: {
                     visible: true,
                     enabled: true,
-                    value: this.moduleSelected.description ? this.moduleSelected.description : null
+                    value: this.mainObjectSelected.description ? this.mainObjectSelected.description : null
                 },
                 priorityId: {
                     visible: true,
@@ -845,7 +845,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     close() {
         this.flagClose = false;
-        document.location.href = `http://3.227.233.169/c/content.asp?fld_id=${this.backtofld}`;
+        // document.location.href = `http://3.227.233.169/c/content.asp?fld_id=${this.backtofld}`;
+        document.location.href = `${environment.addresses.closeRequirement.close}${this.backtofld}`;
     }
 
     // modal
@@ -872,7 +873,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     openUpdateActivities() {
         const displayName = encodeURIComponent(this.requirementLoad.displayName.value);
         // tslint:disable-next-line: max-line-length
-        const url = `http://3.227.233.169/c/forms/generic3.asp?closeonexit=1&action=new&actionact=newact&fld_id=5213&fldIdReferer=5811&docIdReferer=${this.requirementLoad.docId.value}&id=${this.requirementLoad.id.value}&displayname=${displayName}&customer=${encodeURIComponent('Universal Assistance')}&customerid=51&project=${encodeURIComponent(this.requirementLoad.project.value)}&projectid=${this.requirementLoad.projectId.value}&context=backlog&callbackfunction=refreshgridActHTML`;
+        const url = `${environment.addresses.openActivities.open}${this.requirementLoad.docId.value}&id=${this.requirementLoad.id.value}&displayname=${displayName}&customer=${encodeURIComponent('Universal Assistance')}&customerid=51&project=${encodeURIComponent(this.requirementLoad.project.value)}&projectid=${this.requirementLoad.projectId.value}&context=backlog&callbackfunction=refreshgridActHTML`;
         window.open(url, '_blank');
     }
 

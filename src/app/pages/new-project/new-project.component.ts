@@ -8,6 +8,7 @@ import { KeypressService, DocumentService, NavigatorService } from 'src/app/util
 import { Subscription, Observable, Subject } from 'rxjs';
 import { EventEmitter } from 'protractor';
 import { emit } from 'cluster';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -75,7 +76,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     saveAndExitText = 'Guardar y salir';
 
     public sessionId: string;
-    // public sessionId = 'a63c063aaf6c49f48b757c3babca8ebe';
+    // public sessionId = 'f00850c5d5bc4637bb2aa77ebcfe25be';
     public projectId: number;
     public backtofld: number;
     private proyectAcction: string;
@@ -130,7 +131,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
         this.newProyectService.loggedUserInfo(this.sessionId).subscribe((response) => {
             if (response) {
-                console.log('usuario logueado', response);
                 this.loggedUserInfo = response.usuario.userFullName.value;
             }
         });
@@ -635,16 +635,14 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     buildDescription() {
         if (this.newProyectFormGroup.get('description').value !== '') {
-            let aux = this.historicalDescription;
-            aux += `${new Date().toLocaleDateString()} - ${this.loggedUserInfo} :
-            ${this.newProyectFormGroup.get('description').value};`;
+            let aux = `${new Date().toLocaleString()} - ${this.loggedUserInfo} : ${this.newProyectFormGroup.get('description').value};`;
+            aux += this.historicalDescription;
             return aux;
         }
         return this.historicalDescription;
     }
 
     save() {
-        console.log('proyecto', this.buildForm());
         if (this.validForm()) {
             if (this.projectId) {
                 this.newProyectService.putChangeProject(this.buildForm(), this.projectId, this.sessionId).subscribe((response) => {
@@ -696,7 +694,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     // modal
     close() {
         this.flagClose = false;
-        document.location.href = `http://3.227.233.169/c/content.asp?fld_id=${this.backtofld}`;
+        document.location.href = `${environment.addresses.closeProject.close}${this.backtofld}`;
     }
 
     openDialog() {
