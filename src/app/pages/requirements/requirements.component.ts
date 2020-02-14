@@ -7,6 +7,7 @@ import { ModalService } from 'src/app/component';
 import { NavigatorService, KeypressService, DocumentService, WindowService } from 'src/app/utils';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
     selector: 'app-requirements',
@@ -120,6 +121,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     private flagClose = false;
 
     historicalDescription: string;
+
+    openingNewActivity = false;
 
     constructor(
         private requirementService: RequierementsService,
@@ -239,6 +242,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             estimatedDateEnd: new FormControl(''),
             systemEffortinHours: new FormControl(''),
             usersEffortinHours: new FormControl(''),
+            solvedpercent: new FormControl(''),
             releaseNumber: new FormControl(''),
             project: new FormControl('', Validators.required),
         });
@@ -322,6 +326,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.transformDateToString(response.requerimiento.estimatedStartDate.value));
         this.requirementFormGroup.get('estimatedDateEnd').setValue(
             this.transformDateToString(response.requerimiento.estimatedEndDate.value));
+        this.requirementFormGroup.get('solvedpercent').setValue(response.requerimiento.solvedpercent.value);
 
         // historicalDescription systemEffortInHours userEffortInHours usersEffortinHours
         this.historicalDescription = response.requerimiento.description.value;
@@ -709,6 +714,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     visible: true,
                     enabled: true,
                     value: this.complexityLevelSelected.id ? +this.complexityLevelSelected.id : null
+                },
+                solvedpercent: {
+                    visible: true,
+                    enabled: true,
+                    value: +this.requirementFormGroup.get('solvedpercent').value
                 }
             }
         };
@@ -870,11 +880,20 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    openUpdateActivities() {
-        const displayName = encodeURIComponent(this.requirementLoad.displayName.value);
-        // tslint:disable-next-line: max-line-length
-        const url = `${environment.addresses.openActivities.open}${this.requirementLoad.docId.value}&id=${this.requirementLoad.id.value}&displayname=${displayName}&customer=${encodeURIComponent('Universal Assistance')}&customerid=51&project=${encodeURIComponent(this.requirementLoad.project.value)}&projectid=${this.requirementLoad.projectId.value}&context=backlog&callbackfunction=refreshgridActHTML`;
-        window.open(url, '_blank');
+    createNewActivity() {
+        let params = new HttpParams();
+        params = params.set('requirement_doc_id', this.requirementLoad.docId.value);
+        const url = `${environment.addresses.activities.newActivity}&${params.toString()}`;
+        this.openingNewActivity = true;
+        this.requirementService.getSetting("ServerUrl_Int", this.sessionId).subscribe((response) => {
+            debugger;
+            if(response.status === 200){
+                window.open(response.settings[0].Values.VALUE + url, '_blank');
+            }else{
+                alert("No se pudo cargar la nueva actividad. Pruebe nuevamente en unos minutos, si el problema persiste, comuníquese con el administrador");
+            }
+            this.openingNewActivity = false;
+        });
     }
 
     reloadActivities() {

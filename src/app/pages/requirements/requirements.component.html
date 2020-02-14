@@ -72,9 +72,17 @@
                             [isSession]="sessionId" (userSelectedData)="itemSelectedPredictive($event)"
                             [selectedFormControl]="requirementFormGroup.get('requestedByUser')"></app-user>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             <app-textfield text="Fecha de solicitud" [dispatchHint]="'dd/MM/yyyy'" mask="00/00/0000"
                                 id="requestDate" [control]="requirementFormGroup.get('requestDate')">
+                            </app-textfield>
+                        </div>
+                        <div class="col-md-3">
+                            <app-textfield
+                                text="Porcentaje de avance"
+                                id="solvedpercent" 
+                                [control]="requirementFormGroup.get('solvedpercent')"
+                                [disabled]="true">
                             </app-textfield>
                         </div>
                     </div>
@@ -168,7 +176,7 @@
                         </div>
                     </div>
                 </app-tab>
-                <app-tab [title]="'Actividades'">
+                <app-tab *ngIf="requirementAcction != 'new'" [title]="'Actividades'">
                     <div class="margin-top-16">
                         <div class="row">
                             <div class="col-md-10">
@@ -181,8 +189,8 @@
                         </div>
                     </div>
 
-                    <div *ngIf="false" class="margin-top-48 margin-right-24">
-                        <app-button [text]="'Cargar actividades'" (clickButton)="openUpdateActivities()"></app-button>
+                    <div class="margin-top-48 margin-right-24">
+                        <app-button [isLoading]="openingNewActivity" [text]="'Cargar actividades'" (clickButton)="createNewActivity()"></app-button>
                     </div>
                 </app-tab>
             </app-tabs>

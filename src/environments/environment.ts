@@ -1,3 +1,5 @@
+import { settings } from 'cluster';
+
 const API_DOMAIN = 'http://3.209.10.150:80/bffgestar/api/v1'; //TEST
 // const API_DOMAIN = 'http://3.231.217.94:80/bffgestar/api/v1'; //PROD
 
@@ -25,19 +27,20 @@ export const environment = {
       findCliend: `${API_DOMAIN}/Contactos`,
     },
     activities: {
-      searchActivities: `${API_DOMAIN}/Actividades`
+      searchActivities: `${API_DOMAIN}/Actividades`,
+      newActivity: '/c/forms/generic3.asp?closeonexit=1&action=new&actionact=newact&fld_id=5213'
     },
     loggedUserInfo: {
       loggedUserInfo: `${API_DOMAIN}/Usuarios/loggedUserInfo`
-    },
-    openActivities: {
-      open: 'http://3.209.10.150/c/forms/generic3.asp?closeonexit=1&action=new&actionact=newact&fld_id=5213&fldIdReferer=5811&docIdReferer='
     },
     closeRequirement: {
       close: 'http://3.209.10.150/c/content.asp?fld_id='
     },
     closeProject: {
       close: 'http://3.209.10.150/c/content.asp?fld_id='
+    },
+    settings: {
+      getSetting : `${API_DOMAIN}/Settings`
     }
   },
 };
