@@ -1,7 +1,8 @@
 import { settings } from 'cluster';
 
-const API_DOMAIN = 'http://3.209.10.150:80/bffgestar/api/v1'; //TEST
-// const API_DOMAIN = 'http://3.231.217.94:80/bffgestar/api/v1'; //PROD
+const API_DOMAIN = 'http://3.209.10.150:80/bffgestar/api/v1';
+const GESTAR_SERVER = 'http://3.209.10.150'
+const APPVIRTUALROOT = "c"
 
 export const environment = {
   production: false,
@@ -28,16 +29,16 @@ export const environment = {
     },
     activities: {
       searchActivities: `${API_DOMAIN}/Actividades`,
-      newActivity: '/c/forms/generic3.asp?closeonexit=1&action=new&actionact=newact&fld_id=5213'
+      newActivity: `${GESTAR_SERVER}/${APPVIRTUALROOT}/forms/generic3.asp?closeonexit=1&action=new&actionact=newact&fld_id=5213`
     },
     loggedUserInfo: {
       loggedUserInfo: `${API_DOMAIN}/Usuarios/loggedUserInfo`
     },
     closeRequirement: {
-      close: 'http://3.209.10.150/c/content.asp?fld_id='
+      close: `${GESTAR_SERVER}/${APPVIRTUALROOT}/content.asp?fld_id=`
     },
     closeProject: {
-      close: 'http://3.209.10.150/c/content.asp?fld_id='
+      close: `${GESTAR_SERVER}/${APPVIRTUALROOT}/content.asp?fld_id=`
     },
     settings: {
       getSetting : `${API_DOMAIN}/Settings`

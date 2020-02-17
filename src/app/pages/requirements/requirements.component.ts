@@ -122,8 +122,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     historicalDescription: string;
 
-    openingNewActivity = false;
-
     constructor(
         private requirementService: RequierementsService,
         private modalServiceNg: ModalService,
@@ -884,16 +882,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         let params = new HttpParams();
         params = params.set('requirement_doc_id', this.requirementLoad.docId.value);
         const url = `${environment.addresses.activities.newActivity}&${params.toString()}`;
-        this.openingNewActivity = true;
-        this.requirementService.getSetting("ServerUrl_Int", this.sessionId).subscribe((response) => {
-            debugger;
-            if(response.status === 200){
-                window.open(response.settings[0].Values.VALUE + url, '_blank');
-            }else{
-                alert("No se pudo cargar la nueva actividad. Pruebe nuevamente en unos minutos, si el problema persiste, comuníquese con el administrador");
-            }
-            this.openingNewActivity = false;
-        });
+        window.open(url, 'newActivity','height=600px, width=670px, resizable=yes, titlebar=no, scrollbars=1');
     }
 
     reloadActivities() {

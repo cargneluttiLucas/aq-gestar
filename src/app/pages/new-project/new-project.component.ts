@@ -173,6 +173,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.newProyectService.getNewProyect(this.sessionId).subscribe((response) => {
             if (response) {
                 this.cargarCombos(response);
+                this.loadFilds(response);
             }
         });
     }
