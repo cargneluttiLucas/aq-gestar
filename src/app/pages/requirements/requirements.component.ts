@@ -136,7 +136,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         const auxProyect = {
             filter: '',
             order: 'DOC_ID',
-            fields: 'DOC_ID,project_name,customer,customerid'
+            fields: 'DOC_ID,ID,project_name,customer,customerid'
         };
         const auxUsers = {
             userFilter: '',
@@ -203,7 +203,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.projects = [];
         proyects.forEach((item) => {
             const aux = { id: 0, description: '', disabled: false, customer: null, customerid: null };
-            aux.id = item.Values.DOC_ID;
+            aux.id = item.Values.ID;
             aux.description = item.Values.PROJECT_NAME;
             aux.customerid = item.Values.CUSTOMERID;
             aux.customer = item.Values.CUSTOMER;
