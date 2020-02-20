@@ -99,7 +99,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     public backtofld: number;
 
     projects = [];
-    proyectSelected = { id: null, description: null, disabled: false, customer: null, customerid: null };
+    proyectSelected = { id: null, description: null, project: null, disabled: false, customer: null, customerid: null };
     itemDefault: any;
     itemsFilterDefault = [];
 
@@ -136,7 +136,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         const auxProyect = {
             filter: '',
             order: 'DOC_ID',
-            fields: 'DOC_ID,ID,project_name,customer,customerid'
+            fields: 'DOC_ID,ID,project_name,DISPLAYNAME,customer,customerid'
         };
         const auxUsers = {
             userFilter: '',
@@ -202,9 +202,10 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     buildProjectTextfield(proyects) {
         this.projects = [];
         proyects.forEach((item) => {
-            const aux = { id: 0, description: '', disabled: false, customer: null, customerid: null };
+            const aux = { id: 0, description: '', project: '', disabled: false, customer: null, customerid: null };
             aux.id = item.Values.ID;
-            aux.description = item.Values.PROJECT_NAME;
+            aux.description = item.Values.DISPLAYNAME;
+            aux.project = item.Values.PROJECT_NAME;
             aux.customerid = item.Values.CUSTOMERID;
             aux.customer = item.Values.CUSTOMER;
 
@@ -331,9 +332,10 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         // this.requirementFormGroup.get('description').setValue(response.requerimiento.description.value);
 
         this.requirementFormGroup.get('releaseNumber').setValue(response.requerimiento.releaseNumber.value);
-        this.requirementFormGroup.get('project').setValue(response.requerimiento.project.value);
+        this.requirementFormGroup.get('project').setValue(response.requerimiento.projectDisplayName.value);
         this.proyectSelected.id = response.requerimiento.projectId.value;
-        this.proyectSelected.description = response.requerimiento.project.value;
+        this.proyectSelected.description = response.requerimiento.projectDisplayName.value;
+        this.proyectSelected.project = response.requerimiento.project.value;
         this.proyectSelected.customerid = response.requerimiento.customerId.value;
         this.proyectSelected.customer = response.requerimiento.customer.value;
         this.requirementFormGroup.get('requestedByUser').setValue(response.requerimiento.requestedByUser.value);
@@ -659,6 +661,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     value: this.proyectSelected.id
                 },
                 project: {
+                    visible: true,
+                    enabled: true,
+                    value: this.proyectSelected.project
+                },
+                projectDisplayName: {
                     visible: true,
                     enabled: true,
                     value: this.proyectSelected.description

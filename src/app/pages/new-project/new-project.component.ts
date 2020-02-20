@@ -96,7 +96,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     requestedByUserSelected = { id: null, description: '', disabled: false };
 
-    checkbox = { id: 1, disabled: false, selected: false, indeterminate: false, text: 'Sin numero' };
+    checkbox = { id: 1, disabled: false, selected: false, indeterminate: false, text: 'Sin número' };
     disabledPurchaseNumber = false;
 
     historicalDescription: string;

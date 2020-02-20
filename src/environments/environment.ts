@@ -1,7 +1,7 @@
 import { settings } from 'cluster';
 
-const API_DOMAIN = 'http://3.209.10.150:80/bffgestar/api/v1';
-const GESTAR_SERVER = 'http://3.209.10.150'
+const API_DOMAIN = 'http://localhost:61739/api/v1';
+const GESTAR_SERVER = 'http://3.227.233.148'
 const APPVIRTUALROOT = "c"
 
 export const environment = {
