@@ -9,6 +9,7 @@ import { Subscription, Observable, Subject } from 'rxjs';
 import { EventEmitter } from 'protractor';
 import { emit } from 'cluster';
 import { environment } from 'src/environments/environment';
+import { debug } from 'util';
 
 
 @Component({
@@ -95,7 +96,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     requestedByUserSelected = { id: null, description: '', disabled: false };
 
-    checkbox = { id: 1, disabled: false, selected: false, indeterminate: false, text: 'Sin numero' };
+    checkbox = { id: 1, disabled: false, selected: false, indeterminate: false, text: 'Sin número' };
     disabledPurchaseNumber = false;
 
     historicalDescription: string;
@@ -164,13 +165,17 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             requestedbyuser: new FormControl(''),
             displayname: new FormControl(''),
             priority: new FormControl(''),
+            solvedpercent: new FormControl(''),
         });
     }
 
     cargarNewProject() {
         this.newProyectService.getNewProyect(this.sessionId).subscribe((response) => {
             if (response) {
-                this.cargarCombos(response);
+                setTimeout(() => {
+                    this.cargarCombos(response);
+                    this.loadFilds(response);
+                }, 200);
             }
         });
     }
@@ -257,6 +262,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             response.proyecto.estimatedHours.value === 0 ? '' : response.proyecto.estimatedHours.value);
         this.newProyectFormGroup.get('realHours').setValue(
             response.proyecto.realHours.value === 0 ? '' : response.proyecto.realHours.value);
+        this.newProyectFormGroup.get('solvedpercent').setValue(
+            response.proyecto.solvedpercent.value === 0 ? '' : response.proyecto.solvedpercent.value);
 
         // combos
         if (response.proyecto.projectTypeId.value) {
@@ -484,6 +491,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                     enabled: true,
                     value: this.newProyectFormGroup.get('realHours').value === '' ?
                         null : +this.newProyectFormGroup.get('realHours').value
+                },
+                solvedpercent: {
+                    visible: true,
+                    enabled: true,
+                    value: this.newProyectFormGroup.get('solvedpercent').value === '' ?
+                        null : +this.newProyectFormGroup.get('solvedpercent').value
                 },
                 realStartDate: {
                     visible: true,

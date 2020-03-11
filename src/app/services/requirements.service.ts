@@ -56,4 +56,12 @@ export class RequierementsService {
     this.options.headers.SessionId = sessionId;
     return this.http.post<any>(environment.addresses.activities.searchActivities, filterData, this.options);
   }
+
+  public getSetting(setting: string, sessionId: string) {
+    const aux = {
+      filter: `SETTING in ('${setting.replace(/'/g, "''")}')`,
+    };
+    this.options.headers.SessionId = sessionId;
+    return this.http.post<any>(environment.addresses.settings.getSetting, aux, this.options);
+  }
 }

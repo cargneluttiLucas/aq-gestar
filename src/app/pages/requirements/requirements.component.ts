@@ -7,6 +7,7 @@ import { ModalService } from 'src/app/component';
 import { NavigatorService, KeypressService, DocumentService, WindowService } from 'src/app/utils';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
     selector: 'app-requirements',
@@ -98,7 +99,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     public backtofld: number;
 
     projects = [];
-    proyectSelected = { id: null, description: null, disabled: false, customer: null, customerid: null };
+    proyectSelected = { id: null, description: null, project: null, disabled: false, customer: null, customerid: null };
     itemDefault: any;
     itemsFilterDefault = [];
 
@@ -135,7 +136,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         const auxProyect = {
             filter: '',
             order: 'DOC_ID',
-            fields: 'DOC_ID,project_name,customer,customerid'
+            fields: 'DOC_ID,ID,project_name,DISPLAYNAME,customer,customerid'
         };
         const auxUsers = {
             userFilter: '',
@@ -201,9 +202,10 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     buildProjectTextfield(proyects) {
         this.projects = [];
         proyects.forEach((item) => {
-            const aux = { id: 0, description: '', disabled: false, customer: null, customerid: null };
-            aux.id = item.Values.DOC_ID;
-            aux.description = item.Values.PROJECT_NAME;
+            const aux = { id: 0, description: '', project: '', disabled: false, customer: null, customerid: null };
+            aux.id = item.Values.ID;
+            aux.description = item.Values.DISPLAYNAME;
+            aux.project = item.Values.PROJECT_NAME;
             aux.customerid = item.Values.CUSTOMERID;
             aux.customer = item.Values.CUSTOMER;
 
@@ -239,6 +241,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             estimatedDateEnd: new FormControl(''),
             systemEffortinHours: new FormControl(''),
             usersEffortinHours: new FormControl(''),
+            solvedpercent: new FormControl(''),
             releaseNumber: new FormControl(''),
             project: new FormControl('', Validators.required),
         });
@@ -322,15 +325,17 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.transformDateToString(response.requerimiento.estimatedStartDate.value));
         this.requirementFormGroup.get('estimatedDateEnd').setValue(
             this.transformDateToString(response.requerimiento.estimatedEndDate.value));
+        this.requirementFormGroup.get('solvedpercent').setValue(response.requerimiento.solvedpercent.value);
 
         // historicalDescription systemEffortInHours userEffortInHours usersEffortinHours
         this.historicalDescription = response.requerimiento.description.value;
         // this.requirementFormGroup.get('description').setValue(response.requerimiento.description.value);
 
         this.requirementFormGroup.get('releaseNumber').setValue(response.requerimiento.releaseNumber.value);
-        this.requirementFormGroup.get('project').setValue(response.requerimiento.project.value);
+        this.requirementFormGroup.get('project').setValue(response.requerimiento.projectDisplayName.value);
         this.proyectSelected.id = response.requerimiento.projectId.value;
-        this.proyectSelected.description = response.requerimiento.project.value;
+        this.proyectSelected.description = response.requerimiento.projectDisplayName.value;
+        this.proyectSelected.project = response.requerimiento.project.value;
         this.proyectSelected.customerid = response.requerimiento.customerId.value;
         this.proyectSelected.customer = response.requerimiento.customer.value;
         this.requirementFormGroup.get('requestedByUser').setValue(response.requerimiento.requestedByUser.value);
@@ -658,6 +663,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 project: {
                     visible: true,
                     enabled: true,
+                    value: this.proyectSelected.project
+                },
+                projectDisplayName: {
+                    visible: true,
+                    enabled: true,
                     value: this.proyectSelected.description
                 },
                 customerId: {
@@ -709,6 +719,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     visible: true,
                     enabled: true,
                     value: this.complexityLevelSelected.id ? +this.complexityLevelSelected.id : null
+                },
+                solvedpercent: {
+                    visible: true,
+                    enabled: true,
+                    value: +this.requirementFormGroup.get('solvedpercent').value
                 }
             }
         };
@@ -870,11 +885,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    openUpdateActivities() {
-        const displayName = encodeURIComponent(this.requirementLoad.displayName.value);
-        // tslint:disable-next-line: max-line-length
-        const url = `${environment.addresses.openActivities.open}${this.requirementLoad.docId.value}&id=${this.requirementLoad.id.value}&displayname=${displayName}&customer=${encodeURIComponent('Universal Assistance')}&customerid=51&project=${encodeURIComponent(this.requirementLoad.project.value)}&projectid=${this.requirementLoad.projectId.value}&context=backlog&callbackfunction=refreshgridActHTML`;
-        window.open(url, '_blank');
+    createNewActivity() {
+        let params = new HttpParams();
+        params = params.set('requirement_doc_id', this.requirementLoad.docId.value);
+        const url = `${environment.addresses.activities.newActivity}&${params.toString()}`;
+        window.open(url, 'newActivity','height=600px, width=670px, resizable=yes, titlebar=no, scrollbars=1');
     }
 
     reloadActivities() {

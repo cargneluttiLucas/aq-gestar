@@ -37,7 +37,7 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <app-user [text]="'Codinador'" [id]="'coordinator'" [isSession]="sessionId" (userSelectedData)="itemSelectedPredictiveCoordinators($event)"
+                        <app-user [text]="'Coordinador'" [id]="'coordinator'" [isSession]="sessionId" (userSelectedData)="itemSelectedPredictiveCoordinators($event)"
                         [selectedFormControl]="newProyectFormGroup.get('coordinator')"></app-user>
                     </div>
                     <div class="col-md-6">
@@ -144,13 +144,23 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <app-textfield [text]="'Horas estimadas'" id="estimatedHours"
                             [control]="newProyectFormGroup.get('estimatedHours')"></app-textfield>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6">
                         <app-textfield [text]="'Horas reales'" id="realHours"
                             [control]="newProyectFormGroup.get('realHours')">
+                        </app-textfield>
+                    </div>                                     
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <app-textfield
+                            text="Porcentaje de avance"
+                            id="solvedpercent" 
+                            [control]="newProyectFormGroup.get('solvedpercent')"
+                            [disabled]="true">
                         </app-textfield>
                     </div>
                     <div class="col-md-6">
@@ -160,7 +170,6 @@
                             </app-checkbox>
                         </app-textfield>
                     </div>
-
                 </div>
                 <div class="row">
                     <!-- <div class="col-md-6">
@@ -173,7 +182,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <app-textfield text="Descripcion" id="description"
+                        <app-textfield text="Descripción" id="description"
                             [control]="newProyectFormGroup.get('description')">
                         </app-textfield>
                     </div>
