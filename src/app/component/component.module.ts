@@ -13,6 +13,7 @@ import { CheckboxsModule } from './checkboxs/checkboxs.module';
 import { TabsModule } from './tabs/tabs.module';
 import { TableModule } from './table/table.module';
 import { ShowTextModule } from './show-text';
+import { SpinnerModule } from './spinner/spinner.module';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { ShowTextModule } from './show-text';
     CheckboxsModule.forRoot(),
     TabsModule.forRoot(),
     TableModule.forRoot(),
-    ShowTextModule.forRoot()
+    ShowTextModule.forRoot(),
+    SpinnerModule.forRoot()
   ],
   declarations: [],
   exports: [
@@ -45,7 +47,8 @@ import { ShowTextModule } from './show-text';
     TextfieldPredictiveModule,
     CheckboxsModule,
     TabsModule,
-    TableModule
+    TableModule,
+    SpinnerModule
   ]
 })
 export class ComponentsModule {

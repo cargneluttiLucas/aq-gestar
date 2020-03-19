@@ -7,6 +7,7 @@ import { ComponentsModule } from './component';
 import { ServiceModule } from './services/service.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PagesModule } from './pages/pages.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { PagesModule } from './pages/pages.module';
   ],
   imports: [
     BrowserModule,
+    CoreModule,
     AppRoutingModule,
     ComponentsModule.forRoot(),
     PagesModule.forRoot(),

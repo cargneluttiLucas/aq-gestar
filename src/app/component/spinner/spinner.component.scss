@@ -1,0 +1,34 @@
+:host {
+  background-color: white;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: visible;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 999;
+}
+
+.login-container {
+  height: 100%;
+}
+
+.login-container::before {
+  background-color: rgba(0, 0, 0, 0.2);
+  content: "";
+  display: block;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.login-container:not(:required) {
+  background-color: transparent;
+  border: 0;
+  color: transparent;
+  font: 0/0 a;
+  text-shadow: none;
+}

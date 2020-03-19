@@ -41,7 +41,7 @@
                 <app-tab [title]="'Requerimiento'">
                     <div class="row  margin-top-16">
                         <div class="col-md-6">
-                            <app-textfield text="Titulo" id="title" [control]="requirementFormGroup.get('title')">
+                            <app-textfield text="Titulo" [disabled]="requirementName" id="title" [control]="requirementFormGroup.get('title')">
                             </app-textfield>
                         </div>
                     </div>

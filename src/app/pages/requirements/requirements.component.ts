@@ -95,6 +95,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     public sessionId: string;
     public projectId: number;
     public requirementId: number;
+    public requirementName: string;
     public requirementAcction: string;
     public backtofld: number;
 
@@ -315,6 +316,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementFormGroup.get('createdDate').setValue(this.transformDateToString(response.requerimiento.createdDate.value));
         this.requirementFormGroup.get('creator').setValue(response.requerimiento.creator.value);
         this.requirementFormGroup.get('title').setValue(response.requerimiento.title.value);
+        this.requirementName = response.requerimiento.title.value;
         this.requirementFormGroup.get('state').setValue(response.requerimiento.state.value);
         this.requirementFormGroup.get('createdMonth').setValue(this.transformDateToString(response.requerimiento.createdMonth.value));
         this.requirementFormGroup.get('displayName').setValue(response.requerimiento.displayName.value);

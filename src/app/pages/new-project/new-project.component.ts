@@ -1,15 +1,12 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NewProjectService } from 'src/app/services/new-project.service';
 import { CookieService } from 'src/app/services/cookie.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'src/app/component';
 import { KeypressService, DocumentService, NavigatorService } from 'src/app/utils';
-import { Subscription, Observable, Subject } from 'rxjs';
-import { EventEmitter } from 'protractor';
-import { emit } from 'cluster';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { debug } from 'util';
 
 
 @Component({
@@ -77,8 +74,9 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     saveAndExitText = 'Guardar y salir';
 
     public sessionId: string;
-    // public sessionId = 'f00850c5d5bc4637bb2aa77ebcfe25be';
+    // public sessionId = 'cb575a158b7c4b91a181058fead54136';
     public projectId: number;
+    public proyectName: string;
     public backtofld: number;
     private proyectAcction: string;
 
@@ -216,6 +214,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.managementAreaInChargeDisabled = false;
         this.newProyectFormGroup.get('id').setValue(response.proyecto.id.value);
         this.newProyectFormGroup.get('name').setValue(response.proyecto.projectName.value);
+        this.proyectName = response.proyecto.projectName.value;
 
 
         this.newProyectFormGroup.get('client').setValue(response.proyecto.customer.value);
