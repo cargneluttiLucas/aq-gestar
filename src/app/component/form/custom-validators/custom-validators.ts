@@ -153,10 +153,20 @@ export class CustomValidators {
     if (isEmpty(control.value)) {
       return null;
     }
-    return DATE_SIN_BARRAS_REGEXP.test(control.value) ? null : { dateSinBarras: true };
+    if (control.dirty) {
+      return DATE_SIN_BARRAS_REGEXP.test(control.value) ?  { dateSinBarras: false } : { dateSinBarras: true };
+      console.log('component dirty');
+    }
   }
 
   static date(control: AbstractControl): ValidationErrors | null {
+    if (isEmpty(control.value)) {
+      return null;
+    }
+    return DATE_REGEXP.test(control.value) ? null : { date: true };
+  }
+
+  static dateMinToDay(control: AbstractControl): ValidationErrors | null {
     if (isEmpty(control.value)) {
       return null;
     }
@@ -215,8 +225,8 @@ export class ErrorMessages {
       itemsFilterEmpty: `No hay elementos.`,
       phone: `Revisá el número.`,
       phoneInvalid: `Revisá el número.`,
-      dateSinBarras: `La fecha ingresada no tiene el formato válido.`,
-      date: `La fecha ingresada no tiene el formato válido.`,
+      dateSinBarras: `La fecha no es válida.`,
+      date: `La fecha no es válida.`,
       cbu: `El cbu ingresado es inválido.`,
       ...(validatorValue && validatorValue.requiredLength) ? {
         maxlength: `Ingresá como maximo ${validatorValue.requiredLength} digitos`,

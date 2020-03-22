@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NewProjectService } from 'src/app/services/new-project.service';
 import { CookieService } from 'src/app/services/cookie.service';
@@ -7,6 +7,7 @@ import { ModalService } from 'src/app/component';
 import { KeypressService, DocumentService, NavigatorService } from 'src/app/utils';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { FORMS_CUSTOM_VALIDATORS } from 'src/app/component/form';
 
 
 @Component({
@@ -73,8 +74,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
-    public sessionId: string;
-    // public sessionId = 'cb575a158b7c4b91a181058fead54136';
+    // public sessionId: string;
+    public sessionId = '23a2883f5afc4fbabc15cdbfd0680759';
     public projectId: number;
     public proyectName: string;
     public backtofld: number;
@@ -105,15 +106,13 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         private newProyectService: NewProjectService,
         private cookieService: CookieService,
         private modalServiceNg: ModalService,
-        private keypressService: KeypressService,
         private documentService: DocumentService,
-        private deviceDetector: NavigatorService,
-        private route: ActivatedRoute,
+        @Inject(FORMS_CUSTOM_VALIDATORS) private customValidators: any,
         private router: Router) { }
 
 
     ngOnInit() {
-        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;
@@ -135,6 +134,15 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         });
     }
 
+
+    public compareDate(date1: Date, date2: Date): number {
+        const d1 = new Date(date1); const d2 = new Date(date2);
+        const same = d1.getTime() === d2.getTime();
+        if (same) { return 0; }
+        if (d1 > d2) { return -1; }
+        if (d1 < d2) { return 1; }
+    }
+
     createForm() {
         this.newProyectFormGroup = new FormGroup({
             id: new FormControl(''),
@@ -146,7 +154,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             qualitativebenefits: new FormControl(''),
             quantitativebenefits: new FormControl(''),
 
-            dateStart: new FormControl(''),
+            dateStart: new FormControl('', this.customValidators.dateSinBarras),
             dateEnd: new FormControl(''),
             dateStartReal: new FormControl(''),
             dateEndReal: new FormControl(''),
