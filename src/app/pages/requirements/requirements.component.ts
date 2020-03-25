@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { RequierementsService } from 'src/app/services/requirements.service';
 import { CookieService } from 'src/app/services/cookie.service';
@@ -8,6 +8,7 @@ import { NavigatorService, KeypressService, DocumentService, WindowService } fro
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
+import { FORMS_CUSTOM_VALIDATORS } from 'src/app/component/form';
 
 @Component({
     selector: 'app-requirements',
@@ -131,6 +132,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         private documentService: DocumentService,
         private deviceDetector: NavigatorService,
         private route: ActivatedRoute,
+        @Inject(FORMS_CUSTOM_VALIDATORS) private customValidators: any,
         private router: Router) { }
 
     ngOnInit() {
@@ -224,6 +226,30 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
+    validateDates() {
+        this.requirementFormGroup.get('requestDate').valueChanges.subscribe((data) => {
+            if (data && data.length !== 0) {
+                this.requirementFormGroup.get('requestDate').setValidators(this.customValidators.dateSinBarras);
+            } else {
+                this.requirementFormGroup.get('requestDate').setValidators(null);
+            }
+        });
+        this.requirementFormGroup.get('estimatedDateStart').valueChanges.subscribe((data) => {
+            if (data && data.length !== 0) {
+                this.requirementFormGroup.get('estimatedDateStart').setValidators(this.customValidators.dateSinBarras);
+            } else {
+                this.requirementFormGroup.get('estimatedDateStart').setValidators(null);
+            }
+        });
+        this.requirementFormGroup.get('estimatedDateEnd').valueChanges.subscribe((data) => {
+            if (data && data.length !== 0) {
+                this.requirementFormGroup.get('estimatedDateEnd').setValidators(this.customValidators.dateSinBarras);
+            } else {
+                this.requirementFormGroup.get('estimatedDateEnd').setValidators(null);
+            }
+        });
+    }
+
     createForm() {
         this.requirementFormGroup = new FormGroup({
             id: new FormControl(''),
@@ -236,9 +262,9 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             organization: new FormControl(''),
             realDateEnd: new FormControl(''),
             description: new FormControl(''),
-            requestDate: new FormControl(''),
             requestedByUser: new FormControl(''),
 
+            requestDate: new FormControl(''),
             estimatedDateStart: new FormControl(''),
             estimatedDateEnd: new FormControl(''),
 
@@ -893,7 +919,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         let params = new HttpParams();
         params = params.set('requirement_doc_id', this.requirementLoad.docId.value);
         const url = `${environment.addresses.activities.newActivity}&${params.toString()}`;
-        window.open(url, 'newActivity','height=600px, width=670px, resizable=yes, titlebar=no, scrollbars=1');
+        window.open(url, 'newActivity', 'height=600px, width=670px, resizable=yes, titlebar=no, scrollbars=1');
     }
 
     reloadActivities() {

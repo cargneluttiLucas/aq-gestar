@@ -136,7 +136,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.validateDates();
     }
 
-    validateDates(){
+    validateDates() {
         this.newProyectFormGroup.get('dateStart').valueChanges.subscribe((data) => {
             if (data && data.length !== 0) {
                 this.newProyectFormGroup.get('dateStart').setValidators(this.customValidators.dateSinBarras);
