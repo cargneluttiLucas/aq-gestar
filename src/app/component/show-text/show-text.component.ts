@@ -23,6 +23,10 @@ export class ShowTextComponent implements OnChanges {
           index = i;
         }
       }
+
+      if (this.historicalDescription.length === 0) {
+        this.historicalDescription.push(this.description);
+      }
     }
 
   }

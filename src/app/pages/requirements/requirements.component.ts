@@ -91,7 +91,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    // public sessionId = 'f00850c5d5bc4637bb2aa77ebcfe25be';
+    // public sessionId = '69d14220bb46472d857eff0348ebb691';
     public sessionId: string;
     public projectId: number;
     public requirementId: number;
@@ -238,8 +238,10 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             description: new FormControl(''),
             requestDate: new FormControl(''),
             requestedByUser: new FormControl(''),
+
             estimatedDateStart: new FormControl(''),
             estimatedDateEnd: new FormControl(''),
+
             systemEffortinHours: new FormControl(''),
             usersEffortinHours: new FormControl(''),
             solvedpercent: new FormControl(''),

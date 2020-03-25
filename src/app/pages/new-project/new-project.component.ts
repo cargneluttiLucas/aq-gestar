@@ -74,8 +74,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
-    // public sessionId: string;
-    public sessionId = '23a2883f5afc4fbabc15cdbfd0680759';
+    public sessionId: string;
+    // public sessionId = '69d14220bb46472d857eff0348ebb691';
     public projectId: number;
     public proyectName: string;
     public backtofld: number;
@@ -112,7 +112,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
 
     ngOnInit() {
-        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;
@@ -132,8 +132,40 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 this.loggedUserInfo = response.usuario.userFullName.value;
             }
         });
+
+        this.validateDates();
     }
 
+    validateDates(){
+        this.newProyectFormGroup.get('dateStart').valueChanges.subscribe((data) => {
+            if (data && data.length !== 0) {
+                this.newProyectFormGroup.get('dateStart').setValidators(this.customValidators.dateSinBarras);
+            } else {
+                this.newProyectFormGroup.get('dateStart').setValidators(null);
+            }
+        });
+        this.newProyectFormGroup.get('dateEnd').valueChanges.subscribe((data) => {
+            if (data && data.length !== 0) {
+                this.newProyectFormGroup.get('dateEnd').setValidators(this.customValidators.dateSinBarras);
+            } else {
+                this.newProyectFormGroup.get('dateEnd').setValidators(null);
+            }
+        });
+        this.newProyectFormGroup.get('dateStartReal').valueChanges.subscribe((data) => {
+            if (data && data.length !== 0) {
+                this.newProyectFormGroup.get('dateStartReal').setValidators(this.customValidators.dateSinBarras);
+            } else {
+                this.newProyectFormGroup.get('dateStartReal').setValidators(null);
+            }
+        });
+        this.newProyectFormGroup.get('dateEndReal').valueChanges.subscribe((data) => {
+            if (data && data.length !== 0) {
+                this.newProyectFormGroup.get('dateEndReal').setValidators(this.customValidators.dateSinBarras);
+            } else {
+                this.newProyectFormGroup.get('dateEndReal').setValidators(null);
+            }
+        });
+    }
 
     public compareDate(date1: Date, date2: Date): number {
         const d1 = new Date(date1); const d2 = new Date(date2);
@@ -154,10 +186,11 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             qualitativebenefits: new FormControl(''),
             quantitativebenefits: new FormControl(''),
 
-            dateStart: new FormControl('', this.customValidators.dateSinBarras),
+            dateStart: new FormControl(''),
             dateEnd: new FormControl(''),
             dateStartReal: new FormControl(''),
             dateEndReal: new FormControl(''),
+
             estimatedHours: new FormControl(''),
             realHours: new FormControl(''),
 
