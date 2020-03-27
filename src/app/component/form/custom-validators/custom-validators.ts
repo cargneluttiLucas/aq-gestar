@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 const NUMBER_REGEXP = /^\d+$/;
 const ALPHANUMBER_REGEXP = /^[a-z0-9]+$/i;
-const DATE_SIN_BARRAS_REGEXP = /^(0[1-9]|[1-2][0-9]|31(?!(?:0[2469]|11))|30(?!02))(0[1-9]|1[0-2])([12]\d{3})/m;
+const DATE_SIN_BARRAS_REGEXP = /^(0[1-9]|[1-2][0-9]|31(?!(?:0[2469]|11))|30(?!02))(0[1-9]|1[0-2])([12]\d{3})/gm;
 const EMAIL_REGEXP = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
 
 // tslint:disable-next-line: max-line-length
@@ -154,7 +154,7 @@ export class CustomValidators {
       return null;
     }
     if (control.dirty) {
-      return DATE_SIN_BARRAS_REGEXP.test(control.value) ?  { dateSinBarras: false } : { dateSinBarras: true };
+      return DATE_SIN_BARRAS_REGEXP.test(control.value) ?  null : { dateSinBarras: true };
       console.log('component dirty');
     }
   }
