@@ -74,8 +74,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
-    // public sessionId: string;
-    public sessionId = '0396acf63485430b9981436c6070263d';
+    public sessionId: string;
+    //public sessionId = '0396acf63485430b9981436c6070263d';
     public projectId: number;
     public proyectName: string;
     public backtofld: number;

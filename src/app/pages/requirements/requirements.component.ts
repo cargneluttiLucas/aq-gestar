@@ -92,8 +92,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    public sessionId = '0396acf63485430b9981436c6070263d';
-    // public sessionId: string;
+    //public sessionId = '0396acf63485430b9981436c6070263d';
+    public sessionId: string;
     public projectId: number;
     public requirementId: number;
     public requirementName: string;
