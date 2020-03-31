@@ -1,0 +1,12 @@
+<div [style.cursor]="clickable ? 'pointer' : 'initial'" [style.position]="clickable ? 'relative' : 'initial'"
+   [ngClass]="{'card-container--notHover': isNotHover, 
+                 'card-container__default': !defaultStyles && breakpointMinWithoutStyles >= widthViewport,
+                 'card-container--notShadow': isNotShadow}" [ngStyle]="(widthViewport > breakpointMinWithoutStyles)
+      || (widthViewport <= breakpointMinWithoutStyles && defaultStyles) ? styleList : styleListMobile" class="card-container"
+  zBrowser (click)="onCardClicked()">
+
+  <div class="card-container-body" [ngStyle]="(widthViewport > breakpointMinWithoutStyles)
+    || (widthViewport <= breakpointMinWithoutStyles && defaultStyles) ? styleListBody : styleListBodyMobile">
+    <ng-content></ng-content>
+  </div>
+</div>

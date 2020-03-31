@@ -9,3 +9,5 @@ export * from './checkboxs/index';
 export * from './tabs/index';
 export * from './table/index';
 export * from './show-text/index';
+export * from './card/index';
+export * from './container-icon/index';
