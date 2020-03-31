@@ -145,7 +145,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             userFilter: '',
             userOrder: ''
         };
-        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.searchProject(auxProyect);
         this.router.routerState.root.queryParams.forEach((item) => {
             this.requirementId = item.doc_id;
