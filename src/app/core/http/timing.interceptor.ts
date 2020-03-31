@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 
 export class TimingInterceptor implements HttpInterceptor {
   componentFactory;
+  pendingRequests = 0;
 
   reqList: any[] = [];
 
@@ -30,7 +31,11 @@ export class TimingInterceptor implements HttpInterceptor {
     return next.handle(req)
       .pipe(
         tap((event) => {
-          this.showSpinner(true);
+          console.log(event);
+          if (event.type === 0) {
+            this.pendingRequests++;
+            this.showSpinner(true);
+          }
           // Succeeds when there is a response; ignore other events
           ok = event instanceof HttpResponse ? 'succeeded' : '';
           // Operation failed; error is an HttpErrorResponse
@@ -43,27 +48,21 @@ export class TimingInterceptor implements HttpInterceptor {
           const elapsed = Date.now() - started;
           const msg = `${req.method} "${req.urlWithParams}"
              ${ok} in ${elapsed} ms.`;
-          this.showSpinner(false, req.urlWithParams);
+          this.pendingRequests--;
+          this.showSpinner(false);
           LoggerService.log(msg);
         })
       );
   }
 
-  private showSpinner(flag: boolean, url?: string) {
+  private showSpinner(flag: boolean) {
     if (flag && !this.componentFactory) {
       this.componentFactory = this.componentFactoryResolver.resolveComponentFactory(SpinnerComponent).create(this.injector);
       this.appRef.attachView(this.componentFactory.hostView);
       const domElem = (this.componentFactory.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
       document.body.appendChild(domElem);
     }
-    if (!flag && this.componentFactory) {
-      this.reqList.forEach((item, index) => {
-        if (item.url === url && item.pending) {
-          this.reqList[index].pending = false;
-        }
-      });
-    }
-    if (!this.reqList[this.reqList.length - 1].pending) {
+    if (this.pendingRequests === 0) {
       this.appRef.detachView(this.componentFactory.hostView);
       this.componentFactory.destroy();
     }
