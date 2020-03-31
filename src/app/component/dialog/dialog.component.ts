@@ -2,24 +2,24 @@ import { AfterViewInit, Component, OnInit, OnDestroy } from '@angular/core';
 import { IContainerIconData } from '../container-icon/models/container-icon-data.interface';
 import { IModalDialogButton } from './services/dialog.service';
 import { IModalDialogOptions } from '../../utils/services/modal/models/modal-dialog.interface';
-import { ZBrowser } from '../../utils/util/browser/browser';
+import { Browser } from '../../utils/util/browser/browser';
 import { Subject, Subscription } from 'rxjs';
 import {
   WindowService,
   DocumentService,
   KeypressService,
-  NGZModalDialogService,
+  ModalDialogService,
   NavigatorService,
   KeyPressType
 } from '../../utils/index';
 
 @Component({
-  selector: 'z-dialog',
+  selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
-export class NGZDialogComponent implements OnInit, IModalDialogOptions<any>, AfterViewInit, OnDestroy {
-  browser = new ZBrowser(this.windowService);
+export class DialogComponent implements OnInit, IModalDialogOptions<any>, AfterViewInit, OnDestroy {
+  browser = new Browser(this.windowService);
   contentIcon: IContainerIconData;
   title: string;
   paragraph: string;
@@ -48,7 +48,7 @@ export class NGZDialogComponent implements OnInit, IModalDialogOptions<any>, Aft
   constructor(
     private documentService: DocumentService,
     private windowService: WindowService,
-    public modalService: NGZModalDialogService,
+    public modalService: ModalDialogService,
     private deviceDetector: NavigatorService,
     private keypressService: KeypressService) {
   }
@@ -89,20 +89,20 @@ export class NGZDialogComponent implements OnInit, IModalDialogOptions<any>, Aft
   setModal(): void {
 
     this.documentService.nativeDocument.body.style.overflow = 'hidden';
-    (this.documentService.nativeDocument.querySelector('z-dialog') as HTMLElement).style.alignItems = 'center';
-    (this.documentService.nativeDocument.querySelector('z-dialog') as HTMLElement).style.border = '0';
-    (this.documentService.nativeDocument.querySelector('z-dialog') as HTMLElement).style.display = 'flex';
-    (this.documentService.nativeDocument.querySelector('z-dialog') as HTMLElement).style.height = 'calc(100vh - 10px)';
-    (this.documentService.nativeDocument.querySelector('z-dialog') as HTMLElement).style.justifyContent = 'center';
-    (this.documentService.nativeDocument.querySelector('z-dialog') as HTMLElement).style.left =
+    (this.documentService.nativeDocument.querySelector('dialog') as HTMLElement).style.alignItems = 'center';
+    (this.documentService.nativeDocument.querySelector('dialog') as HTMLElement).style.border = '0';
+    (this.documentService.nativeDocument.querySelector('dialog') as HTMLElement).style.display = 'flex';
+    (this.documentService.nativeDocument.querySelector('dialog') as HTMLElement).style.height = 'calc(100vh - 10px)';
+    (this.documentService.nativeDocument.querySelector('dialog') as HTMLElement).style.justifyContent = 'center';
+    (this.documentService.nativeDocument.querySelector('dialog') as HTMLElement).style.left =
       this.browser.getBrowser() === 'ie' ? '-10%' : '0';
-    (this.documentService.nativeDocument.querySelector('z-dialog') as HTMLElement).style.overflow = 'hidden';
-    (this.documentService.nativeDocument.querySelector('z-dialog') as HTMLElement).style.position = 'fixed';
-    (this.documentService.nativeDocument.querySelector('z-dialog') as HTMLElement).style.right = '0';
-    (this.documentService.nativeDocument.querySelector('z-dialog') as HTMLElement).style.top =
+    (this.documentService.nativeDocument.querySelector('dialog') as HTMLElement).style.overflow = 'hidden';
+    (this.documentService.nativeDocument.querySelector('dialog') as HTMLElement).style.position = 'fixed';
+    (this.documentService.nativeDocument.querySelector('dialog') as HTMLElement).style.right = '0';
+    (this.documentService.nativeDocument.querySelector('dialog') as HTMLElement).style.top =
       this.browser.getBrowser() === 'ie' ? '-10%' : '0';
-    (this.documentService.nativeDocument.querySelector('z-dialog') as HTMLElement).style.width = '100%';
-    (this.documentService.nativeDocument.querySelector('z-dialog') as HTMLElement).style.zIndex = '810';
+    (this.documentService.nativeDocument.querySelector('dialog') as HTMLElement).style.width = '100%';
+    (this.documentService.nativeDocument.querySelector('dialog') as HTMLElement).style.zIndex = '810';
 
   }
 

@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { NGZDialogComponent } from '../dialog.component';
+import { DialogComponent } from '../dialog.component';
 import { ModalDialogService } from 'src/app/utils';
 import { IContainerIconData } from '../../container-icon/models/container-icon-data.interface';
 
 @Injectable()
-export class NGZDialogService {
+export class DialogService {
 
   constructor(private modalService: ModalDialogService) { }
 
   showDialog(dataComponent: IDialogData, afterClose: Subject<any>): void {
-    this.modalService.openDialog(NGZDialogComponent, {
-      childComponent: NGZDialogComponent,
+    this.modalService.openDialog(DialogComponent, {
+      childComponent: DialogComponent,
       data: dataComponent,
       onAfterClose: afterClose,
       isOverlay: true

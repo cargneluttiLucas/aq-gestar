@@ -6,7 +6,7 @@ import { DocumentService } from '../../utils/services/document/document.service'
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
-export class NGZCardComponent {
+export class CardComponent {
   @Input() styleList: any;
   @Input() styleListMobile: any;
 

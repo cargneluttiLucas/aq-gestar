@@ -26,7 +26,7 @@ import {
   templateUrl: './custom-dialog.component.html',
   styleUrls: ['./custom-dialog.component.scss']
 })
-export class NGZCustomDialogComponent implements OnInit, OnDestroy, IModalDialogOptions<any>, AfterViewInit {
+export class CustomDialogComponent implements OnInit, OnDestroy, IModalDialogOptions<any>, AfterViewInit {
   isPostbackSafari = false;
   browser = new Browser(this.windowService);
   isMobile = false;
@@ -87,20 +87,20 @@ export class NGZCustomDialogComponent implements OnInit, OnDestroy, IModalDialog
   setModal(): void {
     const browser = new Browser(this.windowService);
     this.documentService.nativeDocument.body.style.overflow = 'hidden';
-    (this.documentService.nativeDocument.querySelector('z-custom-dialog') as HTMLElement).style.alignItems = 'center';
-    (this.documentService.nativeDocument.querySelector('z-custom-dialog') as HTMLElement).style.border = '0';
-    (this.documentService.nativeDocument.querySelector('z-custom-dialog') as HTMLElement).style.display = 'flex';
-    (this.documentService.nativeDocument.querySelector('z-custom-dialog') as HTMLElement).style.height = 'calc(100vh - 10px)';
-    (this.documentService.nativeDocument.querySelector('z-custom-dialog') as HTMLElement).style.justifyContent = 'center';
-    (this.documentService.nativeDocument.querySelector('z-custom-dialog') as HTMLElement).style.left =
+    (this.documentService.nativeDocument.querySelector('custom-dialog') as HTMLElement).style.alignItems = 'center';
+    (this.documentService.nativeDocument.querySelector('custom-dialog') as HTMLElement).style.border = '0';
+    (this.documentService.nativeDocument.querySelector('custom-dialog') as HTMLElement).style.display = 'flex';
+    (this.documentService.nativeDocument.querySelector('custom-dialog') as HTMLElement).style.height = 'calc(100vh - 10px)';
+    (this.documentService.nativeDocument.querySelector('custom-dialog') as HTMLElement).style.justifyContent = 'center';
+    (this.documentService.nativeDocument.querySelector('custom-dialog') as HTMLElement).style.left =
       browser.getBrowser() === 'ie' ? '-10%' : '0';
-    (this.documentService.nativeDocument.querySelector('z-custom-dialog') as HTMLElement).style.overflow = 'hidden';
-    (this.documentService.nativeDocument.querySelector('z-custom-dialog') as HTMLElement).style.position = 'fixed';
-    (this.documentService.nativeDocument.querySelector('z-custom-dialog') as HTMLElement).style.right = '0';
-    (this.documentService.nativeDocument.querySelector('z-custom-dialog') as HTMLElement).style.top =
+    (this.documentService.nativeDocument.querySelector('custom-dialog') as HTMLElement).style.overflow = 'hidden';
+    (this.documentService.nativeDocument.querySelector('custom-dialog') as HTMLElement).style.position = 'fixed';
+    (this.documentService.nativeDocument.querySelector('custom-dialog') as HTMLElement).style.right = '0';
+    (this.documentService.nativeDocument.querySelector('custom-dialog') as HTMLElement).style.top =
       browser.getBrowser() === 'ie' ? '-10%' : '0';
-    (this.documentService.nativeDocument.querySelector('z-custom-dialog') as HTMLElement).style.width = '100%';
-    (this.documentService.nativeDocument.querySelector('z-custom-dialog') as HTMLElement).style.zIndex = '830';
+    (this.documentService.nativeDocument.querySelector('custom-dialog') as HTMLElement).style.width = '100%';
+    (this.documentService.nativeDocument.querySelector('custom-dialog') as HTMLElement).style.zIndex = '830';
 
     const bodyElement = (this.documentService.nativeDocument.querySelector('body') as HTMLElement);
     this.eventBody = fromEvent(bodyElement, 'keydown');
@@ -130,11 +130,11 @@ export class NGZCustomDialogComponent implements OnInit, OnDestroy, IModalDialog
     }
 
     const domElem = (component.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
-    (this.documentService.nativeDocument.querySelector('.z-custom-modal-dialog__content__body') as HTMLElement).appendChild(domElem);
+    (this.documentService.nativeDocument.querySelector('.custom-modal-dialog__content__body') as HTMLElement).appendChild(domElem);
 
     if (this.data.titleDialog) {
       this.titleDialog = this.data.titleDialog;
-      const bodyElement = (this.documentService.nativeDocument.querySelector('.z-custom-modal-dialog__content__body')) as HTMLElement;
+      const bodyElement = (this.documentService.nativeDocument.querySelector('.custom-modal-dialog__content__body')) as HTMLElement;
 
       this.scrollBody = fromEvent(bodyElement, 'scroll');
       this.suscribeScroll();

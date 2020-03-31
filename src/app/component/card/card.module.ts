@@ -1,18 +1,18 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NGZCardComponent } from './card.component';
+import { CardComponent } from './card.component';
 import { UtilsModule } from 'src/app/utils';
 
 @NgModule({
   declarations: [
-    NGZCardComponent
+    CardComponent
   ],
   imports: [
     CommonModule,
     UtilsModule
   ],
   exports: [
-    NGZCardComponent
+    CardComponent
   ]
 })
 export class CardModule {

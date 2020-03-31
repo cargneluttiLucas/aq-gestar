@@ -2,7 +2,10 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardModule } from '../card/card.module';
 import { ButtonModule } from '../button/button.module';
-import { UtilsModule, NavigatorService } from 'src/app/utils/index';
+import { UtilsModule, NavigatorService, ModalDialogService } from 'src/app/utils/index';
+import { ContainerIconModule } from '../container-icon/container-icon.module';
+import { DialogService } from './services/dialog.service';
+import { DialogComponent } from './dialog.component';
 
 @NgModule({
   declarations: [

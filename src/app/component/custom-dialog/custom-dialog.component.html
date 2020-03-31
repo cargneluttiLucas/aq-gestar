@@ -1,20 +1,20 @@
-<z-card zOuterClick [disabledClose]="disabledClose" (clickOutside)="clickOutside()" [styleList]="isMobile ? styleArrayMobile : styleArray"
+<app-card zOuterClick [disabledClose]="disabledClose" (clickOutside)="clickOutside()" [styleList]="isMobile ? styleArrayMobile : styleArray"
         [style.display]="'flex'" [style.justify-content]="'center'" [style.width]="'100%'" [style.margin]="isMobile ? marginCardMobile : null">
-  <div class="z-custom-modal-dialog__content">
-    <div class="z-custom-modal-dialog__content__header" [style.height.px]="heightTitle"
-      [ngClass]="{'z-custom-modal-dialog__content__header--border-finish': isLineFinish}">
-      <div class="z-custom-modal-dialog__content__header__title"
+  <div class="custom-modal-dialog__content">
+    <div class="custom-modal-dialog__content__header" [style.height.px]="heightTitle"
+      [ngClass]="{'custom-modal-dialog__content__header--border-finish': isLineFinish}">
+      <div class="custom-modal-dialog__content__header__title"
            [style.marginTop.px]="marginTopTitle">
-        <h2 class="z-subtitle z-custom-modal-dialog__content__header__title__text" *ngIf="titleDialog"
-            [ngClass]="{'z-custom-modal-dialog__content__header__title__text--finish': isLineFinish,
-            'z-custom-modal-dialog__content__header__title__text--mobile': isMobile}">{{titleDialog}}</h2>
+        <h2 class="subtitle custom-modal-dialog__content__header__title__text" *ngIf="titleDialog"
+            [ngClass]="{'custom-modal-dialog__content__header__title__text--finish': isLineFinish,
+            'custom-modal-dialog__content__header__title__text--mobile': isMobile}">{{titleDialog}}</h2>
       </div>
-      <div class="icon" [ngClass]="{'z-custom-modal-dialog__content__header__icon': !isMobile}"
+      <div class="icon" [ngClass]="{'custom-modal-dialog__content__header__icon': !isMobile}"
        (click)="closeModal()">
         <p class="icon-cross size-24"></p>
       </div>
     </div>
-    <div class="z-custom-modal-dialog__content__body">
+    <div class="custom-modal-dialog__content__body">
     </div>
   </div>
-</z-card>
+</app-card>
