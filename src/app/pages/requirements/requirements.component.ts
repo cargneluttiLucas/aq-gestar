@@ -4,7 +4,7 @@ import { RequierementsService } from 'src/app/services/requirements.service';
 import { CookieService } from 'src/app/services/cookie.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'src/app/component';
-import { NavigatorService, KeypressService, DocumentService, WindowService } from 'src/app/utils';
+import { NavigatorService, KeypressService, DocumentService, BeforeunloadService } from 'src/app/utils/index';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
@@ -120,6 +120,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     private requirement: any;
     private requirementLoad: any;
 
+    private flagBeforunload = true;
+
     private flagClose = false;
 
     historicalDescription: string;
@@ -132,14 +134,22 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         private documentService: DocumentService,
         private deviceDetector: NavigatorService,
         private route: ActivatedRoute,
+        private beforeunloadService: BeforeunloadService,
         @Inject(FORMS_CUSTOM_VALIDATORS) private customValidators: any,
         private router: Router) { }
 
     ngOnInit() {
-        // tslint:disable-next-line: only-arrow-functions
-        window.addEventListener('beforeunload', function(e) {
-            e.preventDefault();
-            e.returnValue = '';
+        // // tslint:disable-next-line: only-arrow-functions
+        // window.addEventListener('beforeunload', function(e) {
+        //     e.preventDefault();
+        //     e.returnValue = '';
+        // });
+
+        this.beforeunloadService.beforeunload().subscribe((data) => {
+            if (this.flagBeforunload) {
+                data.preventDefault();
+                data.returnValue = '';
+            }
         });
 
         const auxProyect = {
@@ -889,6 +899,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     saveAndClose() {
         if (this.validFormFromToSave()) {
+            this.flagBeforunload = false;
             this.save();
             this.flagClose = true;
         }

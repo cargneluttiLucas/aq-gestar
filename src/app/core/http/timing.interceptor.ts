@@ -31,7 +31,6 @@ export class TimingInterceptor implements HttpInterceptor {
     return next.handle(req)
       .pipe(
         tap((event) => {
-          console.log(event);
           if (event.type === 0) {
             this.pendingRequests++;
             this.showSpinner(true);
@@ -65,6 +64,7 @@ export class TimingInterceptor implements HttpInterceptor {
     if (this.pendingRequests === 0) {
       this.appRef.detachView(this.componentFactory.hostView);
       this.componentFactory.destroy();
+      this.componentFactory = null;
     }
   }
 }
