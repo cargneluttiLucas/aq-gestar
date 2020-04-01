@@ -4,7 +4,7 @@ import { NewProjectService } from 'src/app/services/new-project.service';
 import { CookieService } from 'src/app/services/cookie.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'src/app/component';
-import { KeypressService, DocumentService, NavigatorService } from 'src/app/utils';
+import { KeypressService, DocumentService, NavigatorService, BeforeunloadService } from 'src/app/utils';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { FORMS_CUSTOM_VALIDATORS } from 'src/app/component/form';
@@ -74,8 +74,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
-    public sessionId: string;
-    //public sessionId = '0396acf63485430b9981436c6070263d';
+    // public sessionId: string;
+    public sessionId = '0396acf63485430b9981436c6070263d';
     public projectId: number;
     public proyectName: string;
     public backtofld: number;
@@ -102,17 +102,28 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     private loggedUserInfo: any;
 
+    private flagBeforunload = true;
+
+
     constructor(
         private newProyectService: NewProjectService,
         private cookieService: CookieService,
         private modalServiceNg: ModalService,
         private documentService: DocumentService,
+        private beforeunloadService: BeforeunloadService,
         @Inject(FORMS_CUSTOM_VALIDATORS) private customValidators: any,
         private router: Router) { }
 
 
     ngOnInit() {
-        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        this.beforeunloadService.beforeunload().subscribe((data) => {
+            if (this.flagBeforunload) {
+                data.preventDefault();
+                data.returnValue = '';
+            }
+        });
+
+        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;
@@ -731,6 +742,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     saveAndClose() {
         if (this.validForm()) {
+            this.flagBeforunload = false;
             this.save();
             this.flagClose = true;
         }

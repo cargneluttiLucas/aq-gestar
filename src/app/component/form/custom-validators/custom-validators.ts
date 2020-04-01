@@ -155,7 +155,6 @@ export class CustomValidators {
     }
     if (control.dirty) {
       return DATE_SIN_BARRAS_REGEXP.test(control.value) ?  null : { dateSinBarras: true };
-      console.log('component dirty');
     }
   }
 

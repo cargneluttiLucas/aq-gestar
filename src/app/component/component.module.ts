@@ -14,6 +14,7 @@ import { TabsModule } from './tabs/tabs.module';
 import { TableModule } from './table/table.module';
 import { ShowTextModule } from './show-text';
 import { SpinnerModule } from './spinner/spinner.module';
+import { CardModule } from './card/card.module';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { SpinnerModule } from './spinner/spinner.module';
     TabsModule.forRoot(),
     TableModule.forRoot(),
     ShowTextModule.forRoot(),
-    SpinnerModule.forRoot()
+    SpinnerModule.forRoot(),
+    CardModule.forRoot()
   ],
   declarations: [],
   exports: [
@@ -48,7 +50,8 @@ import { SpinnerModule } from './spinner/spinner.module';
     CheckboxsModule,
     TabsModule,
     TableModule,
-    SpinnerModule
+    SpinnerModule,
+    CardModule
   ]
 })
 export class ComponentsModule {
