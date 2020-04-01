@@ -92,8 +92,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    public sessionId = '0396acf63485430b9981436c6070263d';
-    // public sessionId: string;
+    // public sessionId = '0396acf63485430b9981436c6070263d';
+    public sessionId: string;
     public projectId: number;
     public requirementId: number;
     public requirementName: string;
@@ -161,7 +161,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             userFilter: '',
             userOrder: ''
         };
-        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.searchProject(auxProyect);
         this.router.routerState.root.queryParams.forEach((item) => {
             this.requirementId = item.doc_id;
