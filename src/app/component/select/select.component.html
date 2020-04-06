@@ -1,11 +1,18 @@
-<div #selectRef class="select-container" appOuterClick (clickOutside)="clickOutside($event)"
-     [ngClass]="{'select-container--selected-open': iconOpen && item,
-                 'select-container--selected': !iconOpen && item,
-                 'select-container--open': iconOpen && !item && !isErrorLine,
-                 'select-container--error': isErrorLine && !inFocus && !item,
-                 'select-container--errorFocus': isErrorLine && inFocus && !item,
-                 'select-container--disabled': disabled}">
-  <div class="select-container__field" (click)="openItemsResult()">
+<div
+  #selectRef
+  class="select-container"
+  appOuterClick
+  (clickOutside)="clickOutside($event)"
+  tabindex="0"
+  (focus)="openItemsResult()"
+  (blur)="onBlurOut()"
+  [ngClass]="{'select-container--selected-open': iconOpen && item,
+              'select-container--selected': !iconOpen && item,
+              'select-container--open': iconOpen && !item && !isErrorLine,
+              'select-container--error': isErrorLine && !inFocus && !item,
+              'select-container--errorFocus': isErrorLine && inFocus && !item,
+              'select-container--disabled': disabled}">
+  <div class="select-container__field">
     <div class="select-container__field__texts">
         <span class="select-container__field__texts__placeholder">
           {{placeholderDefault}}
