@@ -1,4 +1,4 @@
-<app-card zOuterClick [disabledClose]="disabledClose" (clickOutside)="clickOutside()" [styleList]="isMobile ? styleArrayMobile : styleArray"
+<app-card appOuterClick [disabledClose]="disabledClose" (clickOutside)="clickOutside()" [styleList]="isMobile ? styleArrayMobile : styleArray"
   [style.maxWidth]="maxWidthCard">
   <div class="modal-dialog__content" [ngClass]="{'modal-dialog__content--without-container': !contentIcon}">
     <div *ngIf="contentIcon" class="modal-dialog__content__header">

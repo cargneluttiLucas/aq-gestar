@@ -1,4 +1,4 @@
-<app-card zOuterClick [disabledClose]="disabledClose" (clickOutside)="clickOutside()" [styleList]="isMobile ? styleArrayMobile : styleArray"
+<app-card appOuterClick [disabledClose]="disabledClose" (clickOutside)="clickOutside()" [styleList]="isMobile ? styleArrayMobile : styleArray"
         [style.display]="'flex'" [style.justify-content]="'center'" [style.width]="'100%'" [style.margin]="isMobile ? marginCardMobile : null">
   <div class="custom-modal-dialog__content">
     <div class="custom-modal-dialog__content__header" [style.height.px]="heightTitle"

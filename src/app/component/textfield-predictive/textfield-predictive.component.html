@@ -1,4 +1,4 @@
-<div class="container-predictive" zOuterClick (clickOutside)="clickOutside($event)">
+<div class="container-predictive" appOuterClick (clickOutside)="clickOutside($event)">
   <app-textfield [text]="text" [id]="id" [submit$]="validationMoment$" [control]="selectFormControl"
     [dispatchSuccess]="dispatchSuccess" [dispatchHint]="dispatchHint" [autocomplete]="autocomplete"
     [dispatchError]="dispatchError" [disabled]="disabled" (focus)="openDialog($event, id)"
