@@ -61,7 +61,7 @@
                         <div class="col-md-6">
                             <app-textfield-predictive id="project" [item]="proyectSelected"
                                 [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3" [items]="projects"
-                                text="Proyecto / frente de trabajo"
+                                text="Proyecto / frente de trabajo" [timeFilter]="300"
                                 [selectFormControl]="requirementFormGroup.get('project')"
                                 (itemSelected)="itemSelected($event)"></app-textfield-predictive>
                         </div>
@@ -102,11 +102,11 @@
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-select [items]="mainObjects" [item]="mainObjectSelected"
-                                [dispatchHint]="'Seleccione un elemento'"
-                                (itemSelected)="selectedItem($event, 'mainObjects')"
-                                placeholderDefault="Objeto principal">
-                            </app-select>
+                            <app-main-object [text]="'Objeto principal'" (itemSelected)="selectedItem($event, 'mainObjects')"
+                            [dispatchHint]="'Seleccione un elemento'" (mainObjectsSelectedData)="itemSelectedMainObjectPredictive($event)"
+                             [selectedFormControl]="requirementFormGroup.get('mainObject')"
+                            [mainObjects]="mainObjects" [id]="'mainObjects'"></app-main-object>
+
                         </div>
                         <div class="col-md-3">
                             <app-select [items]="prioritys" [item]="prioritySelected"

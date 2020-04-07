@@ -1,8 +1,8 @@
 import {
     Component, forwardRef, Input, OnInit, Output,
     EventEmitter, ViewChild, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy
-  } from '@angular/core';
-import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+} from '@angular/core';
+import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor, Validators } from '@angular/forms';
 import { Observable, Subject, Subscription } from 'rxjs';
 
 export const TextfieldComponentType = {
@@ -113,10 +113,16 @@ export class TextfieldComponent implements ControlValueAccessor, OnInit, AfterVi
     public controlMessagesProyection = false;
     public checkboxProyection: boolean;
 
+    flagRequired = false;
+
     constructor(private cdRef: ChangeDetectorRef) { }
 
     ngOnInit(): void {
         this.createForm();
+
+        if (this.control.validator === Validators.required) {
+            this.flagRequired = this.control.validator === Validators.required;
+        }
 
         this.submit$.subscribe((result) => {
             if (result) {

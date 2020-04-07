@@ -6,7 +6,7 @@
             appMask [mask]="mask" [hiddenInput]="hiddenInput"
             name="{{id}}" (focusout)="focusOutFunction($event)" type="{{typeInput}}">
           <label [ngClass]="{'whitNotPlaceholder': control.value,
-                               'label-disabled': disabled}">{{ text }}</label>
+                               'label-disabled': disabled}">{{ text }}<span class="required" *ngIf="flagRequired">*</span></label>
         </div>
         <div class="icon box-textfield__inputs__icons"
           [ngClass]="{'box-textfield__inputs__checkbox': checkboxProyection}">

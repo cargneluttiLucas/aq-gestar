@@ -74,8 +74,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
-    public sessionId: string;
-    // public sessionId = '0396acf63485430b9981436c6070263d';
+    // public sessionId: string;
+    public sessionId = '5047a0e4dcd5441082527100b3ad1d1d';
     public projectId: number;
     public proyectName: string;
     public backtofld: number;
@@ -123,7 +123,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;

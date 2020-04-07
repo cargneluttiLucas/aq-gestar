@@ -92,8 +92,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    // public sessionId = '0396acf63485430b9981436c6070263d';
-    public sessionId: string;
+    public sessionId = '5047a0e4dcd5441082527100b3ad1d1d';
+    // public sessionId: string;
     public projectId: number;
     public requirementId: number;
     public requirementName: string;
@@ -121,8 +121,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     private requirementLoad: any;
 
     private flagBeforunload = true;
-
     private flagClose = false;
+    private flagProject = true;
 
     historicalDescription: string;
 
@@ -161,7 +161,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             userFilter: '',
             userOrder: ''
         };
-        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.searchProject(auxProyect);
         this.router.routerState.root.queryParams.forEach((item) => {
             this.requirementId = item.doc_id;
@@ -189,6 +189,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 auxUsers.userFilter = data;
                 this.searchUsers(auxUsers);
             }
+        });
+
+        this.requirementFormGroup.get('project').valueChanges.subscribe((data) => {
+            if (this.flagProject) {
+                this.proyectSelected = { id: null, description: null, project: null, disabled: false, customer: null, customerid: null };
+            }
+            this.flagProject = true;
         });
     }
 
@@ -279,6 +286,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             realDateEnd: new FormControl(''),
             description: new FormControl(''),
             requestedByUser: new FormControl(''),
+            mainObject: new FormControl(''),
 
             requestDate: new FormControl(''),
             estimatedDateStart: new FormControl(''),
@@ -327,7 +335,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.modules = response.reqKeywords.keywords[1].options;
                 this.businessProces = response.reqKeywords.keywords[2].options;
                 this.requirementTypes = response.reqKeywords.keywords[3].options;
+
+                // este se vonvirtio en un predictivo pero no busca por filtro al back
+                // solo busca en la carga inicial.
                 this.mainObjects = response.reqKeywords.keywords[4].options;
+
+
                 this.prioritys = response.reqKeywords.keywords[5].options;
                 this.regios = response.reqKeywords.keywords[6].options;
                 this.areas = response.reqKeywords.keywords[7].options;
@@ -450,6 +463,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('mainObject').setValue(response.requerimiento.mainObject.value);
         if (response.requerimiento.requerimentTypeId.value) {
             this.requirementTypeSelected = {
                 id: response.requerimiento.requerimentTypeId.value,
@@ -840,6 +854,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // textfield predictive
     itemSelected(event) {
+        // flag para que no limpie el componente.
+        this.flagProject = false;
         this.proyectSelected = event;
         this.requirementFormGroup.get('project').setValue(event.description);
         this.itemsFilterDefault = this.projects;
@@ -848,6 +864,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     itemSelectedPredictive(event) {
         this.userSelected = event;
         this.requirementFormGroup.get('requestedByUser').setValue(event.description);
+        this.itemsFilterDefaultUser = this.users;
+    }
+
+    itemSelectedMainObjectPredictive(event) {
+        console.log(event);
+        this.mainObjectSelected = event;
+        this.requirementFormGroup.get('mainObject').setValue(event.description);
         this.itemsFilterDefaultUser = this.users;
     }
 
@@ -863,6 +886,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementLoad.stateId.value = item.stateid;
         this.requirementLoad.state.value = item.state;
         this.flagClose = true;
+        this.flagBeforunload = false;
         this.save();
     }
 
