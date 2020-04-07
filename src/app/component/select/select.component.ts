@@ -177,6 +177,11 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy, OnC
     }
   }
 
+  onBlurOut(){
+    this.inFocus = false;
+    this.iconOpen = false;
+  }
+
   statusLinesErrorSuccess() {
     if (this.errors && this.errors[0] !== 'success') {
       this.isErrorLine = true;
