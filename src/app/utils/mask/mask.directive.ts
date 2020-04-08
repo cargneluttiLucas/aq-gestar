@@ -120,7 +120,7 @@ export class MaskDirective implements ControlValueAccessor, OnChanges {
       return null;
     }
     if (this._maskService.ipError) {
-      return { 'Mask error': true };
+      return { 'maskserror': true };
     }
     if (
       this._maskValue.startsWith('dot_separator') ||
@@ -177,14 +177,14 @@ export class MaskDirective implements ControlValueAccessor, OnChanges {
         (this._maskValue.indexOf('*') > 1 && value.toString().length < this._maskValue.indexOf('*')) ||
         (this._maskValue.indexOf('?') > 1 && value.toString().length < this._maskValue.indexOf('?'))
       ) {
-        return { 'Mask error': true };
+        return { 'maskserror': true };
       }
       if (this._maskValue.indexOf('*') === -1 || this._maskValue.indexOf('?') === -1) {
         const length: number = this._maskService.dropSpecialCharacters
           ? this._maskValue.length - this._maskService.checkSpecialCharAmount(this._maskValue) - counterOfOpt
           : this._maskValue.length - counterOfOpt;
         if (value.toString().length < length) {
-          return { 'Mask error': true };
+          return { 'maskserror': true };
         }
       }
 

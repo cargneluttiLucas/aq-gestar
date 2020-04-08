@@ -1,0 +1,11 @@
+<app-textfield-predictive
+[id]="id"
+[text]="text"
+[selectFormControl]="selectedFormControl"
+[items]="proyects"
+[timeFilter]="1000"
+[minLength]="3"
+(focusPredictive)="focusPredictive($event)"
+(handlerError)="handlerError($event)"
+(itemSelected)="itemSelected($event)">
+</app-textfield-predictive>

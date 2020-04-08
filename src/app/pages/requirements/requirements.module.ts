@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ServiceModule } from 'src/app/services/service.module';
 import { UserModule } from 'src/app/features/user';
 import { MainObjectsModule } from 'src/app/features/main-object';
+import { ProjectsModule } from 'src/app/features/projects';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { MainObjectsModule } from 'src/app/features/main-object';
     ServiceModule,
     RequirementsRoutingModule,
     UserModule.forRoot(),
+    ProjectsModule.forRoot(),
     MainObjectsModule.forRoot()
   ],
   declarations: [

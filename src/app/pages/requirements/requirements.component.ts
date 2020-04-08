@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
 import { FORMS_CUSTOM_VALIDATORS } from 'src/app/component/form';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'app-requirements',
@@ -92,8 +93,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    // public sessionId = '5047a0e4dcd5441082527100b3ad1d1d';
-    public sessionId: string;
+    public sessionId = '5047a0e4dcd5441082527100b3ad1d1d';
+    // public sessionId: string;
     public projectId: number;
     public requirementId: number;
     public requirementName: string;
@@ -124,6 +125,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     private flagClose = false;
     private flagProject = true;
 
+    errorMessageDate = '';
+
     historicalDescription: string;
 
     constructor(
@@ -139,11 +142,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         private router: Router) { }
 
     ngOnInit() {
-        // // tslint:disable-next-line: only-arrow-functions
-        // window.addEventListener('beforeunload', function(e) {
-        //     e.preventDefault();
-        //     e.returnValue = '';
-        // });
 
         this.beforeunloadService.beforeunload().subscribe((data) => {
             if (this.flagBeforunload) {
@@ -152,17 +150,17 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         });
 
-        const auxProyect = {
-            filter: '',
-            order: 'DOC_ID',
-            fields: 'DOC_ID,ID,project_name,DISPLAYNAME,customer,customerid'
-        };
+        // const auxProyect = {
+        //     filter: '',
+        //     order: 'DOC_ID',
+        //     fields: 'DOC_ID,ID,project_name,DISPLAYNAME,customer,customerid'
+        // };
         const auxUsers = {
             userFilter: '',
             userOrder: ''
         };
-        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
-        this.searchProject(auxProyect);
+        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        // this.searchProject(auxProyect);
         this.router.routerState.root.queryParams.forEach((item) => {
             this.requirementId = item.doc_id;
             this.requirementAcction = item.action;
@@ -178,12 +176,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.loadNewRequirement();
         }
         this.createForm();
-
-        this.requirementFormGroup.get('project').valueChanges.subscribe((data) => {
-            if (data && data.length >= 3) {
-                this.searchProject(auxProyect);
-            }
-        });
         this.requirementFormGroup.get('requestedByUser').valueChanges.subscribe((data) => {
             if (data && data.length >= 3) {
                 auxUsers.userFilter = data;
@@ -197,6 +189,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             }
             this.flagProject = true;
         });
+
+        this.validateDates();
     }
 
     ngAfterViewInit() {
@@ -209,13 +203,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    searchProject(aux) {
-        this.requirementService.searchProject(aux, this.sessionId).subscribe((response) => {
-            if (response.proyectos) {
-                this.buildProjectTextfield(response.proyectos);
-            }
-        });
-    }
+    // searchProject(aux) {
+    //     this.requirementService.searchProject(aux, this.sessionId).subscribe((response) => {
+    //         if (response.proyectos) {
+    //             this.buildProjectTextfield(response.proyectos);
+    //         }
+    //     });
+    // }
 
     searchUsers(aux) {
         this.requirementService.searchUsers(aux, this.sessionId).subscribe((response) => {
@@ -225,19 +219,19 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         });
     }
 
-    buildProjectTextfield(proyects) {
-        this.projects = [];
-        proyects.forEach((item) => {
-            const aux = { id: 0, description: '', project: '', disabled: false, customer: null, customerid: null };
-            aux.id = item.Values.ID;
-            aux.description = item.Values.DISPLAYNAME;
-            aux.project = item.Values.PROJECT_NAME;
-            aux.customerid = item.Values.CUSTOMERID;
-            aux.customer = item.Values.CUSTOMER;
+    // buildProjectTextfield(proyects) {
+    //     this.projects = [];
+    //     proyects.forEach((item) => {
+    //         const aux = { id: 0, description: '', project: '', disabled: false, customer: null, customerid: null };
+    //         aux.id = item.Values.ID;
+    //         aux.description = item.Values.DISPLAYNAME;
+    //         aux.project = item.Values.PROJECT_NAME;
+    //         aux.customerid = item.Values.CUSTOMERID;
+    //         aux.customer = item.Values.CUSTOMER;
 
-            this.projects.push(aux);
-        });
-    }
+    //         this.projects.push(aux);
+    //     });
+    // }
 
     buildUsersTextfield(users) {
         this.users = [];
@@ -271,6 +265,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.requirementFormGroup.get('estimatedDateEnd').setValidators(null);
             }
         });
+    }
+
+    handlerErrorDate(event) {
+        if (event[0] === 'maskserror') {
+            this.errorMessageDate = 'La fecha no es válida.';
+        }
     }
 
     createForm() {

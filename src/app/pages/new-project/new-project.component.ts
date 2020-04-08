@@ -71,11 +71,13 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     errorMessage; string;
 
+    errorMessageDate = '';
+
     saveText = 'Guardar';
     saveAndExitText = 'Guardar y salir';
 
-    public sessionId: string;
-    // public sessionId = '5047a0e4dcd5441082527100b3ad1d1d';
+    // public sessionId: string;
+    public sessionId = '5047a0e4dcd5441082527100b3ad1d1d';
     public projectId: number;
     public proyectName: string;
     public backtofld: number;
@@ -123,7 +125,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             }
         });
 
-        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
+        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.projectId = item.doc_id;
             this.proyectAcction = item.action;
@@ -176,6 +178,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 this.newProyectFormGroup.get('dateEndReal').setValidators(null);
             }
         });
+    }
+
+    handlerErrorDate(event) {
+        if (event[0] === 'maskserror') {
+            this.errorMessageDate = 'La fecha no es válida.';
+        }
     }
 
     public compareDate(date1: Date, date2: Date): number {
@@ -726,9 +734,9 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             } else {
                 this.newProyectService.putSaveProject(this.buildForm(), this.sessionId).subscribe((response) => {
                     if (response) {
-                        if(response.id){
+                        if (response.id) {
                             window.alert(response.message[0] + ` ID de proyecto: ${response.id.toFixed(0)}.`);
-                        }else{
+                        } else {
                             window.alert(response.message[0]);
                         }
                         if (response.status === 200) {

@@ -23,6 +23,7 @@
                 </div>
                 <div class="col-xl-3">
                     <app-textfield text="Fecha de creación" mask="00/00/0000" id="createdDate" [disabled]="true"
+                        [dispatchError]="errorMessageDate" (handlerError)="handlerErrorDate($event)"
                         [control]="requirementFormGroup.get('createdDate')">
                     </app-textfield>
                 </div>
@@ -41,7 +42,8 @@
                 <app-tab [title]="'Requerimiento'">
                     <div class="row  margin-top-16">
                         <div class="col-md-6">
-                            <app-textfield text="Titulo" [disabled]="requirementName" id="title" [control]="requirementFormGroup.get('title')">
+                            <app-textfield text="Titulo" [disabled]="requirementName" id="title"
+                                [control]="requirementFormGroup.get('title')">
                             </app-textfield>
                         </div>
                     </div>
@@ -59,18 +61,22 @@
                             </app-select>
                         </div>
                         <div class="col-md-6">
-                            <app-textfield-predictive id="project" [item]="proyectSelected"
+                            <!-- <app-textfield-predictive id="project" [item]="proyectSelected"
                                 [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3" [items]="projects"
-                                text="Proyecto / frente de trabajo" [timeFilter]="300"
+                                text="Proyecto / frente de trabajo" [timeFilter]="3000"
                                 [selectFormControl]="requirementFormGroup.get('project')"
-                                (itemSelected)="itemSelected($event)"></app-textfield-predictive>
+                                (itemSelected)="itemSelected($event)"></app-textfield-predictive> -->
+
+                            <app-project [text]="'Proyecto / frente de trabajo'" [id]="'project'"
+                            [isSession]="sessionId" (proyectsSelectedData)="itemSelected($event)"
+                                [selectedFormControl]="requirementFormGroup.get('project')"></app-project>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <app-user [text]="'Usuario solicitante'" [id]="'requestedByUser'"
-                            [isSession]="sessionId" (userSelectedData)="itemSelectedPredictive($event)"
-                            [selectedFormControl]="requirementFormGroup.get('requestedByUser')"></app-user>
+                            <app-user [text]="'Usuario solicitante'" [id]="'requestedByUser'" [isSession]="sessionId"
+                                (userSelectedData)="itemSelectedPredictive($event)"
+                                [selectedFormControl]="requirementFormGroup.get('requestedByUser')"></app-user>
                         </div>
                         <div class="col-md-3">
                             <app-textfield text="Fecha de solicitud" [dispatchHint]="'dd/MM/yyyy'" mask="00/00/0000"
@@ -78,11 +84,8 @@
                             </app-textfield>
                         </div>
                         <div class="col-md-3">
-                            <app-textfield
-                                text="Porcentaje de avance"
-                                id="solvedpercent" 
-                                [control]="requirementFormGroup.get('solvedpercent')"
-                                [disabled]="true">
+                            <app-textfield text="Porcentaje de avance" id="solvedpercent"
+                                [control]="requirementFormGroup.get('solvedpercent')" [disabled]="true">
                             </app-textfield>
                         </div>
                     </div>
@@ -102,10 +105,12 @@
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-main-object [text]="'Objeto principal'" (itemSelected)="selectedItem($event, 'mainObjects')"
-                            [dispatchHint]="'Seleccione un elemento'" (mainObjectsSelectedData)="itemSelectedMainObjectPredictive($event)"
-                             [selectedFormControl]="requirementFormGroup.get('mainObject')"
-                            [mainObjects]="mainObjects" [id]="'mainObjects'"></app-main-object>
+                            <app-main-object [text]="'Objeto principal'"
+                                (itemSelected)="selectedItem($event, 'mainObjects')"
+                                [dispatchHint]="'Seleccione un elemento'"
+                                (mainObjectsSelectedData)="itemSelectedMainObjectPredictive($event)"
+                                [selectedFormControl]="requirementFormGroup.get('mainObject')"
+                                [mainObjects]="mainObjects" [id]="'mainObjects'"></app-main-object>
 
                         </div>
                         <div class="col-md-3">
@@ -118,13 +123,16 @@
                     <div class="row">
                         <div class="col-md-3">
                             <app-textfield text="Fecha estimada de inicio" mask="00/00/0000" id="estimatedDateStart"
-                                [dispatchHint]="'dd/MM/yyyy'"
+                                [dispatchHint]="'dd/MM/yyyy'" [dispatchError]="errorMessageDate"
+                                (handlerError)="handlerErrorDate($event)"
                                 [control]="requirementFormGroup.get('estimatedDateStart')">
                             </app-textfield>
                         </div>
                         <div class="col-md-3">
                             <app-textfield text="Fecha estimada de fin" mask="00/00/0000" id="estimatedDateEnd"
-                                [dispatchHint]="'dd/MM/yyyy'" [control]="requirementFormGroup.get('estimatedDateEnd')">
+                                [dispatchError]="errorMessageDate" [dispatchHint]="'dd/MM/yyyy'"
+                                (handlerError)="handlerErrorDate($event)"
+                                [control]="requirementFormGroup.get('estimatedDateEnd')">
                             </app-textfield>
                         </div>
                         <div class="col-md-3">
@@ -159,7 +167,8 @@
                             </app-select>
                         </div>
                         <div class="col-md-3">
-                            <app-textfield text="Número de release" id="releaseNumber" [control]="requirementFormGroup.get('releaseNumber')">
+                            <app-textfield text="Número de release" id="releaseNumber"
+                                [control]="requirementFormGroup.get('releaseNumber')">
                             </app-textfield>
                         </div>
                     </div>

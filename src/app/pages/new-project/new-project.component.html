@@ -19,7 +19,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <app-textfield text="Nombre del proyecto" id="name" [disabled]="proyectName" [control]="newProyectFormGroup.get('name')">
+                        <app-textfield text="Nombre del proyecto" id="name" [disabled]="proyectName"
+                            [control]="newProyectFormGroup.get('name')">
                         </app-textfield>
                     </div>
                 </div>
@@ -30,19 +31,22 @@
                             (clientSelectedData)="itemSelectedPredictiveClients($event)"></app-client>
                     </div>
                     <div class="col-md-6">
-                        <app-user [text]="'Sponsor'" [id]="'sponsor'" [isSession]="sessionId" (userSelectedData)="itemSelectedPredictiveSponsor($event)"
-                        [selectedFormControl]="newProyectFormGroup.get('sponsor')"></app-user>
+                        <app-user [text]="'Sponsor'" [id]="'sponsor'" [isSession]="sessionId"
+                            (userSelectedData)="itemSelectedPredictiveSponsor($event)"
+                            [selectedFormControl]="newProyectFormGroup.get('sponsor')"></app-user>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
-                        <app-user [text]="'Coordinador'" [id]="'coordinator'" [isSession]="sessionId" (userSelectedData)="itemSelectedPredictiveCoordinators($event)"
-                        [selectedFormControl]="newProyectFormGroup.get('coordinator')"></app-user>
+                        <app-user [text]="'Coordinador'" [id]="'coordinator'" [isSession]="sessionId"
+                            (userSelectedData)="itemSelectedPredictiveCoordinators($event)"
+                            [selectedFormControl]="newProyectFormGroup.get('coordinator')"></app-user>
                     </div>
                     <div class="col-md-6">
-                        <app-user [text]="'Solicitado por'" [id]="'requestedbyuser'" [isSession]="sessionId" (userSelectedData)="itemSelectedPredictiveRequestedByUsers($event)"
-                        [selectedFormControl]="newProyectFormGroup.get('requestedbyuser')"></app-user>
+                        <app-user [text]="'Solicitado por'" [id]="'requestedbyuser'" [isSession]="sessionId"
+                            (userSelectedData)="itemSelectedPredictiveRequestedByUsers($event)"
+                            [selectedFormControl]="newProyectFormGroup.get('requestedbyuser')"></app-user>
                     </div>
                 </div>
 
@@ -90,15 +94,13 @@
                         </app-select>
                     </div>
                     <div class="col-md-3">
-                        <app-select [items]="areas" [item]="areaSelected"
-                            [dispatchHint]="'Seleccione un elemento'"
+                        <app-select [items]="areas" [item]="areaSelected" [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'area')" placeholderDefault="Área">
                         </app-select>
                     </div>
 
                     <div class="col-md-3">
-                        <app-select [items]="regions" [item]="regionSelected"
-                            [dispatchHint]="'Seleccione un elemento'"
+                        <app-select [items]="regions" [item]="regionSelected" [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'region')" placeholderDefault="Región">
                         </app-select>
                     </div>
@@ -122,11 +124,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         <app-textfield text="Fecha de Inicio Planificada" id="dateStart" mask="00/00/0000"
+                            [dispatchError]="errorMessageDate" (handlerError)="handlerErrorDate($event)"
                             [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateStart')">
                         </app-textfield>
                     </div>
                     <div class="col-md-6">
                         <app-textfield [text]="'Fecha de Fin Planificada'" id="dateEnd" mask="00/00/0000"
+                            [dispatchError]="errorMessageDate" (handlerError)="handlerErrorDate($event)"
                             [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateEnd')">
                         </app-textfield>
                     </div>
@@ -134,11 +138,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         <app-textfield text="Fecha de Inicio Real" id="dateStartReal" mask="00/00/0000"
+                            [dispatchError]="errorMessageDate" (handlerError)="handlerErrorDate($event)"
                             [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateStartReal')">
                         </app-textfield>
                     </div>
                     <div class="col-md-6">
                         <app-textfield [text]="'Fecha de Fin Real'" id="dateEndReal" mask="00/00/0000"
+                            [dispatchError]="errorMessageDate" (handlerError)="handlerErrorDate($event)"
                             [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateEndReal')">
                         </app-textfield>
                     </div>
@@ -152,15 +158,12 @@
                         <app-textfield [text]="'Horas reales'" id="realHours"
                             [control]="newProyectFormGroup.get('realHours')">
                         </app-textfield>
-                    </div>                                     
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <app-textfield
-                            text="Porcentaje de avance"
-                            id="solvedpercent" 
-                            [control]="newProyectFormGroup.get('solvedpercent')"
-                            [disabled]="true">
+                        <app-textfield text="Porcentaje de avance" id="solvedpercent"
+                            [control]="newProyectFormGroup.get('solvedpercent')" [disabled]="true">
                         </app-textfield>
                     </div>
                     <div class="col-md-6">

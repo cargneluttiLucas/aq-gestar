@@ -52,6 +52,7 @@ export class TextfieldPredictiveComponent implements OnInit, AfterViewInit, OnDe
 
   @Output() itemSelected = new EventEmitter<any>();
   @Output() handlerError = new EventEmitter<any>();
+  @Output() focusPredictive = new EventEmitter<any>();
 
   @ViewChild('textfieldModal', { static: false }) textfieldModal: ElementRef;
 
@@ -224,6 +225,8 @@ export class TextfieldPredictiveComponent implements OnInit, AfterViewInit, OnDe
   }
 
   openDialog(event, id: string) {
+    console.log(event);
+    this.focusPredictive.emit(event);
     if (event.focusOn && this.isMobile) {
       setTimeout(() => {
         const textfieldModalPredictive = this.renderer.selectRootElement(`#${this.id}-mobile`);

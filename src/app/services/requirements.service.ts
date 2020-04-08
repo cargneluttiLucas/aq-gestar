@@ -42,11 +42,6 @@ export class RequierementsService {
     return this.http.put<any>(environment.addresses.requirement.changeRequirementById + requirementId, data, this.options);
   }
 
-  searchProject(filterData, sessionId) {
-    this.options.headers.SessionId = sessionId;
-    return this.http.post<any>(environment.addresses.project.searchProject, filterData, this.options);
-  }
-
   searchUsers(filterData, sessionId) {
     this.options.headers.SessionId = sessionId;
     return this.http.post<any>(environment.addresses.user.findUser, filterData, this.options);

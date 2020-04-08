@@ -225,6 +225,7 @@ export class ErrorMessages {
       phone: `Revisá el número.`,
       phoneInvalid: `Revisá el número.`,
       dateSinBarras: `La fecha no es válida.`,
+      maskserror: `El formato del campo no es válido.`,
       date: `La fecha no es válida.`,
       cbu: `El cbu ingresado es inválido.`,
       ...(validatorValue && validatorValue.requiredLength) ? {
