@@ -93,8 +93,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    public sessionId = '5047a0e4dcd5441082527100b3ad1d1d';
-    // public sessionId: string;
+    // public sessionId = '5047a0e4dcd5441082527100b3ad1d1d';
+    public sessionId: string;
     public projectId: number;
     public requirementId: number;
     public requirementName: string;
@@ -149,18 +149,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 data.returnValue = '';
             }
         });
-
-        // const auxProyect = {
-        //     filter: '',
-        //     order: 'DOC_ID',
-        //     fields: 'DOC_ID,ID,project_name,DISPLAYNAME,customer,customerid'
-        // };
         const auxUsers = {
             userFilter: '',
             userOrder: ''
         };
-        // this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
-        // this.searchProject(auxProyect);
+        this.sessionId = this.cookieService.getCookie('GESTAR_SESSIONID=');
         this.router.routerState.root.queryParams.forEach((item) => {
             this.requirementId = item.doc_id;
             this.requirementAcction = item.action;
@@ -203,14 +196,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    // searchProject(aux) {
-    //     this.requirementService.searchProject(aux, this.sessionId).subscribe((response) => {
-    //         if (response.proyectos) {
-    //             this.buildProjectTextfield(response.proyectos);
-    //         }
-    //     });
-    // }
-
     searchUsers(aux) {
         this.requirementService.searchUsers(aux, this.sessionId).subscribe((response) => {
             if (response.usuarios) {
@@ -218,20 +203,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             }
         });
     }
-
-    // buildProjectTextfield(proyects) {
-    //     this.projects = [];
-    //     proyects.forEach((item) => {
-    //         const aux = { id: 0, description: '', project: '', disabled: false, customer: null, customerid: null };
-    //         aux.id = item.Values.ID;
-    //         aux.description = item.Values.DISPLAYNAME;
-    //         aux.project = item.Values.PROJECT_NAME;
-    //         aux.customerid = item.Values.CUSTOMERID;
-    //         aux.customer = item.Values.CUSTOMER;
-
-    //         this.projects.push(aux);
-    //     });
-    // }
 
     buildUsersTextfield(users) {
         this.users = [];
