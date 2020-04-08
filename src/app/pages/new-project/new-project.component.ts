@@ -707,12 +707,13 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     }
 
     save() {
+        debugger;
         if (this.validForm()) {
             if (this.projectId) {
                 this.newProyectService.putChangeProject(this.buildForm(), this.projectId, this.sessionId).subscribe((response) => {
                     if (response) {
                         if (response.message) {
-                            window.alert(response.message[0] + 'ID' + response.docId);
+                            window.alert(response.message[0]);
                         }
                         if (response.message === null) {
                             window.alert('Se modificó el documento de manera exitosa.');
@@ -725,13 +726,17 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             } else {
                 this.newProyectService.putSaveProject(this.buildForm(), this.sessionId).subscribe((response) => {
                     if (response) {
-                        window.alert(response.message[0] + 'ID' + response.docId);
+                        if(response.id){
+                            window.alert(response.message[0] + ` ID de proyecto: ${response.id.toFixed(0)}.`);
+                        }else{
+                            window.alert(response.message[0]);
+                        }
                         if (response.status === 200) {
                             this.projectId = response.docId;
                             this.changeTextButtons();
-                        }
-                        if (this.flagClose) {
-                            this.close();
+                            if (this.flagClose) {
+                                this.close();
+                            }
                         }
                     }
                 });
