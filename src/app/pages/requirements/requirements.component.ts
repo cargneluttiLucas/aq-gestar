@@ -902,8 +902,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     close() {
         this.flagClose = false;
-        // document.location.href = `http://3.227.233.169/c/content.asp?fld_id=${this.backtofld}`;
-        document.location.href = `${environment.addresses.closeRequirement.close}${this.backtofld}`;
+        if (window.opener && window.opener !== window) {
+            //inside a popup
+            window.close();
+            this.flagBeforunload = false;
+        }else{
+            document.location.href = `${environment.addresses.closeRequirement.close}${this.backtofld}`;
+        }   
     }
 
     // modal
