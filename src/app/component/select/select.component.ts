@@ -1,6 +1,6 @@
 import {
   Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild,
-  ElementRef, AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges
+  ElementRef, AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, SimpleChanges
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, Subject, Subscription, fromEvent } from 'rxjs';
@@ -85,8 +85,18 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy, OnC
     });
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
     this.widthSelectResults();
+    
+    for (const propName in changes) {
+      if (changes.hasOwnProperty(propName)) {
+        switch (propName) {
+          case 'item': {
+            this.createForm();
+          }
+        }
+      }
+    }
   }
 
   widthSelectResults(): void {
@@ -111,9 +121,9 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy, OnC
 
   createForm(): void {
     if (this.required) {
-      this.select = new FormControl(this.item, Validators.required);
+      this.select = new FormControl(this.item.id, Validators.required);
     } else {
-      this.select = new FormControl(this.item);
+      this.select = new FormControl(this.item.id);
     }
   }
 
@@ -177,9 +187,14 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy, OnC
     }
   }
 
-  onBlurOut(){
-    this.inFocus = false;
+  onBlur(){
+    debugger;
     this.iconOpen = false;
+    if (this.inFocus) {
+      this.validationMoment.next(true);
+      this.statusLinesErrorSuccess();
+      this.inFocus = false;
+    }
   }
 
   statusLinesErrorSuccess() {

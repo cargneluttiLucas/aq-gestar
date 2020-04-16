@@ -2,10 +2,10 @@
   #selectRef
   class="select-container"
   appOuterClick
-  (clickOutside)="clickOutside($event)"
+  
   tabindex="0"
   (focus)="openItemsResult()"
-  (blur)="onBlurOut()"
+  (blur)="onBlur()"
   [ngClass]="{'select-container--selected-open': iconOpen && item,
               'select-container--selected': !iconOpen && item,
               'select-container--open': iconOpen && !item && !isErrorLine,
@@ -15,11 +15,11 @@
   <div class="select-container__field">
     <div class="select-container__field__texts">
         <span class="select-container__field__texts__placeholder">
-          {{placeholderDefault}}
+          {{placeholderDefault}}<span class="required" *ngIf="required">*</span>
         </span>
       <span class="select-container__field__texts__item" *ngIf="item">
           {{item.description}}
-        </span>
+      </span>
     </div>
     <div class="icon select-container__field__icon">
       <div [ngClass]="{'icon-angle-down size-16': !iconOpen, 'icon-angle-up size-16': iconOpen}"></div>

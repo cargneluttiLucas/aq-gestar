@@ -469,7 +469,9 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     validForm(): boolean {
         // tener en cuenta que para esto hay que ver que combos son obligatorios
-        return this.newProyectFormGroup.valid && this.clientSelected.id !== null;
+        return this.newProyectFormGroup.valid
+            && this.clientSelected.id !== null
+            && this.typeProjectSelected.id !== null;
     }
 
     checkSelectedPurchaseNumber() {
@@ -715,7 +717,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     }
 
     save() {
-        debugger;
         if (this.validForm()) {
             if (this.projectId) {
                 this.newProyectService.putChangeProject(this.buildForm(), this.projectId, this.sessionId).subscribe((response) => {
