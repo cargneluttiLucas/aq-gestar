@@ -352,7 +352,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementFormGroup.get('realDateEnd').setValue(this.transformDateToString(response.requerimiento.fechaFinReal.value));
         this.requirementFormGroup.get('requestDate').setValue(this.transformDateToString(response.requerimiento.requestedDate.value));
         this.requirementFormGroup.get('estimatedDateStart').setValue(
-            this.transformDateToString(response.requerimiento.estimatedStartDate.value));
+            new Date(response.requerimiento.estimatedStartDate.value));
         this.requirementFormGroup.get('estimatedDateEnd').setValue(
             this.transformDateToString(response.requerimiento.estimatedEndDate.value));
         this.requirementFormGroup.get('solvedpercent').setValue(response.requerimiento.solvedpercent.value);
@@ -643,7 +643,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 estimatedStartDate: {
                     visible: true,
                     enabled: true,
-                    value: this.transformStringToDate(this.requirementFormGroup.get('estimatedDateStart').value)
+                    value: this.requirementFormGroup.get('estimatedDateStart').value || null,
                 },
                 estimatedEndDate: {
                     visible: true,

@@ -61,12 +61,6 @@
                             </app-select>
                         </div>
                         <div class="col-md-6">
-                            <!-- <app-textfield-predictive id="project" [item]="proyectSelected"
-                                [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3" [items]="projects"
-                                text="Proyecto / frente de trabajo" [timeFilter]="3000"
-                                [selectFormControl]="requirementFormGroup.get('project')"
-                                (itemSelected)="itemSelected($event)"></app-textfield-predictive> -->
-
                             <app-project [text]="'Proyecto / frente de trabajo'" [id]="'project'"
                             [isSession]="sessionId" (proyectsSelectedData)="itemSelected($event)"
                                 [selectedFormControl]="requirementFormGroup.get('project')"></app-project>
