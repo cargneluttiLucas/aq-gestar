@@ -8,6 +8,15 @@ import { ServiceModule } from 'src/app/services/service.module';
 import { RequirementsModule } from '../requirements';
 import { ClientModule } from 'src/app/features/client';
 import { UserModule } from 'src/app/features/user';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import {
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -18,7 +27,20 @@ import { UserModule } from 'src/app/features/user';
     ServiceModule,
     ClientModule.forRoot(),
     UserModule.forRoot(),
-    RequirementsModule.forRoot()
+    RequirementsModule.forRoot(),
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+  ],
+  providers: [
+    MatNativeDateModule,
+    {provide: MAT_DATE_LOCALE, useValue: 'es'},
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
   ],
   declarations: [
     NewProjectComponent

@@ -145,39 +145,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 this.loggedUserInfo = response.usuario.userFullName.value;
             }
         });
-
-        this.validateDates();
-    }
-
-    validateDates() {
-        this.newProyectFormGroup.get('dateStart').valueChanges.subscribe((data) => {
-            if (data && data.length !== 0) {
-                this.newProyectFormGroup.get('dateStart').setValidators(this.customValidators.dateSinBarras);
-            } else {
-                this.newProyectFormGroup.get('dateStart').setValidators(null);
-            }
-        });
-        this.newProyectFormGroup.get('dateEnd').valueChanges.subscribe((data) => {
-            if (data && data.length !== 0) {
-                this.newProyectFormGroup.get('dateEnd').setValidators(this.customValidators.dateSinBarras);
-            } else {
-                this.newProyectFormGroup.get('dateEnd').setValidators(null);
-            }
-        });
-        this.newProyectFormGroup.get('dateStartReal').valueChanges.subscribe((data) => {
-            if (data && data.length !== 0) {
-                this.newProyectFormGroup.get('dateStartReal').setValidators(this.customValidators.dateSinBarras);
-            } else {
-                this.newProyectFormGroup.get('dateStartReal').setValidators(null);
-            }
-        });
-        this.newProyectFormGroup.get('dateEndReal').valueChanges.subscribe((data) => {
-            if (data && data.length !== 0) {
-                this.newProyectFormGroup.get('dateEndReal').setValidators(this.customValidators.dateSinBarras);
-            } else {
-                this.newProyectFormGroup.get('dateEndReal').setValidators(null);
-            }
-        });
     }
 
     handlerErrorDate(event) {
@@ -308,15 +275,22 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.checkbox.selected = response.proyecto.sinOrdenCompra.value === 1 ? false : true;
 
         this.newProyectFormGroup.get('repositorySVN').setValue(response.proyecto.repositorioSvn.value);
-
-        this.newProyectFormGroup.get('dateStart').setValue(
-            this.transformDateToString(response.proyecto.startDate.value));
-        this.newProyectFormGroup.get('dateEnd').setValue(
-            this.transformDateToString(response.proyecto.endDate.value));
-        this.newProyectFormGroup.get('dateStartReal').setValue(
-            this.transformDateToString(response.proyecto.realStartDate.value));
-        this.newProyectFormGroup.get('dateEndReal').setValue(
-            this.transformDateToString(response.proyecto.realEndDate.value));
+        if (response.proyecto.startDate.value) {
+            this.newProyectFormGroup.get('dateStart').setValue(
+                new Date(response.requerimiento.startDate.value));
+        }
+        if (response.proyecto.endDate.value) {
+            this.newProyectFormGroup.get('dateEnd').setValue(
+                new Date(response.requerimiento.endDate.value));
+        }
+        if (response.proyecto.realStartDate.value) {
+            this.newProyectFormGroup.get('dateStartReal').setValue(
+                new Date(response.requerimiento.realStartDate.value));
+        }
+        if (response.proyecto.realEndDate.value) {
+            this.newProyectFormGroup.get('dateEndReal').setValue(
+                new Date(response.requerimiento.realEndDate.value));
+        }
         this.newProyectFormGroup.get('estimatedHours').setValue(
             response.proyecto.estimatedHours.value === 0 ? '' : response.proyecto.estimatedHours.value);
         this.newProyectFormGroup.get('realHours').setValue(
@@ -516,14 +490,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 startDate: {
                     visible: true,
                     enabled: true,
-                    value: this.newProyectFormGroup.get('dateStart').value === '' ? null :
-                        this.transformStringToDate(this.newProyectFormGroup.get('dateStart').value)
+                    value: this.newProyectFormGroup.get('dateStart').value || null,
                 },
                 endDate: {
                     visible: true,
                     enabled: true,
-                    value: this.newProyectFormGroup.get('dateEnd').value === '' ? null :
-                        this.transformStringToDate(this.newProyectFormGroup.get('dateEnd').value)
+                    value: this.newProyectFormGroup.get('dateEnd').value || null,
                 },
                 sinOrdenCompra: {
                     visible: true,
@@ -562,14 +534,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 realStartDate: {
                     visible: true,
                     enabled: true,
-                    value: this.newProyectFormGroup.get('dateStartReal').value === '' ? null :
-                        this.transformStringToDate(this.newProyectFormGroup.get('dateStartReal').value)
+                    value: this.newProyectFormGroup.get('dateStartReal').value || null,
                 },
                 realEndDate: {
                     visible: true,
                     enabled: true,
-                    value: this.newProyectFormGroup.get('dateEndReal').value === '' ? null :
-                        this.transformStringToDate(this.newProyectFormGroup.get('dateEndReal').value)
+                    value: this.newProyectFormGroup.get('dateEndReal').value || null,
                 },
                 customer: {
                     visible: true,

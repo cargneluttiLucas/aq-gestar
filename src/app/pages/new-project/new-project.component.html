@@ -123,31 +123,37 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
-                        <app-textfield text="Fecha de Inicio Planificada" id="dateStart" mask="00/00/0000"
-                            [dispatchError]="errorMessageDate" (handlerError)="handlerErrorDate($event)"
-                            [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateStart')">
-                        </app-textfield>
+                    <div class="col-md-3 margin-top-32">
+                        <mat-form-field>
+                            <mat-label>Fecha de Inicio Planificada</mat-label>
+                            <input matInput placeholder="dd/mm/aaaa" [matDatepicker]="dateStart" [formControl]="newProyectFormGroup.get('dateStart')">
+                            <mat-datepicker-toggle matSuffix [for]="dateStart"></mat-datepicker-toggle>
+                            <mat-datepicker #dateStart></mat-datepicker>
+                        </mat-form-field>
                     </div>
-                    <div class="col-md-6">
-                        <app-textfield [text]="'Fecha de Fin Planificada'" id="dateEnd" mask="00/00/0000"
-                            [dispatchError]="errorMessageDate" (handlerError)="handlerErrorDate($event)"
-                            [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateEnd')">
-                        </app-textfield>
+                    <div class="col-md-3 margin-top-32">
+                        <mat-form-field>
+                            <mat-label>Fecha de Fin Planificada</mat-label>
+                            <input matInput placeholder="dd/mm/aaaa" [matDatepicker]="dateEnd" [formControl]="newProyectFormGroup.get('dateEnd')">
+                            <mat-datepicker-toggle matSuffix [for]="dateEnd"></mat-datepicker-toggle>
+                            <mat-datepicker #dateEnd></mat-datepicker>
+                        </mat-form-field>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <app-textfield text="Fecha de Inicio Real" id="dateStartReal" mask="00/00/0000"
-                            [dispatchError]="errorMessageDate" (handlerError)="handlerErrorDate($event)"
-                            [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateStartReal')">
-                        </app-textfield>
+                    <div class="col-md-3 margin-top-32">
+                        <mat-form-field>
+                            <mat-label>Fecha de Inicio Real</mat-label>
+                            <input matInput placeholder="dd/mm/aaaa" [matDatepicker]="dateStartReal" [formControl]="newProyectFormGroup.get('dateStartReal')">
+                            <mat-datepicker-toggle matSuffix [for]="dateStartReal"></mat-datepicker-toggle>
+                            <mat-datepicker #dateStartReal></mat-datepicker>
+                        </mat-form-field>
                     </div>
-                    <div class="col-md-6">
-                        <app-textfield [text]="'Fecha de Fin Real'" id="dateEndReal" mask="00/00/0000"
-                            [dispatchError]="errorMessageDate" (handlerError)="handlerErrorDate($event)"
-                            [dispatchHint]="'dd/MM/yyyy'" [control]="newProyectFormGroup.get('dateEndReal')">
-                        </app-textfield>
+                    <div class="col-md-3 margin-top-32">
+                        <mat-form-field>
+                            <mat-label>Fecha de Fin Real</mat-label>
+                            <input matInput placeholder="dd/mm/aaaa" [matDatepicker]="dateEndReal" [formControl]="newProyectFormGroup.get('dateEndReal')">
+                            <mat-datepicker-toggle matSuffix [for]="dateEndReal"></mat-datepicker-toggle>
+                            <mat-datepicker #dateEndReal></mat-datepicker>
+                        </mat-form-field>
                     </div>
                 </div>
                 <div class="row">
