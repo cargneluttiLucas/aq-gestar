@@ -6,3 +6,6 @@
 @import "./app/styles/modals";
 @import "./app/styles/spaces";
 @import "./app/styles/animations";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

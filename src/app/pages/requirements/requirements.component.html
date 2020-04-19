@@ -61,12 +61,6 @@
                             </app-select>
                         </div>
                         <div class="col-md-6">
-                            <!-- <app-textfield-predictive id="project" [item]="proyectSelected"
-                                [dispatchHint]="'Ingrese al menos 3 letras'" [minLength]="3" [items]="projects"
-                                text="Proyecto / frente de trabajo" [timeFilter]="3000"
-                                [selectFormControl]="requirementFormGroup.get('project')"
-                                (itemSelected)="itemSelected($event)"></app-textfield-predictive> -->
-
                             <app-project [text]="'Proyecto / frente de trabajo'" [id]="'project'"
                             [isSession]="sessionId" (proyectsSelectedData)="itemSelected($event)"
                                 [selectedFormControl]="requirementFormGroup.get('project')"></app-project>
@@ -78,10 +72,13 @@
                                 (userSelectedData)="itemSelectedPredictive($event)"
                                 [selectedFormControl]="requirementFormGroup.get('requestedByUser')"></app-user>
                         </div>
-                        <div class="col-md-3">
-                            <app-textfield text="Fecha de solicitud" [dispatchHint]="'dd/MM/yyyy'" mask="00/00/0000"
-                                id="requestDate" [control]="requirementFormGroup.get('requestDate')">
-                            </app-textfield>
+                        <div class="col-md-3 margin-top-32">
+                            <mat-form-field>
+                                <mat-label>Fecha de solicitud</mat-label>
+                                <input matInput placeholder="dd/mm/aaaa" [matDatepicker]="requestDate" [formControl]="requirementFormGroup.get('requestDate')">
+                                <mat-datepicker-toggle matSuffix [for]="requestDate"></mat-datepicker-toggle>
+                                <mat-datepicker #requestDate></mat-datepicker>
+                            </mat-form-field>
                         </div>
                         <div class="col-md-3">
                             <app-textfield text="Porcentaje de avance" id="solvedpercent"
@@ -121,19 +118,21 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <app-textfield text="Fecha estimada de inicio" mask="00/00/0000" id="estimatedDateStart"
-                                [dispatchHint]="'dd/MM/yyyy'" [dispatchError]="errorMessageDate"
-                                (handlerError)="handlerErrorDate($event)"
-                                [control]="requirementFormGroup.get('estimatedDateStart')">
-                            </app-textfield>
+                        <div class="col-md-3 margin-top-32">
+                            <mat-form-field>
+                                <mat-label>Fecha estimada de inicio</mat-label>
+                                <input matInput placeholder="dd/mm/aaaa" [matDatepicker]="estimatedDateStart" [formControl]="requirementFormGroup.get('estimatedDateStart')">
+                                <mat-datepicker-toggle matSuffix [for]="estimatedDateStart"></mat-datepicker-toggle>
+                                <mat-datepicker #estimatedDateStart></mat-datepicker>
+                            </mat-form-field>
                         </div>
-                        <div class="col-md-3">
-                            <app-textfield text="Fecha estimada de fin" mask="00/00/0000" id="estimatedDateEnd"
-                                [dispatchError]="errorMessageDate" [dispatchHint]="'dd/MM/yyyy'"
-                                (handlerError)="handlerErrorDate($event)"
-                                [control]="requirementFormGroup.get('estimatedDateEnd')">
-                            </app-textfield>
+                        <div class="col-md-3 margin-top-32">
+                            <mat-form-field>
+                                <mat-label>Fecha estimada de fin</mat-label>
+                                <input matInput placeholder="dd/mm/aaaa" [matDatepicker]="estimatedDateEnd" [formControl]="requirementFormGroup.get('estimatedDateEnd')">
+                                <mat-datepicker-toggle matSuffix [for]="estimatedDateEnd"></mat-datepicker-toggle>
+                                <mat-datepicker #estimatedDateEnd></mat-datepicker>
+                            </mat-form-field>
                         </div>
                         <div class="col-md-3">
                             <app-textfield text="Esfuerzo sistemas en horas" id="systemEffortinHours"

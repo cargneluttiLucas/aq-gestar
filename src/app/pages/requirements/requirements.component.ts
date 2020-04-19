@@ -182,8 +182,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             }
             this.flagProject = true;
         });
-
-        this.validateDates();
     }
 
     ngAfterViewInit() {
@@ -211,30 +209,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             aux.id = item.userId.value;
             aux.description = item.userFullName.value;
             this.users.push(aux);
-        });
-    }
-
-    validateDates() {
-        this.requirementFormGroup.get('requestDate').valueChanges.subscribe((data) => {
-            if (data && data.length !== 0) {
-                this.requirementFormGroup.get('requestDate').setValidators(this.customValidators.dateSinBarras);
-            } else {
-                this.requirementFormGroup.get('requestDate').setValidators(null);
-            }
-        });
-        this.requirementFormGroup.get('estimatedDateStart').valueChanges.subscribe((data) => {
-            if (data && data.length !== 0) {
-                this.requirementFormGroup.get('estimatedDateStart').setValidators(this.customValidators.dateSinBarras);
-            } else {
-                this.requirementFormGroup.get('estimatedDateStart').setValidators(null);
-            }
-        });
-        this.requirementFormGroup.get('estimatedDateEnd').valueChanges.subscribe((data) => {
-            if (data && data.length !== 0) {
-                this.requirementFormGroup.get('estimatedDateEnd').setValidators(this.customValidators.dateSinBarras);
-            } else {
-                this.requirementFormGroup.get('estimatedDateEnd').setValidators(null);
-            }
         });
     }
 
@@ -350,11 +324,18 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementFormGroup.get('displayName').setValue(response.requerimiento.displayName.value);
         this.requirementFormGroup.get('organization').setValue(response.requerimiento.organization.value);
         this.requirementFormGroup.get('realDateEnd').setValue(this.transformDateToString(response.requerimiento.fechaFinReal.value));
-        this.requirementFormGroup.get('requestDate').setValue(this.transformDateToString(response.requerimiento.requestedDate.value));
-        this.requirementFormGroup.get('estimatedDateStart').setValue(
-            this.transformDateToString(response.requerimiento.estimatedStartDate.value));
-        this.requirementFormGroup.get('estimatedDateEnd').setValue(
-            this.transformDateToString(response.requerimiento.estimatedEndDate.value));
+        if (response.requerimiento.requestedDate.value) {
+            this.requirementFormGroup.get('requestDate').setValue(
+                new Date(response.requerimiento.requestedDate.value));
+        }
+        if (response.requerimiento.estimatedStartDate.value) {
+            this.requirementFormGroup.get('estimatedDateStart').setValue(
+                new Date(response.requerimiento.estimatedStartDate.value));
+        }
+        if (response.requerimiento.estimatedEndDate.value) {
+            this.requirementFormGroup.get('estimatedDateEnd').setValue(
+                new Date(response.requerimiento.estimatedEndDate.value));
+        }
         this.requirementFormGroup.get('solvedpercent').setValue(response.requerimiento.solvedpercent.value);
 
         // historicalDescription systemEffortInHours userEffortInHours usersEffortinHours
@@ -598,7 +579,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 requestedDate: {
                     visible: true,
                     enabled: true,
-                    value: this.transformStringToDate(this.requirementFormGroup.get('requestDate').value)
+                    value: this.requirementFormGroup.get('requestDate').value || null,
                 },
                 requestedByUser: {
                     visible: true,
@@ -643,12 +624,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 estimatedStartDate: {
                     visible: true,
                     enabled: true,
-                    value: this.transformStringToDate(this.requirementFormGroup.get('estimatedDateStart').value)
+                    value: this.requirementFormGroup.get('estimatedDateStart').value || null,
                 },
                 estimatedEndDate: {
                     visible: true,
                     enabled: true,
-                    value: this.transformStringToDate(this.requirementFormGroup.get('estimatedDateEnd').value)
+                    value: this.requirementFormGroup.get('estimatedDateEnd').value || null,
                 },
                 areaId: {
                     visible: true,
@@ -902,8 +883,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     close() {
         this.flagClose = false;
-        // document.location.href = `http://3.227.233.169/c/content.asp?fld_id=${this.backtofld}`;
-        document.location.href = `${environment.addresses.closeRequirement.close}${this.backtofld}`;
+        if (window.opener && window.opener !== window) {
+            //inside a popup
+            window.close();
+            this.flagBeforunload = false;
+        }else{
+            document.location.href = `${environment.addresses.closeRequirement.close}${this.backtofld}`;
+        }   
     }
 
     // modal
