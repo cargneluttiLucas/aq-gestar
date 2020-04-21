@@ -129,6 +129,7 @@
                             <input matInput placeholder="dd/mm/aaaa" [matDatepicker]="dateStart" [formControl]="newProyectFormGroup.get('dateStart')">
                             <mat-datepicker-toggle matSuffix [for]="dateStart"></mat-datepicker-toggle>
                             <mat-datepicker #dateStart></mat-datepicker>
+                            <mat-error *ngIf="newProyectFormGroup.get('dateStart').hasError('greaterThanTodayValidator')">'Fecha de Inicio Planificada' debe ser mayor o igual a hoy.</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-3 margin-top-32">
@@ -137,6 +138,7 @@
                             <input matInput placeholder="dd/mm/aaaa" [matDatepicker]="dateEnd" [formControl]="newProyectFormGroup.get('dateEnd')">
                             <mat-datepicker-toggle matSuffix [for]="dateEnd"></mat-datepicker-toggle>
                             <mat-datepicker #dateEnd></mat-datepicker>
+                            <mat-error *ngIf="newProyectFormGroup.get('dateEnd').hasError('greaterThanDateValidator')">La fecha seleccionada debe ser mayor o igual a 'Fecha de Inicio Planificada'.</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-3 margin-top-32">
@@ -145,6 +147,7 @@
                             <input matInput placeholder="dd/mm/aaaa" [matDatepicker]="dateStartReal" [formControl]="newProyectFormGroup.get('dateStartReal')">
                             <mat-datepicker-toggle matSuffix [for]="dateStartReal"></mat-datepicker-toggle>
                             <mat-datepicker #dateStartReal></mat-datepicker>
+                            <mat-error *ngIf="newProyectFormGroup.get('dateStartReal').hasError('greaterThanTodayValidator')">'Fecha de Inicio Real' debe ser mayor o igual a hoy.</mat-error>
                         </mat-form-field>
                     </div>
                     <div class="col-md-3 margin-top-32">
@@ -153,6 +156,7 @@
                             <input matInput placeholder="dd/mm/aaaa" [matDatepicker]="dateEndReal" [formControl]="newProyectFormGroup.get('dateEndReal')">
                             <mat-datepicker-toggle matSuffix [for]="dateEndReal"></mat-datepicker-toggle>
                             <mat-datepicker #dateEndReal></mat-datepicker>
+                            <mat-error *ngIf="newProyectFormGroup.get('dateEndReal').hasError('greaterThanDateValidator')">'Fecha de Fin Real' debe ser mayor o igual a 'Fecha de Inicio Real'.</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
