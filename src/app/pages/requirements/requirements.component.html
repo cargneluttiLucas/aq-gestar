@@ -125,6 +125,7 @@
                                 <mat-datepicker-toggle matSuffix [for]="estimatedDateStart"></mat-datepicker-toggle>
                                 <mat-datepicker #estimatedDateStart></mat-datepicker>
                             </mat-form-field>
+                            <mat-error *ngIf="requirementFormGroup.get('estimatedDateStart').hasError('greaterThanTodayValidator')">'Fecha estimada de inicio' debe ser mayor o igual a hoy.</mat-error>
                         </div>
                         <div class="col-md-3 margin-top-32">
                             <mat-form-field>
@@ -132,6 +133,7 @@
                                 <input matInput placeholder="dd/mm/aaaa" [matDatepicker]="estimatedDateEnd" [formControl]="requirementFormGroup.get('estimatedDateEnd')">
                                 <mat-datepicker-toggle matSuffix [for]="estimatedDateEnd"></mat-datepicker-toggle>
                                 <mat-datepicker #estimatedDateEnd></mat-datepicker>
+                                <mat-error *ngIf="requirementFormGroup.get('estimatedDateEnd').hasError('greaterThanDateValidator')">'Fecha estimada de fin' debe ser mayor o igual a 'Fecha estimada de inicio'.</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-3">

@@ -8,6 +8,8 @@ import { KeypressService, DocumentService, NavigatorService, BeforeunloadService
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { FORMS_CUSTOM_VALIDATORS } from 'src/app/component/form';
+import { greaterThanTodayValidator, greaterThanDateValidator } from 'src/app/custom-validators/date.validator';
+import * as moment from 'moment';
 
 
 @Component({
@@ -153,14 +155,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         }
     }
 
-    public compareDate(date1: Date, date2: Date): number {
-        const d1 = new Date(date1); const d2 = new Date(date2);
-        const same = d1.getTime() === d2.getTime();
-        if (same) { return 0; }
-        if (d1 > d2) { return -1; }
-        if (d1 < d2) { return 1; }
-    }
-
     createForm() {
         this.newProyectFormGroup = new FormGroup({
             id: new FormControl(''),
@@ -200,6 +194,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 setTimeout(() => {
                     this.cargarCombos(response);
                     this.loadFilds(response);
+                    this.initDateValidations();
                 }, 200);
             }
         });
@@ -232,6 +227,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 setTimeout(() => {
                     this.cargarCombos(response);
                     this.loadFilds(response);
+                    this.initDateValidations();
                 }, 200);
             }
         });
@@ -273,23 +269,22 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.newProyectFormGroup.get('purchaseNumber').setValue(response.proyecto.nDeCompra.value);
         this.disabledPurchaseNumber = response.proyecto.sinOrdenCompra.value === 1 ? false : true;
         this.checkbox.selected = response.proyecto.sinOrdenCompra.value === 1 ? false : true;
-
         this.newProyectFormGroup.get('repositorySVN').setValue(response.proyecto.repositorioSvn.value);
         if (response.proyecto.startDate.value) {
             this.newProyectFormGroup.get('dateStart').setValue(
-                new Date(response.requerimiento.startDate.value));
+                moment(response.proyecto.startDate.value));
         }
         if (response.proyecto.endDate.value) {
             this.newProyectFormGroup.get('dateEnd').setValue(
-                new Date(response.requerimiento.endDate.value));
+                moment(response.proyecto.endDate.value));
         }
         if (response.proyecto.realStartDate.value) {
             this.newProyectFormGroup.get('dateStartReal').setValue(
-                new Date(response.requerimiento.realStartDate.value));
+                moment(response.proyecto.realStartDate.value));
         }
         if (response.proyecto.realEndDate.value) {
             this.newProyectFormGroup.get('dateEndReal').setValue(
-                new Date(response.requerimiento.realEndDate.value));
+                moment(response.proyecto.realEndDate.value));
         }
         this.newProyectFormGroup.get('estimatedHours').setValue(
             response.proyecto.estimatedHours.value === 0 ? '' : response.proyecto.estimatedHours.value);
@@ -367,15 +362,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             return value;
         }
         return `${value.slice(8, 10)}${value.slice(5, 7)}${value.slice(0, 4)}`;
-    }
-    private transformStringToDate(value): any {
-        if (!value) {
-            return value;
-        }
-        const year = value.slice(4, 10);
-        const month = value.slice(2, 4);
-        const date = value.slice(0, 2);
-        return new Date(year, month - 1, date);
     }
 
     selectedItem(item, select: string) {
@@ -679,11 +665,53 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     buildDescription() {
         if (this.newProyectFormGroup.get('description').value !== '') {
-            let aux = `${new Date().toLocaleString()} - ${this.loggedUserInfo} : ${this.newProyectFormGroup.get('description').value};`;
+            let aux = `${moment().toLocaleString()} - ${this.loggedUserInfo} : ${this.newProyectFormGroup.get('description').value};`;
             aux += this.historicalDescription;
             return aux;
         }
         return this.historicalDescription;
+    }
+
+    initDateValidations() {
+        const dateStartControl = this.newProyectFormGroup.get('dateStart');
+        const dateEndControl = this.newProyectFormGroup.get('dateEnd');
+        const dateStartRealControl = this.newProyectFormGroup.get('dateStartReal');
+        const dateEndRealControl = this.newProyectFormGroup.get('dateEndReal');
+
+        const dateStartDefaultValidator = dateStartControl.validator;
+        const dateEndDefaultValidator = dateEndControl.validator;
+        const dateStartRealDefaultValidator = dateStartRealControl.validator;
+        const dateEndRealDefaultValidator = dateEndRealControl.validator;
+
+        dateStartControl.setValidators([dateStartDefaultValidator,greaterThanTodayValidator]);
+        if (dateStartControl.value) {
+            dateEndControl.setValidators([dateEndDefaultValidator, greaterThanDateValidator(dateStartControl.value)]);
+        }
+        dateStartControl.valueChanges.subscribe(
+            () => {
+                if (dateStartControl.value){
+                    dateEndControl.setValidators([dateEndDefaultValidator, greaterThanDateValidator(dateStartControl.value)]);
+                } else {
+                    dateEndControl.setValidators(dateEndDefaultValidator);
+                }
+                dateEndControl.updateValueAndValidity();
+            }
+        );
+
+        dateStartRealControl.setValidators([dateStartRealDefaultValidator, greaterThanTodayValidator]);
+        if (dateStartRealControl.value) {
+            dateEndRealControl.setValidators([dateEndRealDefaultValidator, greaterThanDateValidator(dateStartRealControl.value)]);
+        }
+        dateStartRealControl.valueChanges.subscribe(
+            () => {
+                if (dateStartRealControl.value){
+                    dateEndRealControl.setValidators([dateEndRealDefaultValidator, greaterThanDateValidator(dateStartRealControl.value)]);
+                } else {
+                    dateEndRealControl.setValidators(dateEndRealDefaultValidator);
+                }
+                dateEndRealControl.updateValueAndValidity();
+            }
+        );
     }
 
     save() {

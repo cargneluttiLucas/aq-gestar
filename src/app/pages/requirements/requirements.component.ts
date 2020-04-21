@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
 import { FORMS_CUSTOM_VALIDATORS } from 'src/app/component/form';
 import { debounceTime } from 'rxjs/operators';
+import { greaterThanTodayValidator, greaterThanDateValidator } from 'src/app/custom-validators/date.validator';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-requirements',
@@ -249,6 +251,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementService.getOpenByDocId(requirementId, this.sessionId).subscribe((response) => {
             if (response) {
                 this.loadFilds(response);
+                this.initDateValidations();
                 if (this.requirementLoad && this.requirementLoad.id.value) {
                     const aux = {
                         filter: `referencestoid = ${this.requirementLoad.id.value}`,
@@ -301,6 +304,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             if (requirement) {
                 setTimeout(() => {
                     this.loadFilds(requirement);
+                    this.initDateValidations();
                 }, 200);
             }
         });
@@ -323,18 +327,21 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requirementFormGroup.get('createdMonth').setValue(this.transformDateToString(response.requerimiento.createdMonth.value));
         this.requirementFormGroup.get('displayName').setValue(response.requerimiento.displayName.value);
         this.requirementFormGroup.get('organization').setValue(response.requerimiento.organization.value);
-        this.requirementFormGroup.get('realDateEnd').setValue(this.transformDateToString(response.requerimiento.fechaFinReal.value));
+        if (response.requerimiento.fechaFinReal.value) {
+            this.requirementFormGroup.get('realDateEnd').setValue(
+                moment(response.requerimiento.fechaFinReal.value));
+        }
         if (response.requerimiento.requestedDate.value) {
             this.requirementFormGroup.get('requestDate').setValue(
-                new Date(response.requerimiento.requestedDate.value));
+                moment(response.requerimiento.requestedDate.value));
         }
         if (response.requerimiento.estimatedStartDate.value) {
             this.requirementFormGroup.get('estimatedDateStart').setValue(
-                new Date(response.requerimiento.estimatedStartDate.value));
+                moment(response.requerimiento.estimatedStartDate.value));
         }
         if (response.requerimiento.estimatedEndDate.value) {
             this.requirementFormGroup.get('estimatedDateEnd').setValue(
-                new Date(response.requerimiento.estimatedEndDate.value));
+                moment(response.requerimiento.estimatedEndDate.value));
         }
         this.requirementFormGroup.get('solvedpercent').setValue(response.requerimiento.solvedpercent.value);
 
@@ -941,6 +948,29 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
             });
         }
+    }
+
+    initDateValidations() {
+        const estimatedDateStartControl = this.requirementFormGroup.get('estimatedDateStart');
+        const estimatedDateEndControl = this.requirementFormGroup.get('estimatedDateEnd');
+
+        const estimatedDateStartDefaultValidator = estimatedDateStartControl.validator;
+        const estimatedDateEndDefaultValidator = estimatedDateEndControl.validator;
+
+        estimatedDateStartControl.setValidators([estimatedDateStartDefaultValidator,greaterThanTodayValidator]);
+        if (estimatedDateStartControl.value) {
+            estimatedDateEndControl.setValidators([estimatedDateEndDefaultValidator, greaterThanDateValidator(estimatedDateStartControl.value)]);
+        }
+        estimatedDateStartControl.valueChanges.subscribe(
+            () => {
+                if (estimatedDateStartControl.value){
+                    estimatedDateEndControl.setValidators([estimatedDateEndDefaultValidator, greaterThanDateValidator(estimatedDateStartControl.value)]);
+                } else {
+                    estimatedDateEndControl.setValidators(estimatedDateEndDefaultValidator);
+                }
+                estimatedDateEndControl.updateValueAndValidity();
+            }
+        );
     }
 
 

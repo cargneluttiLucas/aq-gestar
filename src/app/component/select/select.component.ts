@@ -188,7 +188,6 @@ export class SelectComponent implements OnInit, AfterContentInit, OnDestroy, OnC
   }
 
   onBlur(){
-    debugger;
     this.iconOpen = false;
     if (this.inFocus) {
       this.validationMoment.next(true);
