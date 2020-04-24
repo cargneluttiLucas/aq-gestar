@@ -343,7 +343,9 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.requirementFormGroup.get('estimatedDateEnd').setValue(
                 moment(response.requerimiento.estimatedEndDate.value));
         }
-        this.requirementFormGroup.get('solvedpercent').setValue(response.requerimiento.solvedpercent.value);
+        this.requirementFormGroup.get('solvedpercent').setValue(
+            response.requerimiento.solvedpercent.value === 0 ? '' : response.requerimiento.solvedpercent.value
+        );
 
         // historicalDescription systemEffortInHours userEffortInHours usersEffortinHours
         this.historicalDescription = response.requerimiento.description.value;

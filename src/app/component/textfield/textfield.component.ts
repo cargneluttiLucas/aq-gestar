@@ -120,6 +120,10 @@ export class TextfieldComponent implements ControlValueAccessor, OnInit, AfterVi
     ngOnInit(): void {
         this.createForm();
 
+        if (this.disabled){
+            this.control.disable();
+        }
+
         if (this.control.validator === Validators.required) {
             this.flagRequired = this.control.validator === Validators.required;
         }
