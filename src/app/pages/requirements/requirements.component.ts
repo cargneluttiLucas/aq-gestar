@@ -36,7 +36,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     businessProces = [];
-    businesProcesSelected = {
+    businessProcesSelected = {
         id: null,
         description: null,
         disabled: false
@@ -383,9 +383,9 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             };
         }
         if (response.requerimiento.businessProcessId.value) {
-            this.businesProcesSelected = {
+            this.businessProcesSelected = {
                 id: response.requerimiento.businessProcessId.value,
-                description: response.requerimiento.module.value,
+                description: response.requerimiento.businessProcess.value,
                 disabled: false
             };
         }
@@ -704,12 +704,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 businessProcessId: {
                     visible: true,
                     enabled: true,
-                    value: this.businesProcesSelected.id ? +this.businesProcesSelected.id : null
+                    value: this.businessProcesSelected.id ? +this.businessProcesSelected.id : null
                 },
                 businessProcess: {
                     visibl: true,
                     enabled: true,
-                    value: this.businesProcesSelected.description ? this.businesProcesSelected.description : null
+                    value: this.businessProcesSelected.description ? this.businessProcesSelected.description : null
                 },
                 /* regionId: {
                     visible: true,
@@ -778,7 +778,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     break;
                 }
                 case 'businessProces': {
-                    this.businesProcesSelected = item;
+                    this.businessProcesSelected = item;
                     break;
                 }
                 case 'requirementTypes': {
