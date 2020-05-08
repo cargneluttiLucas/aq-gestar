@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
 import { FORMS_CUSTOM_VALIDATORS } from 'src/app/component/form';
-import { debounceTime } from 'rxjs/operators';
 import { greaterThanTodayValidator, greaterThanDateValidator } from 'src/app/custom-validators/date.validator';
 import * as moment from 'moment';
 
@@ -95,7 +94,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     errorMessage: string;
 
-    // public sessionId = '5047a0e4dcd5441082527100b3ad1d1d';
+    // public sessionId = '7a45de40a093416f91957b166abfc3e3';
     public sessionId: string;
     public projectId: number;
     public requirementId: number;
@@ -144,6 +143,10 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         private router: Router) { }
 
     ngOnInit() {
+
+        // this.requirementFormGroup.get('requestedByUser').statusChanges.subscribe((response) => {
+        //     console.log(response);
+        // });
 
         this.beforeunloadService.beforeunload().subscribe((data) => {
             if (this.flagBeforunload) {
@@ -277,23 +280,63 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private loadSelects() {
+        const firstElement = {
+            id: null,
+            description: null,
+            disabled: false
+        };
         this.requirementService.getNewSelects(this.sessionId).subscribe((response) => {
             if (response) {
-                this.aplications = response.reqKeywords.keywords[0].options;
-                this.modules = response.reqKeywords.keywords[1].options;
-                this.businessProces = response.reqKeywords.keywords[2].options;
-                this.requirementTypes = response.reqKeywords.keywords[3].options;
+                this.aplications.push(firstElement);
+                this.modules.push(firstElement);
+                this.businessProces.push(firstElement);
+                this.requirementTypes.push(firstElement);
+                this.prioritys.push(firstElement);
+                this.regios.push(firstElement);
+                this.areas.push(firstElement);
+                this.managementAreas.push(firstElement);
+                this.complexityLevels.push(firstElement);
 
-                // este se vonvirtio en un predictivo pero no busca por filtro al back
-                // solo busca en la carga inicial.
+                response.reqKeywords.keywords[0].options.forEach((item) => {
+                    this.aplications.push(item);
+                });
+
+                response.reqKeywords.keywords[1].options.forEach((item) => {
+                    this.modules.push(item);
+                });
+                response.reqKeywords.keywords[2].options.forEach((item) => {
+                    this.businessProces.push(item);
+                });
+                response.reqKeywords.keywords[3].options.forEach((item) => {
+                    this.requirementTypes.push(item);
+                });
+                response.reqKeywords.keywords[5].options.forEach((item) => {
+                    this.prioritys.push(item);
+                });
+                response.reqKeywords.keywords[6].options.forEach((item) => {
+                    this.regios.push(item);
+                });
+                response.reqKeywords.keywords[7].options.forEach((item) => {
+                    this.areas.push(item);
+                });
+                response.reqKeywords.keywords[9].options.forEach((item) => {
+                    this.managementAreas.push(item);
+                });
+                response.reqKeywords.keywords[10].options.forEach((item) => {
+                    this.complexityLevels.push(item);
+                });
+                // this.modules = response.reqKeywords.keywords[1].options;
+                // this.businessProces = response.reqKeywords.keywords[2].options;
+                // this.requirementTypes = response.reqKeywords.keywords[3].options;
+
+                // // este se convirtio en un predictivo pero no busca por filtro al back
+                // // solo busca en la carga inicial.
                 this.mainObjects = response.reqKeywords.keywords[4].options;
-
-
-                this.prioritys = response.reqKeywords.keywords[5].options;
-                this.regios = response.reqKeywords.keywords[6].options;
-                this.areas = response.reqKeywords.keywords[7].options;
-                this.managementAreas = response.reqKeywords.keywords[9].options;
-                this.complexityLevels = response.reqKeywords.keywords[10].options;
+                // this.prioritys = response.reqKeywords.keywords[5].options;
+                // this.regios = response.reqKeywords.keywords[6].options;
+                // this.areas = response.reqKeywords.keywords[7].options;
+                // this.managementAreas = response.reqKeywords.keywords[9].options;
+                // this.complexityLevels = response.reqKeywords.keywords[10].options;
             }
         });
 
@@ -623,7 +666,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 priorityId: {
                     visible: true,
                     enabled: true,
-                    value: this.prioritySelected.id ? +this.prioritySelected.id : null
+                    value: this.prioritySelected.id ? + this.prioritySelected.id : null
                 },
                 priority: {
                     visible: true,
@@ -896,9 +939,9 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             //inside a popup
             window.close();
             this.flagBeforunload = false;
-        }else{
+        } else {
             document.location.href = `${environment.addresses.closeRequirement.close}${this.backtofld}`;
-        }   
+        }
     }
 
     // modal
@@ -959,14 +1002,16 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         const estimatedDateStartDefaultValidator = estimatedDateStartControl.validator;
         const estimatedDateEndDefaultValidator = estimatedDateEndControl.validator;
 
-        estimatedDateStartControl.setValidators([estimatedDateStartDefaultValidator,greaterThanTodayValidator]);
+        estimatedDateStartControl.setValidators([estimatedDateStartDefaultValidator, greaterThanTodayValidator]);
         if (estimatedDateStartControl.value) {
-            estimatedDateEndControl.setValidators([estimatedDateEndDefaultValidator, greaterThanDateValidator(estimatedDateStartControl.value)]);
+            estimatedDateEndControl.setValidators([estimatedDateEndDefaultValidator,
+                greaterThanDateValidator(estimatedDateStartControl.value)]);
         }
         estimatedDateStartControl.valueChanges.subscribe(
             () => {
-                if (estimatedDateStartControl.value){
-                    estimatedDateEndControl.setValidators([estimatedDateEndDefaultValidator, greaterThanDateValidator(estimatedDateStartControl.value)]);
+                if (estimatedDateStartControl.value) {
+                    estimatedDateEndControl.setValidators([estimatedDateEndDefaultValidator,
+                        greaterThanDateValidator(estimatedDateStartControl.value)]);
                 } else {
                     estimatedDateEndControl.setValidators(estimatedDateEndDefaultValidator);
                 }

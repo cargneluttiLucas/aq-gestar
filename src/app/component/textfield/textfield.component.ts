@@ -157,6 +157,7 @@ export class TextfieldComponent implements ControlValueAccessor, OnInit, AfterVi
     }
 
     ngAfterViewInit() {
+        console.log('Valor del input', this.control.value);
         const controlMessages = this.boxTextfield.nativeElement.querySelectorAll('[ControlMessages]');
         if (controlMessages.length > 0) {
             this.controlMessagesProyection = true;

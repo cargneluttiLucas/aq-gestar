@@ -67,6 +67,7 @@ export class TextfieldPredictiveComponent implements OnInit, AfterViewInit, OnDe
   isErrorLine = false;
   form: FormGroup;
   flagDefault = false;
+  flagLoadFirst = true;
 
   keypressSubscription: Subscription = new Subscription();
 
@@ -116,6 +117,12 @@ export class TextfieldPredictiveComponent implements OnInit, AfterViewInit, OnDe
       });
     }
 
+    this.keypressService.keyPressTab().subscribe((response) => {
+      if (response === true) {
+        this.iconOpen = false;
+      }
+    });
+
     this.submit$.subscribe((result) => {
       if (result) {
         this.validationMoment.next(true);
@@ -153,13 +160,18 @@ export class TextfieldPredictiveComponent implements OnInit, AfterViewInit, OnDe
       });
     }
     this.itemsFilter = aux;
-    if (this.itemsFilter.length === 0 && this.selectFormControl.dirty) {
-      this.selectFormControl.setValidators([this.selectFormControl.validator, this.itemsFilterEmpty]);
-      this.validationMoment.next(true);
+    if (this.itemsFilter.length === 1 && this.flagLoadFirst) {
+      this.flagLoadFirst = false;
+      this.itemSelect(this.itemsFilter[0]);
     } else {
-      this.selectFormControl.setValidators([Validators.required]);
+      if (this.itemsFilter.length === 0 && this.selectFormControl.dirty) {
+        this.selectFormControl.setValidators([this.selectFormControl.validator, this.itemsFilterEmpty]);
+        this.validationMoment.next(true);
+      } else {
+        this.selectFormControl.setValidators([Validators.required]);
+      }
+      this.cdRef.detectChanges();
     }
-    this.cdRef.detectChanges();
   }
 
   normalizeText(text: string): string {

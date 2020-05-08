@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ProjectsService } from '../service/project.service';
 import { debounceTime } from 'rxjs/operators';
@@ -28,7 +28,7 @@ export class ProjectComponent implements OnInit {
       this.selectedFormControl = new FormControl('');
     }
     this.selectedFormControl.valueChanges.pipe(
-      debounceTime(1000)).subscribe((data) => {
+      debounceTime(0)).subscribe((data) => {
         if (this.flagLoad) {
           if (data && data.length >= 3) {
             this.loadField(data);
