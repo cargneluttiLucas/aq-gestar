@@ -168,7 +168,7 @@ export class TextfieldPredictiveComponent implements OnInit, AfterViewInit, OnDe
         this.selectFormControl.setValidators([this.selectFormControl.validator, this.itemsFilterEmpty]);
         this.validationMoment.next(true);
       } else {
-        this.selectFormControl.setValidators([Validators.required]);
+        // this.selectFormControl.setValidators([Validators.required]);
       }
       this.cdRef.detectChanges();
     }
@@ -237,7 +237,6 @@ export class TextfieldPredictiveComponent implements OnInit, AfterViewInit, OnDe
   }
 
   openDialog(event, id: string) {
-    console.log(event);
     this.focusPredictive.emit(event);
     if (event.focusOn && this.isMobile) {
       setTimeout(() => {

@@ -58,6 +58,5 @@ export class ClientComponent implements OnInit {
   }
 
   handlerError(event) {
-    console.log('handlerError' + this.text, event);
   }
 }

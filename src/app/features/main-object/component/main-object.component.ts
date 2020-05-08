@@ -33,6 +33,5 @@ export class MainObjectsComponent implements OnInit {
   }
 
   handlerError(event) {
-    console.log('handlerError' + this.text, event);
   }
 }

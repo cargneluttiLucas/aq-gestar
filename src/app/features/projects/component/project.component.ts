@@ -29,6 +29,7 @@ export class ProjectComponent implements OnInit {
     }
     this.selectedFormControl.valueChanges.pipe(
       debounceTime(0)).subscribe((data) => {
+        this.flagLoad = true;
         if (this.flagLoad) {
           if (data && data.length >= 3) {
             this.loadField(data);
@@ -72,25 +73,9 @@ export class ProjectComponent implements OnInit {
   }
 
   handlerError(event) {
-    console.log('handlerError' + this.text, event);
   }
 
   focusPredictive(event) {
 
   }
-
-
-  // buildProjectTextfield(proyects) {
-  //   this.projects = [];
-  //   proyects.forEach((item) => {
-  //     const aux = { id: 0, description: '', project: '', disabled: false, customer: null, customerid: null };
-  //     aux.id = item.Values.ID;
-  //     aux.description = item.Values.DISPLAYNAME;
-  //     aux.project = item.Values.PROJECT_NAME;
-  //     aux.customerid = item.Values.CUSTOMERID;
-  //     aux.customer = item.Values.CUSTOMER;
-
-  //     this.projects.push(aux);
-  //   });
-  // }
 }

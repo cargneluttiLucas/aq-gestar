@@ -144,10 +144,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     ngOnInit() {
 
-        // this.requirementFormGroup.get('requestedByUser').statusChanges.subscribe((response) => {
-        //     console.log(response);
-        // });
-
         this.beforeunloadService.beforeunload().subscribe((data) => {
             if (this.flagBeforunload) {
                 data.preventDefault();
@@ -872,7 +868,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     itemSelectedMainObjectPredictive(event) {
-        console.log(event);
         this.mainObjectSelected = event;
         this.requirementFormGroup.get('mainObject').setValue(event.description);
         this.itemsFilterDefaultUser = this.users;

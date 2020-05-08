@@ -64,6 +64,5 @@ export class UserComponent implements OnInit, OnChanges {
   }
 
   handlerError(event) {
-    console.log('handlerError' + this.text, event);
   }
 }
