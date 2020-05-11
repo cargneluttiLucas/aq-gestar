@@ -27,26 +27,33 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <app-client [isSession]="sessionId" [selectedFormControl]="newProyectFormGroup.get('client')"
-                            (clientSelectedData)="itemSelectedPredictiveClients($event)"></app-client>
+                        <!-- <app-client [isSession]="sessionId" [selectedFormControl]="newProyectFormGroup.get('client')"
+                            (clientSelectedData)="itemSelectedPredictiveClients($event)"></app-client> -->
                     </div>
                     <div class="col-md-6">
-                        <app-user [text]="'Sponsor'" [id]="'sponsor'" [isSession]="sessionId"
+                        <!-- <app-user [text]="'Sponsor'" [id]="'sponsor'" [isSession]="sessionId"
                             (userSelectedData)="itemSelectedPredictiveSponsor($event)"
-                            [selectedFormControl]="newProyectFormGroup.get('sponsor')"></app-user>
+                            [selectedFormControl]="newProyectFormGroup.get('sponsor')"></app-user> -->
+                        <app-user
+                            [sessionId]="sessionId"
+                            placeHolder="Sponsor"
+                            [control]="newProyectFormGroup.get('sponsor')"
+                            [userSelected]="''"
+                        >
+                        </app-user>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6">
-                        <app-user [text]="'Coordinador'" [id]="'coordinator'" [isSession]="sessionId"
+                        <!-- <app-user [text]="'Coordinador'" [id]="'coordinator'" [isSession]="sessionId"
                             (userSelectedData)="itemSelectedPredictiveCoordinators($event)"
-                            [selectedFormControl]="newProyectFormGroup.get('coordinator')"></app-user>
+                            [selectedFormControl]="newProyectFormGroup.get('coordinator')"></app-user> -->
                     </div>
                     <div class="col-md-6">
-                        <app-user [text]="'Solicitado por'" [id]="'requestedbyuser'" [isSession]="sessionId"
+                        <!-- <app-user [text]="'Solicitado por'" [id]="'requestedbyuser'" [isSession]="sessionId"
                             (userSelectedData)="itemSelectedPredictiveRequestedByUsers($event)"
-                            [selectedFormControl]="newProyectFormGroup.get('requestedbyuser')"></app-user>
+                            [selectedFormControl]="newProyectFormGroup.get('requestedbyuser')"></app-user> -->
                     </div>
                 </div>
 

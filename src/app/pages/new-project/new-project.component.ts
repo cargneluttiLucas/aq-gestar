@@ -244,9 +244,9 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.clientSelected.id = response.proyecto.customerId.value;
         this.clientSelected.description = response.proyecto.customer.value;
 
-        this.newProyectFormGroup.get('sponsor').setValue(response.proyecto.sponsor.value);
         this.sponsorSelected.id = response.proyecto.sponsorid.value;
         this.sponsorSelected.description = response.proyecto.sponsor.value;
+        this.newProyectFormGroup.get('sponsor').setValue(this.sponsorSelected);
 
         this.newProyectFormGroup.get('coordinator').setValue(response.proyecto.coordinator.value);
         this.coordinatorSelected.id = response.proyecto.coordinatorId.value;
@@ -400,12 +400,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                     break;
                 }
             }
-        }
-    }
-
-    itemSelectedPredictiveSponsor(event) {
-        if (event.id) {
-            this.sponsorSelected = event;
         }
     }
 
@@ -576,12 +570,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 sponsor: {
                     visible: true,
                     enabled: true,
-                    value: this.sponsorSelected.description ? this.sponsorSelected.description : null
+                    value: this.newProyectFormGroup.get('sponsor').value.description ? this.newProyectFormGroup.get('sponsor').value.description : null
                 },
                 sponsorid: {
                     visible: true,
                     enabled: true,
-                    value: this.sponsorSelected.id ? this.sponsorSelected.id : null
+                    value: this.newProyectFormGroup.get('sponsor').value.id ? this.newProyectFormGroup.get('sponsor').value.id : null
                 },
                 coordinator: {
                     visible: true,

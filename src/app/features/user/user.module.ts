@@ -3,11 +3,17 @@ import { CommonModule } from '@angular/common';
 import { TextfieldPredictiveModule, ComponentsModule } from 'src/app/component';
 import { UserService } from './service/user.service';
 import { UserComponent } from './component/user.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
-    ComponentsModule
+    ComponentsModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [
     UserComponent
