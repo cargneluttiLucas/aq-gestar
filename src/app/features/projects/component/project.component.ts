@@ -1,7 +1,16 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnChanges } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { ProjectsService } from '../service/project.service';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, tap, switchMap, finalize, startWith, filter } from 'rxjs/operators';
+
+function autocompleteObjectValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (typeof control.value === 'string' && control.value !== '') {
+      return { 'invalidAutocompleteObject': { value: control.value } }
+    }
+    return null  /* valid option selected */
+  }
+}
 
 @Component({
   selector: 'app-project',
@@ -10,49 +19,38 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class ProjectComponent implements OnInit {
 
-  @Input() selectedFormControl: FormControl;
-  @Input() isSession: string;
-  @Input() text: string;
-  @Input() id: string;
-  proyects: any[] = [];
+  @Input() sessionId: string;
+  @Input() placeHolder: string;
+  @Input() control: FormControl;
 
-  @Input() proyectsSelected = { id: null, description: '', disabled: false };
-  @Output() proyectsSelectedData = new EventEmitter();
-
-  private flagLoad = true;
+  filteredProjects: any[] = [];
 
   constructor(private projectsService: ProjectsService) { }
 
   ngOnInit() {
-    if (!this.selectedFormControl) {
-      this.selectedFormControl = new FormControl('');
-    }
-    this.selectedFormControl.valueChanges.pipe(
-      debounceTime(0)).subscribe((data) => {
-        this.flagLoad = true;
-        if (this.flagLoad) {
-          if (data && data.length >= 3) {
-            this.loadField(data);
-          }
+    this.control.setValidators(autocompleteObjectValidator());
+    
+    this.control
+      .valueChanges
+      .pipe(
+        debounceTime(300),
+        filter((str) => typeof str === 'string' && str !== ''),
+        switchMap(value => this.projectsService.findProjects({
+          filter: value,
+          order: 'DOC_ID',
+          fields: 'DOC_ID,ID,project_name,DISPLAYNAME,customer,customerid'
+        }, this.sessionId)
+        )
+      )
+      .subscribe((response) => {
+        if (response) {
+          this.buildProject(response.proyectos);;
         }
       });
   }
 
-  loadField(data) {
-    const aux = {
-      filter: data,
-      order: 'DOC_ID',
-      fields: 'DOC_ID,ID,project_name,DISPLAYNAME,customer,customerid'
-    };
-    this.projectsService.findProjects(aux, this.isSession).subscribe((response) => {
-      if (response) {
-        this.buildProject(response.proyectos);
-      }
-    });
-  }
-
   buildProject(proyects) {
-    this.proyects = [];
+    this.filteredProjects = [];
     proyects.forEach((item) => {
       const aux = { id: 0, description: '', project: '', disabled: false, customer: null, customerid: null };
       aux.id = item.Values.ID;
@@ -61,21 +59,11 @@ export class ProjectComponent implements OnInit {
       aux.customerid = item.Values.CUSTOMERID;
       aux.customer = item.Values.CUSTOMER;
 
-      this.proyects.push(aux);
+      this.filteredProjects.push(aux);
     });
   }
 
-  itemSelected(event) {
-    this.flagLoad = false;
-    this.proyectsSelected = event;
-    this.selectedFormControl.setValue(event.description);
-    this.proyectsSelectedData.emit(this.proyectsSelected);
-  }
-
-  handlerError(event) {
-  }
-
-  focusPredictive(event) {
-
+  displayFn(user): string | undefined {
+    return user ? user.description : undefined;
   }
 }

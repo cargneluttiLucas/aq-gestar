@@ -3,11 +3,15 @@ import { CommonModule } from '@angular/common';
 import { ComponentsModule } from 'src/app/component';
 import { ProjectsService } from './service/project.service';
 import { ProjectComponent } from './component/project.component';
+import { MatInputModule, MatAutocompleteModule, MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
-    ComponentsModule
+    ComponentsModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [
     ProjectComponent

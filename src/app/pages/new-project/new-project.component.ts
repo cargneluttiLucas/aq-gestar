@@ -439,220 +439,218 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     }
 
     private buildForm() {
+
+        const project = {
+            projectName: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('name').value,
+            },
+            projectType: {
+                visible: true,
+                enabled: true,
+                value: this.typeProjectSelected.description,
+            },
+            projectTypeId: {
+                visible: true,
+                enabled: true,
+                value: this.typeProjectSelected.id,
+            },
+            projectState: {
+                visible: true,
+                enabled: true,
+                value: this.stateProjectSelected.description,
+            },
+            projectStateId: {
+                visible: true,
+                enabled: true,
+                value: this.stateProjectSelected.id,
+            },
+            startDate: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('dateStart').value,
+            },
+            endDate: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('dateEnd').value,
+            },
+            sinOrdenCompra: {
+                visible: true,
+                enabled: true,
+                value: this.disabledPurchaseNumber ? 0 : 1,
+            },
+            repositorioSvn: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('repositorySVN').value,
+            },
+            nDeCompra: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('purchaseNumber').value,
+            },
+            estimatedHours: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('estimatedHours').value,
+            },
+            realHours: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('realHours').value,
+            },
+            solvedpercent: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('solvedpercent').value,
+            },
+            realStartDate: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('dateStartReal').value,
+            },
+            realEndDate: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('dateEndReal').value,
+            },
+            customer: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('client').value.description,
+            },
+            customerId: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('client').value.id,
+            },
+            projRiesgo: {
+                visible: true,
+                enabled: true,
+                value: this.projectRiskSelected.description,
+            },
+            projRiesgoId: {
+                visible: true,
+                enabled: true,
+                value: this.projectRiskSelected.id,
+            },
+            id: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('id').value,
+            },
+            displayname: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('displayname').value,
+            },
+            description: {
+                visible: true,
+                enabled: true,
+                value: this.buildDescription(),
+            },
+            managementAreaInCharge: {
+                visible: true,
+                enabled: true,
+                value: this.managementAreaInChargeSelected.description,
+            },
+            managementAreaInChargeId: {
+                visible: true,
+                enabled: true,
+                value: this.managementAreaInChargeSelected.id,
+            },
+            sponsor: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('sponsor').value.description,
+            },
+            sponsorid: {
+                visible: true,
+                enabled: true,
+                value:this.newProyectFormGroup.get('sponsor').value.id,
+            },
+            coordinator: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('coordinator').value.description,
+            },
+            coordinatorid: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('coordinator').value.id,
+            },
+            priority: {
+                visible: true,
+                enabled: true,
+                value: this.prioritySelected.description,
+            },
+            priorityId: {
+                visible: true,
+                enabled: true,
+                value: this.prioritySelected.id,
+            },
+            complexitylevel: {
+                visible: true,
+                enabled: true,
+                value: this.complexityLevelSelected.description,
+            },
+            complexityLevelId: {
+                visible: true,
+                enabled: true,
+                value: this.complexityLevelSelected.id,
+            },
+            area: {
+                visible: true,
+                enabled: true,
+                value: this.areaSelected.description,
+            },
+            areaId: {
+                visible: true,
+                enabled: true,
+                value: this.areaSelected.id,
+            },
+            region: {
+                visible: true,
+                enabled: true,
+                value: this.regionSelected.description,
+            },
+            regionId: {
+                visible: true,
+                enabled: true,
+                value: this.regionSelected.id,
+            },
+            qualitativeBenefits: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('qualitativebenefits').value,
+            },
+            quantitativeBenefits: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('quantitativebenefits').value,
+            },
+            comments: {
+                visible: true,
+                enabled: true,
+                value: null
+            },
+            requestedbyuser: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('requestedbyuser').value.description,
+            },
+            requestedbyuserid: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('requestedbyuser').value.id,
+            },
+            keywords: []
+        }
+        this.sanitizeValues(project);
         return {
-            proyecto: {
-                projectName: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('name').value
-                },
-                projectType: {
-                    visible: true,
-                    enabled: true,
-                    value: this.typeProjectSelected.description ? this.typeProjectSelected.description : null
-                },
-                projectTypeId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.typeProjectSelected.id ? this.typeProjectSelected.id : null
-                },
-                projectState: {
-                    visible: true,
-                    enabled: true,
-                    value: this.stateProjectSelected.description ? this.stateProjectSelected.description : null
-                },
-                projectStateId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.stateProjectSelected.id ? this.stateProjectSelected.id : null
-                },
-                startDate: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('dateStart').value || null,
-                },
-                endDate: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('dateEnd').value || null,
-                },
-                sinOrdenCompra: {
-                    visible: true,
-                    enabled: true,
-                    value: this.disabledPurchaseNumber ? 0 : 1
-                },
-                repositorioSvn: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('repositorySVN').value
-                },
-                nDeCompra: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('purchaseNumber').value === '' ?
-                        null : this.newProyectFormGroup.get('purchaseNumber').value
-                },
-                estimatedHours: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('estimatedHours').value === '' ?
-                        null : +this.newProyectFormGroup.get('estimatedHours').value
-                },
-                realHours: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('realHours').value === '' ?
-                        null : +this.newProyectFormGroup.get('realHours').value
-                },
-                solvedpercent: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('solvedpercent').value === '' ?
-                        null : +this.newProyectFormGroup.get('solvedpercent').value
-                },
-                realStartDate: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('dateStartReal').value || null,
-                },
-                realEndDate: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('dateEndReal').value || null,
-                },
-                customer: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('client').value.description ? this.newProyectFormGroup.get('client').value.description : null
-                },
-                customerId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('client').value.id ? this.newProyectFormGroup.get('client').value.id : null
-                },
-                projRiesgo: {
-                    visible: true,
-                    enabled: true,
-                    value: this.projectRiskSelected.description ? this.projectRiskSelected.description : null
-                },
-                projRiesgoId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.projectRiskSelected.id ? this.projectRiskSelected.id : null
-                },
-                id: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('id').value === '' ?
-                        null : this.newProyectFormGroup.get('id').value
-                },
-                displayname: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('displayname').value
-                },
-                description: {
-                    visible: true,
-                    enabled: true,
-                    value: this.buildDescription(),
-                },
-                managementAreaInCharge: {
-                    visible: true,
-                    enabled: true,
-                    value: this.managementAreaInChargeSelected.description ? this.managementAreaInChargeSelected.description : null
-                },
-                managementAreaInChargeId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.managementAreaInChargeSelected.id ? this.managementAreaInChargeSelected.id : null
-                },
-                sponsor: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('sponsor').value.description ? this.newProyectFormGroup.get('sponsor').value.description : null
-                },
-                sponsorid: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('sponsor').value.id ? this.newProyectFormGroup.get('sponsor').value.id : null
-                },
-                coordinator: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('coordinator').value.description ? this.newProyectFormGroup.get('coordinator').value.description : null
-                },
-                coordinatorid: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('coordinator').value.id ? this.newProyectFormGroup.get('coordinator').value.id : null
-                },
-                priority: {
-                    visible: true,
-                    enabled: true,
-                    value: this.prioritySelected.description ? this.prioritySelected.description : null
-                },
-                priorityId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.prioritySelected.id ? this.prioritySelected.id : null
-                },
-                complexitylevel: {
-                    visible: true,
-                    enabled: true,
-                    value: this.complexityLevelSelected.description ? this.complexityLevelSelected.description : null
-                },
-                complexityLevelId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.complexityLevelSelected.id ? this.complexityLevelSelected.id : null
-                },
-                area: {
-                    visible: true,
-                    enabled: true,
-                    value: this.areaSelected.description ? this.areaSelected.description : null
-                },
-                areaId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.areaSelected.id ? this.areaSelected.id : null
-                },
-                region: {
-                    visible: true,
-                    enabled: true,
-                    value: this.regionSelected.description ? this.regionSelected.description : null
-                },
-                regionId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.regionSelected.id ? this.regionSelected.id : null
-                },
-                qualitativeBenefits: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('qualitativebenefits').value
-                },
-                quantitativeBenefits: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('quantitativebenefits').value
-                },
-                comments: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                requestedbyuser: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('requestedbyuser').value.description ? this.newProyectFormGroup.get('requestedbyuser').value.description : null
-                },
-                requestedbyuserid: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('requestedbyuser').value.id ? this.newProyectFormGroup.get('requestedbyuser').value.id : null
-                },
-                keywords: []
-            }
+            proyecto: project,
         };
     }
 
@@ -778,6 +776,20 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     closeModalForOtherMotive(event?) {
         if (this.documentService.nativeDocument.body.querySelectorAll('app-modal').length > 0) {
             this.closeModal();
+        }
+    }
+
+    private getValidValueOrNull(value){
+        if (value === undefined || value === NaN || value === '') {
+            return null
+        } else {
+            return value;
+        }
+    }
+
+    private sanitizeValues(project){
+        for (let [key] of Object.entries(project)) {
+            project[key].value = this.getValidValueOrNull(project[key].value);
         }
     }
 

@@ -60,17 +60,26 @@
                                 (itemSelected)="selectedItem($event, 'modules')" placeholderDefault="Módulo">
                             </app-select>
                         </div>
-                        <div class="col-md-6">
-                            <app-project [text]="'Proyecto / frente de trabajo'" [id]="'project'"
+                        <div class="col-md-6 margin-top-32">
+                            <!-- <app-project [text]="'Proyecto / frente de trabajo'" [id]="'project'"
                             [isSession]="sessionId" (proyectsSelectedData)="itemSelected($event)"
-                                [selectedFormControl]="requirementFormGroup.get('project')"></app-project>
+                                [selectedFormControl]="requirementFormGroup.get('project')"></app-project> -->
+                            <app-project
+                                [sessionId]="sessionId"
+                                placeHolder="Proyecto / frente de trabajo"
+                                [control]="requirementFormGroup.get('project')"
+                            >
+                            </app-project>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
-                            <!-- <app-user [text]="'Usuario solicitante'" [id]="'requestedByUser'" [isSession]="sessionId"
-                                (userSelectedData)="itemSelectedPredictive($event)"
-                                [selectedFormControl]="requirementFormGroup.get('requestedByUser')"></app-user> -->
+                        <div class="col-md-6 margin-top-32">
+                            <app-user
+                                [sessionId]="sessionId"
+                                placeHolder="Usuario solicitante"
+                                [control]="requirementFormGroup.get('requestedByUser')"
+                            >
+                            </app-user>
                         </div>
                         <div class="col-md-3 margin-top-32">
                             <mat-form-field>
