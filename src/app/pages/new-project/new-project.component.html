@@ -64,18 +64,28 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-3">
-                        <app-select [items]="typeProject" [item]="typeProjectSelected"
+                    <div class="col-md-3 margin-top-32">
+                        <!-- <app-select [items]="typeProject" [item]="typeProjectSelected"
                             [required]="true"
                             [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'typeProject')" placeholderDefault="Tipo proyecto">
-                        </app-select>
+                        </app-select> -->
+                        <app-keyword
+                            placeHolder="Tipo proyecto"
+                            [control]="newProyectFormGroup.get('projectType')"
+                            [keywords]="projectTypes"
+                        ></app-keyword>
                     </div>
-                    <div class="col-md-3">
-                        <app-select [items]="stateProject" [item]="stateProjectSelected"
+                    <div class="col-md-3 margin-top-32">
+                        <!-- <app-select [items]="stateProject" [item]="stateProjectSelected"
                             [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'stateProject')" placeholderDefault="Estado">
-                        </app-select>
+                        </app-select> -->
+                        <app-keyword
+                            placeHolder="Estado"
+                            [control]="newProyectFormGroup.get('state')"
+                            [keywords]="projectStates"
+                        ></app-keyword>
                     </div>
                     <div class="col-md-3">
                         <app-select [items]="projectRisk" [item]="projectRiskSelected"

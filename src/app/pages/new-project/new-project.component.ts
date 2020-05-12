@@ -21,8 +21,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     newProyectFormGroup: FormGroup;
 
-    typeProject = [];
-    stateProject = [];
+    projectTypes = [];
+    projectStates = [];
     projectRisk = [];
     managementAreaInCharge = [];
     priority = [];
@@ -30,12 +30,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     areas = [];
     regions = [];
 
-    typeProjectSelected = {
+    projectTypeSelected = {
         id: null,
         description: null,
         disabled: false
     };
-    stateProjectSelected = {
+    projectStateSelected = {
         id: null,
         description: null,
         disabled: false
@@ -203,9 +203,9 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     cargarCombos(response) {
 
         if (response) {
-            this.typeProject = response.proyecto.keywords[0].options;
+            this.projectTypes = response.proyecto.keywords[0].options;
 
-            this.stateProject = response.proyecto.keywords[1].options;
+            this.projectStates = response.proyecto.keywords[1].options;
 
             this.projectRisk = response.proyecto.keywords[2].options;
 
@@ -294,22 +294,26 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
         // combos
         if (response.proyecto.projectTypeId.value) {
-            this.typeProjectSelected = {
+            this.projectTypeSelected = {
                 id: response.proyecto.projectTypeId.value,
                 description: response.proyecto.projectType.value,
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('projectType').setValue(this.projectTypeSelected);
+
         if (response.proyecto.projectStateId.value) {
-            this.stateProjectSelected = {
+            this.projectStateSelected = {
                 id: response.proyecto.projectStateId.value,
                 description: response.proyecto.projectState.value,
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('state').setValue(this.projectStateSelected);
+
         if (response.proyecto.managementAreaInChargeId.value) {
             this.managementAreaInChargeDisabled =
-                this.typeProjectSelected.id === 4370 && this.projectId ? true : false;
+                this.projectTypeSelected.id === 4370 && this.projectId ? true : false;
             this.managementAreaInChargeSelected = {
                 id: response.proyecto.managementAreaInChargeId.value,
                 description: response.proyecto.managementAreaInCharge.value,
@@ -359,14 +363,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     selectedItem(item, select: string) {
         if (item && select) {
             switch (select) {
-                case 'typeProject': {
-                    this.typeProjectSelected = item;
-                    break;
-                }
-                case 'stateProject': {
-                    this.stateProjectSelected = item;
-                    break;
-                }
                 case 'projectRisk': {
                     this.projectRiskSelected = item;
                     break;
@@ -399,7 +395,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         // tener en cuenta que para esto hay que ver que combos son obligatorios
         return this.newProyectFormGroup.valid
             && this.newProyectFormGroup.get('client').value.id
-            && this.typeProjectSelected.id !== null;
+            && this.newProyectFormGroup.get('projectType').value.id;
     }
 
     checkSelectedPurchaseNumber() {
@@ -423,22 +419,22 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             projectType: {
                 visible: true,
                 enabled: true,
-                value: this.typeProjectSelected.description,
+                value: this.newProyectFormGroup.get('projectType').value.description,
             },
             projectTypeId: {
                 visible: true,
                 enabled: true,
-                value: this.typeProjectSelected.id,
+                value: this.newProyectFormGroup.get('projectType').value.id,
             },
             projectState: {
                 visible: true,
                 enabled: true,
-                value: this.stateProjectSelected.description,
+                value: this.newProyectFormGroup.get('state').value.description,
             },
             projectStateId: {
                 visible: true,
                 enabled: true,
-                value: this.stateProjectSelected.id,
+                value: this.newProyectFormGroup.get('state').value.id,
             },
             startDate: {
                 visible: true,
