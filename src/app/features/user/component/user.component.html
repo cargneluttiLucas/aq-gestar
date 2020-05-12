@@ -8,10 +8,7 @@
 <span>Your choice is: {{control.value | json}}</span>
 
 <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete" [displayWith]="displayFn">
-    <!-- <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option> -->
-    <ng-container *ngIf="!isLoading">
-        <mat-option *ngFor="let user of filteredUsers" [value]="user">
+    <mat-option *ngFor="let user of filteredUsers" [value]="user">
         <span>{{ user.description }}</span>
-        </mat-option>
-    </ng-container>
+    </mat-option>
 </mat-autocomplete>

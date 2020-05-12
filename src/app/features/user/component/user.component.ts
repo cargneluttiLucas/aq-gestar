@@ -26,7 +26,6 @@ export class UserComponent implements OnInit {
   @Input() userSelected = { id: null, description: '', disabled: false };
 
   filteredUsers: any[] = [];
-  isLoading = false;
 
   constructor(private userService: UserService) { }
 
@@ -39,14 +38,10 @@ export class UserComponent implements OnInit {
       .pipe(
         debounceTime(300),
         filter((str) => str !== ''),
-        tap(() => this.isLoading = true),
         switchMap(value => this.userService.findUser({
           userFilter: value,
           userOrder: ''
         }, this.sessionId)
-        .pipe(
-          finalize(() => this.isLoading = false),
-          )
         )
       )
       .subscribe((response) => {
