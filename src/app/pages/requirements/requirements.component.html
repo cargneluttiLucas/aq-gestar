@@ -61,9 +61,6 @@
                             </app-select>
                         </div>
                         <div class="col-md-6 margin-top-32">
-                            <!-- <app-project [text]="'Proyecto / frente de trabajo'" [id]="'project'"
-                            [isSession]="sessionId" (proyectsSelectedData)="itemSelected($event)"
-                                [selectedFormControl]="requirementFormGroup.get('project')"></app-project> -->
                             <app-project
                                 [sessionId]="sessionId"
                                 placeHolder="Proyecto / frente de trabajo"
@@ -110,13 +107,13 @@
                                 placeholderDefault="Tipo de requerimiento">
                             </app-select>
                         </div>
-                        <div class="col-md-3">
-                            <app-main-object [text]="'Objeto principal'"
-                                (itemSelected)="selectedItem($event, 'mainObjects')"
-                                [dispatchHint]="'Seleccione un elemento'"
-                                (mainObjectsSelectedData)="itemSelectedMainObjectPredictive($event)"
-                                [selectedFormControl]="requirementFormGroup.get('mainObject')"
-                                [mainObjects]="mainObjects" [id]="'mainObjects'"></app-main-object>
+                        <div class="col-md-3 margin-top-32">
+                            <app-main-object
+                                placeHolder="Objeto principal"
+                                [control]="requirementFormGroup.get('mainObject')"
+                                [mainObjects]="mainObjects"
+                            >
+                            </app-main-object>
 
                         </div>
                         <div class="col-md-3">

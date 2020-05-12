@@ -102,15 +102,9 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     public requirementAcction: string;
     public backtofld: number;
 
-    projects = [];
     selectedProject = { id: null, description: null, project: null, disabled: false, customer: null, customerid: null };
-    itemDefault: any;
-    itemsFilterDefault = [];
 
-    users = [];
     requestedByUser = { id: null, description: null, disabled: false };
-    itemDefaultUser: any;
-    itemsFilterDefaultUser = [];
 
     activities = [];
 
@@ -124,7 +118,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private flagBeforunload = true;
     private flagClose = false;
-    private flagProject = true;
 
     errorMessageDate = '';
 
@@ -180,24 +173,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
             });
         }
-    }
-
-    searchUsers(aux) {
-        this.requirementService.searchUsers(aux, this.sessionId).subscribe((response) => {
-            if (response.usuarios) {
-                this.buildUsersTextfield(response.usuarios);
-            }
-        });
-    }
-
-    buildUsersTextfield(users) {
-        this.users = [];
-        users.forEach((item) => {
-            const aux = { id: 0, description: '', disabled: false };
-            aux.id = item.userId.value;
-            aux.description = item.userFullName.value;
-            this.users.push(aux);
-        });
     }
 
     handlerErrorDate(event) {
@@ -446,6 +421,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+
         if (response.requerimiento.mainObjectId.value) {
             this.mainObjectSelected = {
                 id: response.requerimiento.mainObjectId.value,
@@ -453,7 +429,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
-        this.requirementFormGroup.get('mainObject').setValue(response.requerimiento.mainObject.value);
+        this.requirementFormGroup.get('mainObject').setValue(this.mainObjectSelected);
+
         if (response.requerimiento.requerimentTypeId.value) {
             this.requirementTypeSelected = {
                 id: response.requerimiento.requerimentTypeId.value,
@@ -641,12 +618,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             mainObjectId: {
                 visible: true,
                 enabled: true,
-                value: this.mainObjectSelected.id,
+                value: this.requirementFormGroup.get('mainObject').value.id,
             },
             mainObject: {
                 visible: true,
                 enabled: true,
-                value: this.mainObjectSelected.description,
+                value: this.requirementFormGroup.get('mainObject').value.description,
             },
             priorityId: {
                 visible: true,
@@ -805,10 +782,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.requirementTypeSelected = item;
                     break;
                 }
-                case 'mainObjects': {
-                    this.mainObjectSelected = item;
-                    break;
-                }
                 case 'prioritys': {
                     this.prioritySelected = item;
                     break;
@@ -831,21 +804,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
             }
         }
-    }
-
-    // textfield predictive
-    itemSelected(event) {
-        // flag para que no limpie el componente.
-        this.flagProject = false;
-        this.selectedProject = event;
-        this.requirementFormGroup.get('project').setValue(event.description);
-        this.itemsFilterDefault = this.projects;
-    }
-
-    itemSelectedMainObjectPredictive(event) {
-        this.mainObjectSelected = event;
-        this.requirementFormGroup.get('mainObject').setValue(event.description);
-        this.itemsFilterDefaultUser = this.users;
     }
 
     validFormFromToSave(): boolean {

@@ -356,13 +356,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         }
     }
 
-    private transformDateToString(value): any {
-        if (!value) {
-            return value;
-        }
-        return `${value.slice(8, 10)}${value.slice(5, 7)}${value.slice(0, 4)}`;
-    }
-
     selectedItem(item, select: string) {
         if (item && select) {
             switch (select) {
@@ -402,24 +395,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         }
     }
 
-    itemSelectedPredictiveClients(event) {
-        if (event.id) {
-            this.clientSelected = event;
-        }
-    }
-
-    itemSelectedPredictiveCoordinators(event) {
-        if (event.id) {
-            this.coordinatorSelected = event;
-        }
-    }
-
-    itemSelectedPredictiveRequestedByUsers(event) {
-        if (event.id) {
-            this.requestedByUserSelected = event;
-        }
-    }
-
     validForm(): boolean {
         // tener en cuenta que para esto hay que ver que combos son obligatorios
         return this.newProyectFormGroup.valid
@@ -439,7 +414,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     }
 
     private buildForm() {
-
         const project = {
             projectName: {
                 visible: true,
@@ -741,7 +715,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             }
         }
     }
-
 
     saveAndClose() {
         if (this.validForm()) {

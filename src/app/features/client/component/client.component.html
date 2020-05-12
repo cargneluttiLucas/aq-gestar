@@ -5,7 +5,7 @@
     </mat-error>
 </mat-form-field>
 
-<span>Your choice is: {{control.value | json}}</span>
+<!-- <span>Your choice is: {{control.value | json}}</span> -->
 
 <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete" [displayWith]="displayFn">
     <mat-option *ngFor="let client of filteredClients" [value]="client">

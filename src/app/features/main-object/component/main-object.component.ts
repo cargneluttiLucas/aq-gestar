@@ -1,5 +1,15 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, OnInit, OnChanges } from '@angular/core';
+import { FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
+import { filter, map } from 'rxjs/operators';
+
+function autocompleteObjectValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (typeof control.value === 'string' && control.value !== '') {
+      return { 'invalidAutocompleteObject': { value: control.value } }
+    }
+    return null  /* valid option selected */
+  }
+}
 
 @Component({
   selector: 'app-main-object',
@@ -8,30 +18,34 @@ import { FormControl } from '@angular/forms';
 })
 export class MainObjectsComponent implements OnInit {
 
-  @Input() selectedFormControl: FormControl;
-  @Input() isSession: string;
-  @Input() text: string;
-  @Input() dispatchHint: string;
-  @Input() id: string;
+  @Input() placeHolder: string;
+  @Input() control: FormControl;
   @Input() mainObjects: any[] = [];
 
-  @Input() mainObjectsSelected = { id: null, description: '', disabled: false };
-  @Output() mainObjectsSelectedData = new EventEmitter();
+  filteredMainObjects: any[] = [];
 
   constructor() { }
 
   ngOnInit() {
-    if (!this.selectedFormControl) {
-      this.selectedFormControl = new FormControl('');
-    }
+    this.control.setValidators(autocompleteObjectValidator());
+    
+    this.control
+      .valueChanges
+      .pipe(
+        filter((str) => typeof str === 'string'),
+        map(description => description ? this._filter(description) : this.mainObjects.slice())
+      ).subscribe((result) => {
+        this.filteredMainObjects = result;
+      });;
   }
 
-  itemSelected(event) {
-    this.mainObjectsSelected = event;
-    this.selectedFormControl.setValue(event.description);
-    this.mainObjectsSelectedData.emit(this.mainObjectsSelected);
+  private _filter(description: string){
+    const filterValue = description.toLowerCase();
+
+    return this.mainObjects.filter(option => option.description.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  handlerError(event) {
+  displayFn(user): string | undefined {
+    return user ? user.description : undefined;
   }
 }
