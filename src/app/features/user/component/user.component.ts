@@ -23,7 +23,6 @@ export class UserComponent implements OnInit {
   @Input() sessionId: string;
   @Input() placeHolder: string;
   @Input() control: FormControl;
-  @Input() userSelected = { id: null, description: '', disabled: false };
 
   filteredUsers: any[] = [];
 
@@ -31,7 +30,6 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
     this.control.setValidators(autocompleteObjectValidator());
-    this.control.setValue(this.userSelected);
     
     this.control
       .valueChanges
