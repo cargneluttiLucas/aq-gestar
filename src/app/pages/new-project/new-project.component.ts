@@ -239,11 +239,10 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.newProyectFormGroup.get('name').setValue(response.proyecto.projectName.value);
         this.proyectName = response.proyecto.projectName.value;
 
-
-        this.newProyectFormGroup.get('client').setValue(response.proyecto.customer.value);
         this.clientSelected.id = response.proyecto.customerId.value;
         this.clientSelected.description = response.proyecto.customer.value;
-
+        this.newProyectFormGroup.get('client').setValue(this.clientSelected);
+        
         this.sponsorSelected.id = response.proyecto.sponsorid.value;
         this.sponsorSelected.description = response.proyecto.sponsor.value;
         this.newProyectFormGroup.get('sponsor').setValue(this.sponsorSelected);
@@ -424,7 +423,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     validForm(): boolean {
         // tener en cuenta que para esto hay que ver que combos son obligatorios
         return this.newProyectFormGroup.valid
-            && this.clientSelected.id !== null
+            && this.newProyectFormGroup.get('client').value.id
             && this.typeProjectSelected.id !== null;
     }
 
@@ -524,12 +523,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 customer: {
                     visible: true,
                     enabled: true,
-                    value: this.clientSelected.description ? this.clientSelected.description : null
+                    value: this.newProyectFormGroup.get('client').value.description ? this.newProyectFormGroup.get('client').value.description : null
                 },
                 customerId: {
                     visible: true,
                     enabled: true,
-                    value: this.clientSelected.id ? this.clientSelected.id : null
+                    value: this.newProyectFormGroup.get('client').value.id ? this.newProyectFormGroup.get('client').value.id : null
                 },
                 projRiesgo: {
                     visible: true,

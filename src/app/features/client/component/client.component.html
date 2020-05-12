@@ -1,4 +1,14 @@
-<app-textfield-predictive [id]="'client'" text="Cliente"
-    [selectFormControl]="selectedFormControl" [items]="clients" (handlerError)="handlerError($event)"
-    (itemSelected)="itemSelected($event)">
-</app-textfield-predictive>
+<mat-form-field class="full-width-field">
+    <input matInput [placeholder]="placeHolder" [matAutocomplete]="auto" [formControl]='control'>
+    <mat-error *ngIf="control.hasError('invalidAutocompleteObject')">
+       Seleccione una opción válida.
+    </mat-error>
+</mat-form-field>
+
+<span>Your choice is: {{control.value | json}}</span>
+
+<mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete" [displayWith]="displayFn">
+    <mat-option *ngFor="let client of filteredClients" [value]="client">
+        <span>{{ client.description }}</span>
+    </mat-option>
+</mat-autocomplete>

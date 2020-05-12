@@ -35,7 +35,7 @@ export class UserComponent implements OnInit {
       .valueChanges
       .pipe(
         debounceTime(300),
-        filter((str) => str !== ''),
+        filter((str) => typeof str === 'string' && str !== ''),
         switchMap(value => this.userService.findUser({
           userFilter: value,
           userOrder: ''

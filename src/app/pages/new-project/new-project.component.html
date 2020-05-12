@@ -29,6 +29,12 @@
                     <div class="col-md-6">
                         <!-- <app-client [isSession]="sessionId" [selectedFormControl]="newProyectFormGroup.get('client')"
                             (clientSelectedData)="itemSelectedPredictiveClients($event)"></app-client> -->
+                        <app-client
+                            [sessionId]="sessionId"
+                            placeHolder="Cliente"
+                            [control]="newProyectFormGroup.get('client')"
+                        >
+                        </app-client>
                     </div>
                     <div class="col-md-6">
                         <!-- <app-user [text]="'Sponsor'" [id]="'sponsor'" [isSession]="sessionId"
