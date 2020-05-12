@@ -248,13 +248,13 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.sponsorSelected.description = response.proyecto.sponsor.value;
         this.newProyectFormGroup.get('sponsor').setValue(this.sponsorSelected);
 
-        this.newProyectFormGroup.get('coordinator').setValue(response.proyecto.coordinator.value);
         this.coordinatorSelected.id = response.proyecto.coordinatorId.value;
         this.coordinatorSelected.description = response.proyecto.coordinator.value;
-
-        this.newProyectFormGroup.get('requestedbyuser').setValue(response.proyecto.requestedByUser.value);
+        this.newProyectFormGroup.get('coordinator').setValue(this.coordinatorSelected);
+        
         this.requestedByUserSelected.id = response.proyecto.requestedByUserId.value;
         this.requestedByUserSelected.description = response.proyecto.requestedByUser.value;
+        this.newProyectFormGroup.get('requestedbyuser').setValue(this.requestedByUserSelected);
 
         this.newProyectFormGroup.get('displayname').setValue(response.proyecto.displayname.value);
 
@@ -580,12 +580,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 coordinator: {
                     visible: true,
                     enabled: true,
-                    value: this.coordinatorSelected.description ? this.coordinatorSelected.description : null
+                    value: this.newProyectFormGroup.get('coordinator').value.description ? this.newProyectFormGroup.get('coordinator').value.description : null
                 },
                 coordinatorid: {
                     visible: true,
                     enabled: true,
-                    value: this.coordinatorSelected.id ? this.coordinatorSelected.id : null
+                    value: this.newProyectFormGroup.get('coordinator').value.id ? this.newProyectFormGroup.get('coordinator').value.id : null
                 },
                 priority: {
                     visible: true,
@@ -645,12 +645,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 requestedbyuser: {
                     visible: true,
                     enabled: true,
-                    value: this.requestedByUserSelected.description ? this.requestedByUserSelected.description : null
+                    value: this.newProyectFormGroup.get('requestedbyuser').value.description ? this.newProyectFormGroup.get('requestedbyuser').value.description : null
                 },
                 requestedbyuserid: {
                     visible: true,
                     enabled: true,
-                    value: this.requestedByUserSelected.id ? this.requestedByUserSelected.id : null
+                    value: this.newProyectFormGroup.get('requestedbyuser').value.id ? this.newProyectFormGroup.get('requestedbyuser').value.id : null
                 },
                 keywords: []
             }

@@ -48,11 +48,23 @@
                         <!-- <app-user [text]="'Coordinador'" [id]="'coordinator'" [isSession]="sessionId"
                             (userSelectedData)="itemSelectedPredictiveCoordinators($event)"
                             [selectedFormControl]="newProyectFormGroup.get('coordinator')"></app-user> -->
+                        <app-user
+                            [sessionId]="sessionId"
+                            placeHolder="Coordinador"
+                            [control]="newProyectFormGroup.get('coordinator')"
+                        >
+                        </app-user>
                     </div>
                     <div class="col-md-6">
                         <!-- <app-user [text]="'Solicitado por'" [id]="'requestedbyuser'" [isSession]="sessionId"
                             (userSelectedData)="itemSelectedPredictiveRequestedByUsers($event)"
                             [selectedFormControl]="newProyectFormGroup.get('requestedbyuser')"></app-user> -->
+                        <app-user
+                            [sessionId]="sessionId"
+                            placeHolder="Solicitado por"
+                            [control]="newProyectFormGroup.get('requestedbyuser')"
+                        >
+                        </app-user>
                     </div>
                 </div>
 
