@@ -23,9 +23,9 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     projectTypes = [];
     projectStates = [];
-    projectRisk = [];
-    managementAreaInCharge = [];
-    priority = [];
+    projectRisks = [];
+    managementAreasInCharge = [];
+    priorities = [];
     complexityLevels = [];
     areas = [];
     regions = [];
@@ -185,6 +185,9 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             displayname: new FormControl(''),
             priority: new FormControl(''),
             solvedpercent: new FormControl(''),
+            complexityLevel: new FormControl(''),
+            area: new FormControl(''),
+            region: new FormControl(''),
         });
     }
 
@@ -207,11 +210,11 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
             this.projectStates = response.proyecto.keywords[1].options;
 
-            this.projectRisk = response.proyecto.keywords[2].options;
+            this.projectRisks = response.proyecto.keywords[2].options;
 
-            this.managementAreaInCharge = response.proyecto.keywords[3].options;
+            this.managementAreasInCharge = response.proyecto.keywords[3].options;
 
-            this.priority = response.proyecto.keywords[4].options;
+            this.priorities = response.proyecto.keywords[4].options;
 
             this.complexityLevels = response.proyecto.keywords[5].options;
 
@@ -320,6 +323,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('managementAreaInCharge').setValue(this.managementAreaInChargeSelected);
+
         if (response.proyecto.projRiesgoId.value) {
             this.projectRiskSelected = {
                 id: response.proyecto.projRiesgoId.value,
@@ -327,6 +332,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('projectRisk').setValue(this.projectRiskSelected);
+
         if (response.proyecto.priorityId.value) {
             this.prioritySelected = {
                 id: response.proyecto.priorityId.value,
@@ -334,6 +341,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('priority').setValue(this.prioritySelected);
 
         if (response.proyecto.areaId.value) {
             this.areaSelected = {
@@ -342,6 +350,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('area').setValue(this.areaSelected);
 
         if (response.proyecto.regionId.value) {
             this.regionSelected = {
@@ -350,6 +359,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('region').setValue(this.regionSelected);
 
         if (response.proyecto.complexityLevelId.value) {
             this.complexityLevelSelected = {
@@ -358,35 +368,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('complexityLevel').setValue(this.complexityLevelSelected);
     }
 
     selectedItem(item, select: string) {
         if (item && select) {
             switch (select) {
-                case 'projectRisk': {
-                    this.projectRiskSelected = item;
-                    break;
-                }
-                case 'managementAreaInCharge': {
-                    this.managementAreaInChargeSelected = item;
-                    break;
-                }
-                case 'priority': {
-                    this.prioritySelected = item;
-                    break;
-                }
-                case 'complexityLevel': {
-                    this.complexityLevelSelected = item;
-                    break;
-                }
-                case 'area': {
-                    this.areaSelected = item;
-                    break;
-                }
-                case 'region': {
-                    this.regionSelected = item;
-                    break;
-                }
             }
         }
     }
@@ -499,12 +486,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             projRiesgo: {
                 visible: true,
                 enabled: true,
-                value: this.projectRiskSelected.description,
+                value: this.newProyectFormGroup.get('projectRisk').value.description,
             },
             projRiesgoId: {
                 visible: true,
                 enabled: true,
-                value: this.projectRiskSelected.id,
+                value: this.newProyectFormGroup.get('projectRisk').value.id,
             },
             id: {
                 visible: true,
@@ -524,12 +511,12 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             managementAreaInCharge: {
                 visible: true,
                 enabled: true,
-                value: this.managementAreaInChargeSelected.description,
+                value: this.newProyectFormGroup.get('managementAreaInCharge').value.description,
             },
             managementAreaInChargeId: {
                 visible: true,
                 enabled: true,
-                value: this.managementAreaInChargeSelected.id,
+                value: this.newProyectFormGroup.get('managementAreaInCharge').value.id,
             },
             sponsor: {
                 visible: true,
@@ -554,42 +541,42 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             priority: {
                 visible: true,
                 enabled: true,
-                value: this.prioritySelected.description,
+                value: this.newProyectFormGroup.get('priority').value.description,
             },
             priorityId: {
                 visible: true,
                 enabled: true,
-                value: this.prioritySelected.id,
+                value: this.newProyectFormGroup.get('priority').value.id,
             },
             complexitylevel: {
                 visible: true,
                 enabled: true,
-                value: this.complexityLevelSelected.description,
+                value: this.newProyectFormGroup.get('complexityLevel').value.description,
             },
             complexityLevelId: {
                 visible: true,
                 enabled: true,
-                value: this.complexityLevelSelected.id,
+                value: this.newProyectFormGroup.get('complexityLevel').value.id,
             },
             area: {
                 visible: true,
                 enabled: true,
-                value: this.areaSelected.description,
+                value: this.newProyectFormGroup.get('area').value.description,
             },
             areaId: {
                 visible: true,
                 enabled: true,
-                value: this.areaSelected.id,
+                value: this.newProyectFormGroup.get('area').value.id,
             },
             region: {
                 visible: true,
                 enabled: true,
-                value: this.regionSelected.description,
+                value: this.newProyectFormGroup.get('region').value.description,
             },
             regionId: {
                 visible: true,
                 enabled: true,
-                value: this.regionSelected.id,
+                value: this.newProyectFormGroup.get('region').value.id,
             },
             qualitativeBenefits: {
                 visible: true,

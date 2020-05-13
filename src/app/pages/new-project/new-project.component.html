@@ -88,46 +88,77 @@
                             [keywords]="projectStates"
                         ></app-keyword>
                     </div>
-                    <div class="col-md-3">
-                        <app-select [items]="projectRisk" [item]="projectRiskSelected"
+                    <div class="col-md-3 margin-top-32">
+                        <!-- <app-select [items]="projectRisk" [item]="projectRiskSelected"
                             [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'projectRisk')"
                             placeholderDefault="Riesgo del proyecto">
-                        </app-select>
+                        </app-select> -->
+                        <app-keyword
+                            placeHolder="Riesgo del proyecto"
+                            [control]="newProyectFormGroup.get('projectRisk')"
+                            [keywords]="projectRisks"
+                        ></app-keyword>
                     </div>
-                    <div class="col-md-3">
-                        <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
+                    <div class="col-md-3 margin-top-32">
+                        <!-- <app-select [item]="managementAreaInChargeSelected" [items]="managementAreaInCharge"
                             [dispatchHint]="'Seleccione un elemento'" [disabled]="managementAreaInChargeDisabled"
                             (itemSelected)="selectedItem($event, 'managementAreaInCharge')"
                             placeholderDefault="Gerencia a cargo">
-                        </app-select>
+                        </app-select> -->
+                        <app-keyword
+                            placeHolder="Gerencia a cargo"
+                            [control]="newProyectFormGroup.get('managementAreaInCharge')"
+                            [keywords]="managementAreasInCharge"
+                            [disabled]="managementAreaInChargeDisabled"
+                        ></app-keyword>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-3">
-                        <app-select [items]="priority" [item]="prioritySelected"
+                    <div class="col-md-3 margin-top-32">
+                        <!-- <app-select [items]="priority" [item]="prioritySelected"
                             [dispatchHint]="'Seleccione un elemento'" (itemSelected)="selectedItem($event, 'priority')"
                             placeholderDefault="Prioridad">
-                        </app-select>
+                        </app-select> -->
+                        <app-keyword
+                            placeHolder="Prioridad"
+                            [control]="newProyectFormGroup.get('priority')"
+                            [keywords]="priorities"
+                        ></app-keyword>
                     </div>
-                    <div class="col-md-3">
-                        <app-select [items]="complexityLevels" [item]="complexityLevelSelected"
+                    <div class="col-md-3 margin-top-32">
+                        <!-- <app-select [items]="complexityLevels" [item]="complexityLevelSelected"
                             [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'complexityLevel')"
                             placeholderDefault="Nivel de Complejidad">
-                        </app-select>
+                        </app-select> -->
+                        <app-keyword
+                            placeHolder="Nivel de Complejidad"
+                            [control]="newProyectFormGroup.get('complexityLevel')"
+                            [keywords]="complexityLevels"
+                        ></app-keyword>
                     </div>
-                    <div class="col-md-3">
-                        <app-select [items]="areas" [item]="areaSelected" [dispatchHint]="'Seleccione un elemento'"
+                    <div class="col-md-3 margin-top-32">
+                        <!-- <app-select [items]="areas" [item]="areaSelected" [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'area')" placeholderDefault="Área">
-                        </app-select>
+                        </app-select> -->
+                        <app-keyword
+                            placeHolder="Área"
+                            [control]="newProyectFormGroup.get('area')"
+                            [keywords]="areas"
+                        ></app-keyword>
                     </div>
 
-                    <div class="col-md-3">
-                        <app-select [items]="regions" [item]="regionSelected" [dispatchHint]="'Seleccione un elemento'"
+                    <div class="col-md-3 margin-top-32">
+                        <!-- <app-select [items]="regions" [item]="regionSelected" [dispatchHint]="'Seleccione un elemento'"
                             (itemSelected)="selectedItem($event, 'region')" placeholderDefault="Región">
-                        </app-select>
+                        </app-select> -->
+                        <app-keyword
+                            placeHolder="Región"
+                            [control]="newProyectFormGroup.get('region')"
+                            [keywords]="regions"
+                        ></app-keyword>
                     </div>
 
                 </div>

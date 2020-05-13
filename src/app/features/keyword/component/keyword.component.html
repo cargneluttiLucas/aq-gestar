@@ -1,6 +1,6 @@
 <mat-form-field class="full-width-field">
     <mat-label>{{placeHolder}}<span class="required" *ngIf="required">*</span></mat-label>
-    <mat-select [compareWith]="compareObjects" [formControl]="control">
+    <mat-select [compareWith]="compareObjects" [formControl]="control" [disabled]="disabled">
       <mat-option [value]="emptyOption">--</mat-option>
       <mat-option *ngFor="let keyword of keywords" [value]="keyword">
         {{keyword.description}}
@@ -9,4 +9,4 @@
     <mat-error *ngIf="control.hasError('mandatoryField')">Este campo es obligatorio.</mat-error>
 </mat-form-field>
 
-<span>Your choice is: {{control.value | json}}</span>
+<!-- <span>Your choice is: {{control.value | json}}</span> -->

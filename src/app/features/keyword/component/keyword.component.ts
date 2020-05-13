@@ -21,6 +21,7 @@ export class KeywordComponent implements OnInit {
   @Input() control: FormControl;
   @Input() keywords: any[] = [];
   @Input() required: boolean = false;
+  @Input() disabled: boolean = false;
 
   emptyOption = {id: null, description: null, disabled: false};
 
