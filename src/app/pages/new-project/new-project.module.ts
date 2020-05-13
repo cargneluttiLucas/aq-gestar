@@ -17,6 +17,7 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
 } from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { KeywordModule } from 'src/app/features/keyword/keyword.module';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
     ClientModule.forRoot(),
     UserModule.forRoot(),
     RequirementsModule.forRoot(),
+    KeywordModule.forRoot(),
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,

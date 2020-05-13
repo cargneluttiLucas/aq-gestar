@@ -1,9 +1,9 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { KeywordComponent } from './component/keyword.component';
 import { ComponentsModule } from 'src/app/component';
-import { ProjectsService } from './service/project.service';
-import { ProjectComponent } from './component/project.component';
 import { MatInputModule, MatAutocompleteModule, MatProgressSpinnerModule } from '@angular/material';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -12,19 +12,20 @@ import { MatInputModule, MatAutocompleteModule, MatProgressSpinnerModule } from 
     MatInputModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
+    MatSelectModule
   ],
   declarations: [
-    ProjectComponent
+    KeywordComponent
   ],
   exports: [
-    ProjectComponent
+    KeywordComponent,
   ],
-  providers: [ProjectsService]
+  providers: [],
 })
-export class ProjectsModule {
+export class KeywordModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: ProjectsModule
+      ngModule: KeywordModule
     };
   }
 }

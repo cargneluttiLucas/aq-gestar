@@ -21,7 +21,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     requirementFormGroup: FormGroup;
 
     aplications = [];
-    aplicationsSelected = {
+    applicationSelected = {
         id: null,
         description: null,
         disabled: false
@@ -34,8 +34,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         disabled: false
     };
 
-    businessProces = [];
-    businessProcesSelected = {
+    businessProcesses = [];
+    businessProcessSelected = {
         id: null,
         description: null,
         disabled: false
@@ -55,7 +55,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         disabled: false
     };
 
-    prioritys = [];
+    priorities = [];
     prioritySelected = {
         id: null,
         description: null,
@@ -102,15 +102,9 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     public requirementAcction: string;
     public backtofld: number;
 
-    projects = [];
-    proyectSelected = { id: null, description: null, project: null, disabled: false, customer: null, customerid: null };
-    itemDefault: any;
-    itemsFilterDefault = [];
+    selectedProject = { id: null, description: null, project: null, disabled: false, customer: null, customerid: null };
 
-    users = [];
-    userSelected = { id: null, description: null, disabled: false };
-    itemDefaultUser: any;
-    itemsFilterDefaultUser = [];
+    requestedByUser = { id: null, description: null, disabled: false };
 
     activities = [];
 
@@ -124,7 +118,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private flagBeforunload = true;
     private flagClose = false;
-    private flagProject = true;
 
     errorMessageDate = '';
 
@@ -170,19 +163,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.loadNewRequirement();
         }
         this.createForm();
-        this.requirementFormGroup.get('requestedByUser').valueChanges.subscribe((data) => {
-            if (data && data.length >= 3) {
-                auxUsers.userFilter = data;
-                this.searchUsers(auxUsers);
-            }
-        });
-
-        this.requirementFormGroup.get('project').valueChanges.subscribe((data) => {
-            if (this.flagProject) {
-                this.proyectSelected = { id: null, description: null, project: null, disabled: false, customer: null, customerid: null };
-            }
-            this.flagProject = true;
-        });
     }
 
     ngAfterViewInit() {
@@ -193,24 +173,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
             });
         }
-    }
-
-    searchUsers(aux) {
-        this.requirementService.searchUsers(aux, this.sessionId).subscribe((response) => {
-            if (response.usuarios) {
-                this.buildUsersTextfield(response.usuarios);
-            }
-        });
-    }
-
-    buildUsersTextfield(users) {
-        this.users = [];
-        users.forEach((item) => {
-            const aux = { id: 0, description: '', disabled: false };
-            aux.id = item.userId.value;
-            aux.description = item.userFullName.value;
-            this.users.push(aux);
-        });
     }
 
     handlerErrorDate(event) {
@@ -243,6 +205,14 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             solvedpercent: new FormControl(''),
             releaseNumber: new FormControl(''),
             project: new FormControl('', Validators.required),
+            application: new FormControl(''),
+            module: new FormControl(''),
+            businessProcess: new FormControl(''),
+            requirementType: new FormControl(''),
+            priority: new FormControl(''),
+            area: new FormControl(''),
+            managementArea: new FormControl(''),
+            complexityLevel: new FormControl(''),
         });
     }
 
@@ -276,23 +246,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private loadSelects() {
-        const firstElement = {
-            id: null,
-            description: null,
-            disabled: false
-        };
         this.requirementService.getNewSelects(this.sessionId).subscribe((response) => {
             if (response) {
-                this.aplications.push(firstElement);
-                this.modules.push(firstElement);
-                this.businessProces.push(firstElement);
-                this.requirementTypes.push(firstElement);
-                this.prioritys.push(firstElement);
-                this.regios.push(firstElement);
-                this.areas.push(firstElement);
-                this.managementAreas.push(firstElement);
-                this.complexityLevels.push(firstElement);
-
                 response.reqKeywords.keywords[0].options.forEach((item) => {
                     this.aplications.push(item);
                 });
@@ -301,13 +256,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.modules.push(item);
                 });
                 response.reqKeywords.keywords[2].options.forEach((item) => {
-                    this.businessProces.push(item);
+                    this.businessProcesses.push(item);
                 });
                 response.reqKeywords.keywords[3].options.forEach((item) => {
                     this.requirementTypes.push(item);
                 });
                 response.reqKeywords.keywords[5].options.forEach((item) => {
-                    this.prioritys.push(item);
+                    this.priorities.push(item);
                 });
                 response.reqKeywords.keywords[6].options.forEach((item) => {
                     this.regios.push(item);
@@ -322,13 +277,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.complexityLevels.push(item);
                 });
                 // this.modules = response.reqKeywords.keywords[1].options;
-                // this.businessProces = response.reqKeywords.keywords[2].options;
+                // this.businessProcesses = response.reqKeywords.keywords[2].options;
                 // this.requirementTypes = response.reqKeywords.keywords[3].options;
 
                 // // este se convirtio en un predictivo pero no busca por filtro al back
                 // // solo busca en la carga inicial.
                 this.mainObjects = response.reqKeywords.keywords[4].options;
-                // this.prioritys = response.reqKeywords.keywords[5].options;
+                // this.priorities = response.reqKeywords.keywords[5].options;
                 // this.regios = response.reqKeywords.keywords[6].options;
                 // this.areas = response.reqKeywords.keywords[7].options;
                 // this.managementAreas = response.reqKeywords.keywords[9].options;
@@ -391,15 +346,18 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         // this.requirementFormGroup.get('description').setValue(response.requerimiento.description.value);
 
         this.requirementFormGroup.get('releaseNumber').setValue(response.requerimiento.releaseNumber.value);
-        this.requirementFormGroup.get('project').setValue(response.requerimiento.projectDisplayName.value);
-        this.proyectSelected.id = response.requerimiento.projectId.value;
-        this.proyectSelected.description = response.requerimiento.projectDisplayName.value;
-        this.proyectSelected.project = response.requerimiento.project.value;
-        this.proyectSelected.customerid = response.requerimiento.customerId.value;
-        this.proyectSelected.customer = response.requerimiento.customer.value;
-        this.requirementFormGroup.get('requestedByUser').setValue(response.requerimiento.requestedByUser.value);
-        this.userSelected.id = response.requerimiento.requestedByUserId.value;
-        this.userSelected.description = response.requerimiento.requestedByUser.value;
+
+        this.selectedProject.id = response.requerimiento.projectId.value;
+        this.selectedProject.description = response.requerimiento.projectDisplayName.value;
+        this.selectedProject.project = response.requerimiento.project.value;
+        this.selectedProject.customerid = response.requerimiento.customerId.value;
+        this.selectedProject.customer = response.requerimiento.customer.value;
+        this.requirementFormGroup.get('project').setValue(this.selectedProject);
+
+        this.requestedByUser.id = response.requerimiento.requestedByUserId.value;
+        this.requestedByUser.description = response.requerimiento.requestedByUser.value;
+        this.requirementFormGroup.get('requestedByUser').setValue(this.requestedByUser);
+        
         this.requirementFormGroup.get('systemEffortinHours').setValue(
             response.requerimiento.systemEffortInHours.value === 0 ? '' : response.requerimiento.systemEffortInHours.value);
         this.requirementFormGroup.get('usersEffortinHours').setValue(
@@ -408,12 +366,14 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // combos
         if (response.requerimiento.applicationId.value) {
-            this.aplicationsSelected = {
+            this.applicationSelected = {
                 id: response.requerimiento.applicationId.value,
                 description: response.requerimiento.application.value,
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('application').setValue(this.applicationSelected);
+
         if (response.requerimiento.moduleId.value) {
             this.moduleSelected = {
                 id: response.requerimiento.moduleId.value,
@@ -421,13 +381,17 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('module').setValue(this.moduleSelected);
+
         if (response.requerimiento.businessProcessId.value) {
-            this.businessProcesSelected = {
+            this.businessProcessSelected = {
                 id: response.requerimiento.businessProcessId.value,
                 description: response.requerimiento.businessProcess.value,
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('businessProcess').setValue(this.businessProcessSelected);
+
         if (response.requerimiento.managementAreaInChargeId.value) {
             this.managementAreaSelected = {
                 id: response.requerimiento.managementAreaInChargeId.value,
@@ -435,6 +399,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('managementArea').setValue(this.managementAreaSelected);
+
         if (response.requerimiento.complexityLevelId.value) {
             this.complexityLevelSelected = {
                 id: response.requerimiento.complexityLevelId.value,
@@ -442,6 +408,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('complexityLevel').setValue(this.complexityLevelSelected);
+
         if (response.requerimiento.areaId.value) {
             this.areaSelected = {
                 id: response.requerimiento.areaId.value,
@@ -449,6 +417,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('area').setValue(this.areaSelected);
+
         if (response.requerimiento.priorityId.value) {
             this.prioritySelected = {
                 id: response.requerimiento.priorityId.value,
@@ -456,6 +426,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('priority').setValue(this.prioritySelected);
+
         if (response.requerimiento.mainObjectId.value) {
             this.mainObjectSelected = {
                 id: response.requerimiento.mainObjectId.value,
@@ -463,7 +435,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
-        this.requirementFormGroup.get('mainObject').setValue(response.requerimiento.mainObject.value);
+        this.requirementFormGroup.get('mainObject').setValue(this.mainObjectSelected);
+
         if (response.requerimiento.requerimentTypeId.value) {
             this.requirementTypeSelected = {
                 id: response.requerimiento.requerimentTypeId.value,
@@ -471,6 +444,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('requirementType').setValue(this.requirementTypeSelected);
     }
 
     buildDescription() {
@@ -485,307 +459,298 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private buildForm() {
-        return this.requirement = {
-            requerimiento: {
-                createdDate: this.requirementLoad.createdDate,
-                creatorId: this.requirementLoad.creatorId,
-                creator: this.requirementLoad.creator,
-                title: {
-                    visible: true,
-                    enabled: true,
-                    value: this.requirementFormGroup.get('title').value
-                },
-                stateId: {
-                    visible: true,
-                    enabled: true,
-                    value: +this.requirementLoad.stateId.value
-                },
-                state: {
-                    visible: true,
-                    enabled: true,
-                    value: this.requirementLoad.state.value
-                },
-                stateType: {
-                    visible: true,
-                    enabled: true,
-                    value: 0
-                },
-                lastStateId: this.requirementLoad.lastStateId,
-                lastState: this.requirementLoad.lastState,
-                lastActionDate: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                agentActions: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                notActiveEmails: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                createdMonth: this.requirementLoad.createdMonth,
-                displayName: {
-                    visible: true,
-                    enabled: true,
-                    value: this.requirementFormGroup.get('displayName').value
-                },
-                stateTypeName: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                idWorkflow: {
-                    visible: true,
-                    enabled: true,
-                    value: 1.0
-                },
-                workflow: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                organization: {
-                    visible: true,
-                    enabled: true,
-                    value: this.requirementFormGroup.get('organization').value
-                },
-                fechaFinReal: {
-                    visible: true,
-                    enabled: true,
-                    value: this.transformStringToDate(this.requirementFormGroup.get('realDateEnd').value)
-                },
-                type: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                typeId: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                typePath: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                description: {
-                    visible: true,
-                    enabled: true,
-                    value: this.buildDescription(),
-                },
-                releaseNumber: {
-                    visible: true,
-                    enabled: true,
-                    value: this.requirementFormGroup.get('releaseNumber').value
-                },
-                sprintId: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                onlySave: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                createdDateShort: this.requirementLoad.createdDateShort,
-                calendarId: {
-                    visible: true,
-                    enabled: true,
-                    value: 0.0
-                },
-                calendar: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                application: {
-                    visible: true,
-                    enabled: true,
-                    value: this.aplicationsSelected.description ? this.aplicationsSelected.description : null
-                },
-                applicationId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.aplicationsSelected.id ? +this.aplicationsSelected.id : null
-                },
-                moduleId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.moduleSelected.id ? +this.moduleSelected.id : null
-                },
-                module: {
-                    visible: true,
-                    enabled: true,
-                    value: this.moduleSelected.description ? this.moduleSelected.description : null
-                },
-                requestedDate: {
-                    visible: true,
-                    enabled: true,
-                    value: this.requirementFormGroup.get('requestDate').value || null,
-                },
-                requestedByUser: {
-                    visible: true,
-                    enabled: true,
-                    value: this.userSelected.description
-                },
-                requestedByUserId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.userSelected.id
-                },
-                requerimentTypeId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.requirementTypeSelected.id ? +this.requirementTypeSelected.id : null
-                },
-                requerimentType: {
-                    visible: true,
-                    enabled: true,
-                    value: this.requirementTypeSelected.description ? this.requirementTypeSelected.description : null
-                },
-                mainObjectId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.mainObjectSelected.id ? +this.mainObjectSelected.id : null
-                },
-                mainObject: {
-                    visible: true,
-                    enabled: true,
-                    value: this.mainObjectSelected.description ? this.mainObjectSelected.description : null
-                },
-                priorityId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.prioritySelected.id ? + this.prioritySelected.id : null
-                },
-                priority: {
-                    visible: true,
-                    enabled: true,
-                    value: this.prioritySelected.description ? this.prioritySelected.description : null
-                },
-                estimatedStartDate: {
-                    visible: true,
-                    enabled: true,
-                    value: this.requirementFormGroup.get('estimatedDateStart').value || null,
-                },
-                estimatedEndDate: {
-                    visible: true,
-                    enabled: true,
-                    value: this.requirementFormGroup.get('estimatedDateEnd').value || null,
-                },
-                areaId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.areaSelected.id ? +this.areaSelected.id : null
-                },
-                area: {
-                    visible: true,
-                    enabled: true,
-                    value: this.areaSelected.description ? this.areaSelected.description : null
-                },
-                workAreaId: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                workArea: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                systemEffortInHours: {
-                    visible: true,
-                    enabled: true,
-                    value: +this.requirementFormGroup.get('systemEffortinHours').value
-                },
-                userEffortInHours: {
-                    visible: true,
-                    enabled: true,
-                    value: +this.requirementFormGroup.get('usersEffortinHours').value
-                },
-                previousStates: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                // completar con el autocomplete
-                projectId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.proyectSelected.id
-                },
-                project: {
-                    visible: true,
-                    enabled: true,
-                    value: this.proyectSelected.project
-                },
-                projectDisplayName: {
-                    visible: true,
-                    enabled: true,
-                    value: this.proyectSelected.description
-                },
-                customerId: {
-                    visible: false,
-                    enabled: true,
-                    value: this.proyectSelected.customerid
-                },
-                customer: {
-                    visible: false,
-                    enabled: true,
-                    value: this.proyectSelected.customer
-                },
-                businessProcessId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.businessProcesSelected.id ? +this.businessProcesSelected.id : null
-                },
-                businessProcess: {
-                    visibl: true,
-                    enabled: true,
-                    value: this.businessProcesSelected.description ? this.businessProcesSelected.description : null
-                },
-                /* regionId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.regioSelected.id ? +this.regioSelected.id : null
-                },
-                region: {
-                    visible: true,
-                    enabled: true,
-                    value: this.regioSelected.description ? this.regioSelected.description : null
-                }, */
-                managementAreaInCharge: {
-                    visible: true,
-                    enabled: true,
-                    value: this.managementAreaSelected.description ? this.managementAreaSelected.description : null
-                },
-                managementAreaInChargeId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.managementAreaSelected.id ? +this.managementAreaSelected.id : null
-                },
-                complexityLevel: {
-                    visible: true,
-                    enabled: true,
-                    value: this.complexityLevelSelected.description ? this.complexityLevelSelected.description : null
-                },
-                complexityLevelId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.complexityLevelSelected.id ? +this.complexityLevelSelected.id : null
-                },
-                solvedpercent: {
-                    visible: true,
-                    enabled: true,
-                    value: +this.requirementFormGroup.get('solvedpercent').value
-                }
+        const requerimiento = {
+            createdDate: this.requirementLoad.createdDate,
+            creatorId: this.requirementLoad.creatorId,
+            creator: this.requirementLoad.creator,
+            title: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('title').value,
+            },
+            stateId: {
+                visible: true,
+                enabled: true,
+                value: this.requirementLoad.stateId.value,
+            },
+            state: {
+                visible: true,
+                enabled: true,
+                value: this.requirementLoad.state.value,
+            },
+            stateType: {
+                visible: true,
+                enabled: true,
+                value: 0,
+            },
+            lastStateId: this.requirementLoad.lastStateId,
+            lastState: this.requirementLoad.lastState,
+            lastActionDate: {
+                visible: true,
+                enabled: true,
+                value: null,
+            },
+            agentActions: {
+                visible: true,
+                enabled: true,
+                value: null,
+            },
+            notActiveEmails: {
+                visible: true,
+                enabled: true,
+                value: null,
+            },
+            createdMonth: this.requirementLoad.createdMonth,
+            displayName: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('displayName').value
+            },
+            stateTypeName: {
+                visible: true,
+                enabled: true,
+                value: null,
+            },
+            idWorkflow: {
+                visible: true,
+                enabled: true,
+                value: 1.0,
+            },
+            workflow: {
+                visible: true,
+                enabled: true,
+                value: null,
+            },
+            organization: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('organization').value,
+            },
+            fechaFinReal: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('realDateEnd').value,
+            },
+            type: {
+                visible: true,
+                enabled: true,
+                value: null
+            },
+            typeId: {
+                visible: true,
+                enabled: true,
+                value: null
+            },
+            typePath: {
+                visible: true,
+                enabled: true,
+                value: null
+            },
+            description: {
+                visible: true,
+                enabled: true,
+                value: this.buildDescription(),
+            },
+            releaseNumber: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('releaseNumber').value,
+            },
+            sprintId: {
+                visible: true,
+                enabled: true,
+                value: null
+            },
+            onlySave: {
+                visible: true,
+                enabled: true,
+                value: null
+            },
+            createdDateShort: this.requirementLoad.createdDateShort,
+            calendarId: {
+                visible: true,
+                enabled: true,
+                value: 0.0,
+            },
+            calendar: {
+                visible: true,
+                enabled: true,
+                value: null,
+            },
+            application: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('application').value.description,
+            },
+            applicationId: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('application').value.id,
+            },
+            moduleId: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('module').value.id,
+            },
+            module: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('module').value.description,
+            },
+            requestedDate: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('requestDate').value,
+            },
+            requestedByUser: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('requestedByUser').value.description,
+            },
+            requestedByUserId: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('requestedByUser').value.id,
+            },
+            requerimentTypeId: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('requirementType').value.id,
+            },
+            requerimentType: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('requirementType').value.description,
+            },
+            mainObjectId: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('mainObject').value.id,
+            },
+            mainObject: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('mainObject').value.description,
+            },
+            priorityId: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('priority').value.id,
+            },
+            priority: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('priority').value.description,
+            },
+            estimatedStartDate: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('estimatedDateStart').value,
+            },
+            estimatedEndDate: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('estimatedDateEnd').value,
+            },
+            areaId: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('area').value.id,
+            },
+            area: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('area').value.description,
+            },
+            workAreaId: {
+                visible: true,
+                enabled: true,
+                value: null,
+            },
+            workArea: {
+                visible: true,
+                enabled: true,
+                value: null,
+            },
+            systemEffortInHours: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('systemEffortinHours').value,
+            },
+            userEffortInHours: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('usersEffortinHours').value,
+            },
+            previousStates: {
+                visible: true,
+                enabled: true,
+                value: null,
+            },
+            projectId: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('project').value.id,
+            },
+            project: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('project').value.project,
+            },
+            projectDisplayName: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('project').value.description,
+            },
+            customerId: {
+                visible: false,
+                enabled: true,
+                value: this.requirementFormGroup.get('project').value.customerid,
+            },
+            customer: {
+                visible: false,
+                enabled: true,
+                value: this.requirementFormGroup.get('project').value.customer,
+            },
+            businessProcessId: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('businessProcess').value.id,
+            },
+            businessProcess: {
+                visibl: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('businessProcess').value.description,
+            },
+            managementAreaInCharge: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('managementArea').value.description,
+            },
+            managementAreaInChargeId: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('managementArea').value.id,
+            },
+            complexityLevel: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('complexityLevel').value.description,
+            },
+            complexityLevelId: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('complexityLevel').value.id,
+            },
+            solvedpercent: {
+                visible: true,
+                enabled: true,
+                value: this.requirementFormGroup.get('solvedpercent').value,
             }
+        }
+        this.sanitizeValues(requerimiento);
+        return this.requirement = {
+            requerimiento,
         };
     }
 
@@ -805,80 +770,19 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         return new Date(year, month - 1, date);
     }
 
-    selectedItem(item, tipe) {
-        if (item && tipe) {
-            switch (tipe) {
-                case 'aplications': {
-                    this.aplicationsSelected = item;
-                    break;
-                }
-                case 'modules': {
-                    this.moduleSelected = item;
-                    break;
-                }
-                case 'businessProces': {
-                    this.businessProcesSelected = item;
-                    break;
-                }
-                case 'requirementTypes': {
-                    this.requirementTypeSelected = item;
-                    break;
-                }
-                case 'mainObjects': {
-                    this.mainObjectSelected = item;
-                    break;
-                }
-                case 'prioritys': {
-                    this.prioritySelected = item;
-                    break;
-                }
-                /* case 'regions': {
-                    this.regioSelected = item;
-                    break;
-                } */
-                case 'areas': {
-                    this.areaSelected = item;
-                    break;
-                }
-                case 'managementAreas': {
-                    this.managementAreaSelected = item;
-                    break;
-                }
-                case 'complexityLevel': {
-                    this.complexityLevelSelected = item;
-                    break;
-                }
-            }
-        }
-    }
-
-    // textfield predictive
-    itemSelected(event) {
-        // flag para que no limpie el componente.
-        this.flagProject = false;
-        this.proyectSelected = event;
-        this.requirementFormGroup.get('project').setValue(event.description);
-        this.itemsFilterDefault = this.projects;
-    }
-
-    itemSelectedPredictive(event) {
-        this.userSelected = event;
-        this.requirementFormGroup.get('requestedByUser').setValue(event.description);
-        this.itemsFilterDefaultUser = this.users;
-    }
-
-    itemSelectedMainObjectPredictive(event) {
-        this.mainObjectSelected = event;
-        this.requirementFormGroup.get('mainObject').setValue(event.description);
-        this.itemsFilterDefaultUser = this.users;
-    }
-
     validFormFromToSave(): boolean {
-        return this.requirementFormGroup.valid && this.requirementLoad.stateId.value !== 1 && this.proyectSelected.id !== null;
+        return (
+            this.requirementFormGroup.valid &&
+            this.requirementLoad.stateId.value !== 1 &&
+            this.requirementFormGroup.get('project').value.id !== null
+        );
     }
 
     validFormFromToChengeState() {
-        return this.requirementFormGroup.valid && this.proyectSelected.id !== null;
+        return (
+            this.requirementFormGroup.valid &&
+            this.requirementFormGroup.get('project').value.id !== null
+        );
     }
 
     chengeState(item) {
@@ -957,6 +861,20 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     ngOnDestroy() {
         if (this.keypressSubscription) {
             this.keypressSubscription.unsubscribe();
+        }
+    }
+
+    private getValidValueOrNull(value){
+        if (value === undefined || value === NaN || value === '') {
+            return null
+        } else {
+            return value;
+        }
+    }
+
+    private sanitizeValues(project){
+        for (let [key] of Object.entries(project)) {
+            project[key].value = this.getValidValueOrNull(project[key].value);
         }
     }
 

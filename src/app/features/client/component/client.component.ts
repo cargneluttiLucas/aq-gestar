@@ -1,6 +1,16 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, OnInit, OnChanges } from '@angular/core';
+import { FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { ClientService } from '../service/client.service';
+import { debounceTime, tap, switchMap, finalize, startWith, filter } from 'rxjs/operators';
+
+function autocompleteObjectValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (typeof control.value === 'string' && control.value !== '') {
+      return { 'invalidAutocompleteObject': { value: control.value } }
+    }
+    return null  /* valid option selected */
+  }
+}
 
 @Component({
   selector: 'app-client',
@@ -9,54 +19,48 @@ import { ClientService } from '../service/client.service';
 })
 export class ClientComponent implements OnInit {
 
-  @Input() selectedFormControl: FormControl;
-  @Input() isSession: string;
-  @Input() text: string;
-  @Input() id: string;
-  clients: any[] = [];
+  @Input() sessionId: string;
+  @Input() placeHolder: string;
+  @Input() control: FormControl;
 
-  @Input() clientSelected = { id: null, description: '', disabled: false };
-  @Output() clientSelectedData = new EventEmitter();
+  filteredClients: any[] = [];
 
   constructor(private clientService: ClientService) { }
 
   ngOnInit() {
-    if (!this.selectedFormControl) {
-      this.selectedFormControl = new FormControl('');
-    }
-    this.loadField();
-  }
-
-  loadField() {
-    const aux = {
-      filter: '',
-      filterRequired: 'CONTACTTYPE = 1',
-      order: 'DOC_ID',
-      fields: 'DOC_ID,DISPLAYNAME',
-    };
-    this.clientService.findCliend(aux, this.isSession).subscribe((response) => {
-      if (response) {
-        this.buildClient(response.contactos);
-      }
-    });
+    this.control.setValidators(autocompleteObjectValidator());
+    
+    this.control
+      .valueChanges
+      .pipe(
+        debounceTime(300),
+        filter((str) => typeof str === 'string' && str !== ''),
+        switchMap(value => this.clientService.findCliend({
+          filter: value,
+          filterRequired: 'CONTACTTYPE = 1',
+          order: 'ID',
+          fields: 'ID,DISPLAYNAME',
+        }, this.sessionId)
+        )
+      )
+      .subscribe((response) => {
+        if (response) {
+          this.buildClient(response.contactos);;
+        }
+      });
   }
 
   buildClient(client) {
-    this.clients = [];
+    this.filteredClients = [];
     client.forEach((item) => {
       const aux = { id: 0, description: '', disabled: false };
-      aux.id = item.Values.DOC_ID;
+      aux.id = item.Values.ID;
       aux.description = item.Values.DISPLAYNAME;
-      this.clients.push(aux);
+      this.filteredClients.push(aux);
     });
   }
 
-  itemSelected(event) {
-    this.clientSelected = event;
-    this.selectedFormControl.setValue(event.description);
-    this.clientSelectedData.emit(this.clientSelected);
-  }
-
-  handlerError(event) {
+  displayFn(user): string | undefined {
+    return user ? user.description : undefined;
   }
 }

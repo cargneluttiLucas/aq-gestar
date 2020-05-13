@@ -21,21 +21,21 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     newProyectFormGroup: FormGroup;
 
-    typeProject = [];
-    stateProject = [];
-    projectRisk = [];
-    managementAreaInCharge = [];
-    priority = [];
+    projectTypes = [];
+    projectStates = [];
+    projectRisks = [];
+    managementAreasInCharge = [];
+    priorities = [];
     complexityLevels = [];
     areas = [];
     regions = [];
 
-    typeProjectSelected = {
+    projectTypeSelected = {
         id: null,
         description: null,
         disabled: false
     };
-    stateProjectSelected = {
+    projectStateSelected = {
         id: null,
         description: null,
         disabled: false
@@ -185,6 +185,9 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             displayname: new FormControl(''),
             priority: new FormControl(''),
             solvedpercent: new FormControl(''),
+            complexityLevel: new FormControl(''),
+            area: new FormControl(''),
+            region: new FormControl(''),
         });
     }
 
@@ -203,15 +206,15 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     cargarCombos(response) {
 
         if (response) {
-            this.typeProject = response.proyecto.keywords[0].options;
+            this.projectTypes = response.proyecto.keywords[0].options;
 
-            this.stateProject = response.proyecto.keywords[1].options;
+            this.projectStates = response.proyecto.keywords[1].options;
 
-            this.projectRisk = response.proyecto.keywords[2].options;
+            this.projectRisks = response.proyecto.keywords[2].options;
 
-            this.managementAreaInCharge = response.proyecto.keywords[3].options;
+            this.managementAreasInCharge = response.proyecto.keywords[3].options;
 
-            this.priority = response.proyecto.keywords[4].options;
+            this.priorities = response.proyecto.keywords[4].options;
 
             this.complexityLevels = response.proyecto.keywords[5].options;
 
@@ -239,22 +242,21 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.newProyectFormGroup.get('name').setValue(response.proyecto.projectName.value);
         this.proyectName = response.proyecto.projectName.value;
 
-
-        this.newProyectFormGroup.get('client').setValue(response.proyecto.customer.value);
         this.clientSelected.id = response.proyecto.customerId.value;
         this.clientSelected.description = response.proyecto.customer.value;
-
-        this.newProyectFormGroup.get('sponsor').setValue(response.proyecto.sponsor.value);
+        this.newProyectFormGroup.get('client').setValue(this.clientSelected);
+        
         this.sponsorSelected.id = response.proyecto.sponsorid.value;
         this.sponsorSelected.description = response.proyecto.sponsor.value;
+        this.newProyectFormGroup.get('sponsor').setValue(this.sponsorSelected);
 
-        this.newProyectFormGroup.get('coordinator').setValue(response.proyecto.coordinator.value);
         this.coordinatorSelected.id = response.proyecto.coordinatorId.value;
         this.coordinatorSelected.description = response.proyecto.coordinator.value;
-
-        this.newProyectFormGroup.get('requestedbyuser').setValue(response.proyecto.requestedByUser.value);
+        this.newProyectFormGroup.get('coordinator').setValue(this.coordinatorSelected);
+        
         this.requestedByUserSelected.id = response.proyecto.requestedByUserId.value;
         this.requestedByUserSelected.description = response.proyecto.requestedByUser.value;
+        this.newProyectFormGroup.get('requestedbyuser').setValue(this.requestedByUserSelected);
 
         this.newProyectFormGroup.get('displayname').setValue(response.proyecto.displayname.value);
 
@@ -295,28 +297,34 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
         // combos
         if (response.proyecto.projectTypeId.value) {
-            this.typeProjectSelected = {
+            this.projectTypeSelected = {
                 id: response.proyecto.projectTypeId.value,
                 description: response.proyecto.projectType.value,
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('projectType').setValue(this.projectTypeSelected);
+
         if (response.proyecto.projectStateId.value) {
-            this.stateProjectSelected = {
+            this.projectStateSelected = {
                 id: response.proyecto.projectStateId.value,
                 description: response.proyecto.projectState.value,
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('state').setValue(this.projectStateSelected);
+
         if (response.proyecto.managementAreaInChargeId.value) {
             this.managementAreaInChargeDisabled =
-                this.typeProjectSelected.id === 4370 && this.projectId ? true : false;
+                this.projectTypeSelected.id === 4370 && this.projectId ? true : false;
             this.managementAreaInChargeSelected = {
                 id: response.proyecto.managementAreaInChargeId.value,
                 description: response.proyecto.managementAreaInCharge.value,
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('managementAreaInCharge').setValue(this.managementAreaInChargeSelected);
+
         if (response.proyecto.projRiesgoId.value) {
             this.projectRiskSelected = {
                 id: response.proyecto.projRiesgoId.value,
@@ -324,6 +332,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('projectRisk').setValue(this.projectRiskSelected);
+
         if (response.proyecto.priorityId.value) {
             this.prioritySelected = {
                 id: response.proyecto.priorityId.value,
@@ -331,6 +341,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('priority').setValue(this.prioritySelected);
 
         if (response.proyecto.areaId.value) {
             this.areaSelected = {
@@ -339,6 +350,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('area').setValue(this.areaSelected);
 
         if (response.proyecto.regionId.value) {
             this.regionSelected = {
@@ -347,6 +359,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 disabled: false
             };
         }
+        this.newProyectFormGroup.get('region').setValue(this.regionSelected);
 
         if (response.proyecto.complexityLevelId.value) {
             this.complexityLevelSelected = {
@@ -355,83 +368,14 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 disabled: false
             };
         }
-    }
-
-    private transformDateToString(value): any {
-        if (!value) {
-            return value;
-        }
-        return `${value.slice(8, 10)}${value.slice(5, 7)}${value.slice(0, 4)}`;
-    }
-
-    selectedItem(item, select: string) {
-        if (item && select) {
-            switch (select) {
-                case 'typeProject': {
-                    this.typeProjectSelected = item;
-                    break;
-                }
-                case 'stateProject': {
-                    this.stateProjectSelected = item;
-                    break;
-                }
-                case 'projectRisk': {
-                    this.projectRiskSelected = item;
-                    break;
-                }
-                case 'managementAreaInCharge': {
-                    this.managementAreaInChargeSelected = item;
-                    break;
-                }
-                case 'priority': {
-                    this.prioritySelected = item;
-                    break;
-                }
-                case 'complexityLevel': {
-                    this.complexityLevelSelected = item;
-                    break;
-                }
-                case 'area': {
-                    this.areaSelected = item;
-                    break;
-                }
-                case 'region': {
-                    this.regionSelected = item;
-                    break;
-                }
-            }
-        }
-    }
-
-    itemSelectedPredictiveSponsor(event) {
-        if (event.id) {
-            this.sponsorSelected = event;
-        }
-    }
-
-    itemSelectedPredictiveClients(event) {
-        if (event.id) {
-            this.clientSelected = event;
-        }
-    }
-
-    itemSelectedPredictiveCoordinators(event) {
-        if (event.id) {
-            this.coordinatorSelected = event;
-        }
-    }
-
-    itemSelectedPredictiveRequestedByUsers(event) {
-        if (event.id) {
-            this.requestedByUserSelected = event;
-        }
+        this.newProyectFormGroup.get('complexityLevel').setValue(this.complexityLevelSelected);
     }
 
     validForm(): boolean {
         // tener en cuenta que para esto hay que ver que combos son obligatorios
         return this.newProyectFormGroup.valid
-            && this.clientSelected.id !== null
-            && this.typeProjectSelected.id !== null;
+            && this.newProyectFormGroup.get('client').value.id
+            && this.newProyectFormGroup.get('projectType').value.id;
     }
 
     checkSelectedPurchaseNumber() {
@@ -446,220 +390,217 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     }
 
     private buildForm() {
+        const project = {
+            projectName: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('name').value,
+            },
+            projectType: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('projectType').value.description,
+            },
+            projectTypeId: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('projectType').value.id,
+            },
+            projectState: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('state').value.description,
+            },
+            projectStateId: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('state').value.id,
+            },
+            startDate: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('dateStart').value,
+            },
+            endDate: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('dateEnd').value,
+            },
+            sinOrdenCompra: {
+                visible: true,
+                enabled: true,
+                value: this.disabledPurchaseNumber ? 0 : 1,
+            },
+            repositorioSvn: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('repositorySVN').value,
+            },
+            nDeCompra: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('purchaseNumber').value,
+            },
+            estimatedHours: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('estimatedHours').value,
+            },
+            realHours: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('realHours').value,
+            },
+            solvedpercent: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('solvedpercent').value,
+            },
+            realStartDate: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('dateStartReal').value,
+            },
+            realEndDate: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('dateEndReal').value,
+            },
+            customer: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('client').value.description,
+            },
+            customerId: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('client').value.id,
+            },
+            projRiesgo: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('projectRisk').value.description,
+            },
+            projRiesgoId: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('projectRisk').value.id,
+            },
+            id: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('id').value,
+            },
+            displayname: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('displayname').value,
+            },
+            description: {
+                visible: true,
+                enabled: true,
+                value: this.buildDescription(),
+            },
+            managementAreaInCharge: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('managementAreaInCharge').value.description,
+            },
+            managementAreaInChargeId: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('managementAreaInCharge').value.id,
+            },
+            sponsor: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('sponsor').value.description,
+            },
+            sponsorid: {
+                visible: true,
+                enabled: true,
+                value:this.newProyectFormGroup.get('sponsor').value.id,
+            },
+            coordinator: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('coordinator').value.description,
+            },
+            coordinatorid: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('coordinator').value.id,
+            },
+            priority: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('priority').value.description,
+            },
+            priorityId: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('priority').value.id,
+            },
+            complexitylevel: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('complexityLevel').value.description,
+            },
+            complexityLevelId: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('complexityLevel').value.id,
+            },
+            area: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('area').value.description,
+            },
+            areaId: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('area').value.id,
+            },
+            region: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('region').value.description,
+            },
+            regionId: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('region').value.id,
+            },
+            qualitativeBenefits: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('qualitativebenefits').value,
+            },
+            quantitativeBenefits: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('quantitativebenefits').value,
+            },
+            comments: {
+                visible: true,
+                enabled: true,
+                value: null
+            },
+            requestedbyuser: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('requestedbyuser').value.description,
+            },
+            requestedbyuserid: {
+                visible: true,
+                enabled: true,
+                value: this.newProyectFormGroup.get('requestedbyuser').value.id,
+            },
+            keywords: []
+        }
+        this.sanitizeValues(project);
         return {
-            proyecto: {
-                projectName: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('name').value
-                },
-                projectType: {
-                    visible: true,
-                    enabled: true,
-                    value: this.typeProjectSelected.description ? this.typeProjectSelected.description : null
-                },
-                projectTypeId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.typeProjectSelected.id ? this.typeProjectSelected.id : null
-                },
-                projectState: {
-                    visible: true,
-                    enabled: true,
-                    value: this.stateProjectSelected.description ? this.stateProjectSelected.description : null
-                },
-                projectStateId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.stateProjectSelected.id ? this.stateProjectSelected.id : null
-                },
-                startDate: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('dateStart').value || null,
-                },
-                endDate: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('dateEnd').value || null,
-                },
-                sinOrdenCompra: {
-                    visible: true,
-                    enabled: true,
-                    value: this.disabledPurchaseNumber ? 0 : 1
-                },
-                repositorioSvn: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('repositorySVN').value
-                },
-                nDeCompra: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('purchaseNumber').value === '' ?
-                        null : this.newProyectFormGroup.get('purchaseNumber').value
-                },
-                estimatedHours: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('estimatedHours').value === '' ?
-                        null : +this.newProyectFormGroup.get('estimatedHours').value
-                },
-                realHours: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('realHours').value === '' ?
-                        null : +this.newProyectFormGroup.get('realHours').value
-                },
-                solvedpercent: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('solvedpercent').value === '' ?
-                        null : +this.newProyectFormGroup.get('solvedpercent').value
-                },
-                realStartDate: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('dateStartReal').value || null,
-                },
-                realEndDate: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('dateEndReal').value || null,
-                },
-                customer: {
-                    visible: true,
-                    enabled: true,
-                    value: this.clientSelected.description ? this.clientSelected.description : null
-                },
-                customerId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.clientSelected.id ? this.clientSelected.id : null
-                },
-                projRiesgo: {
-                    visible: true,
-                    enabled: true,
-                    value: this.projectRiskSelected.description ? this.projectRiskSelected.description : null
-                },
-                projRiesgoId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.projectRiskSelected.id ? this.projectRiskSelected.id : null
-                },
-                id: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('id').value === '' ?
-                        null : this.newProyectFormGroup.get('id').value
-                },
-                displayname: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('displayname').value
-                },
-                description: {
-                    visible: true,
-                    enabled: true,
-                    value: this.buildDescription(),
-                },
-                managementAreaInCharge: {
-                    visible: true,
-                    enabled: true,
-                    value: this.managementAreaInChargeSelected.description ? this.managementAreaInChargeSelected.description : null
-                },
-                managementAreaInChargeId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.managementAreaInChargeSelected.id ? this.managementAreaInChargeSelected.id : null
-                },
-                sponsor: {
-                    visible: true,
-                    enabled: true,
-                    value: this.sponsorSelected.description ? this.sponsorSelected.description : null
-                },
-                sponsorid: {
-                    visible: true,
-                    enabled: true,
-                    value: this.sponsorSelected.id ? this.sponsorSelected.id : null
-                },
-                coordinator: {
-                    visible: true,
-                    enabled: true,
-                    value: this.coordinatorSelected.description ? this.coordinatorSelected.description : null
-                },
-                coordinatorid: {
-                    visible: true,
-                    enabled: true,
-                    value: this.coordinatorSelected.id ? this.coordinatorSelected.id : null
-                },
-                priority: {
-                    visible: true,
-                    enabled: true,
-                    value: this.prioritySelected.description ? this.prioritySelected.description : null
-                },
-                priorityId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.prioritySelected.id ? this.prioritySelected.id : null
-                },
-                complexitylevel: {
-                    visible: true,
-                    enabled: true,
-                    value: this.complexityLevelSelected.description ? this.complexityLevelSelected.description : null
-                },
-                complexityLevelId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.complexityLevelSelected.id ? this.complexityLevelSelected.id : null
-                },
-                area: {
-                    visible: true,
-                    enabled: true,
-                    value: this.areaSelected.description ? this.areaSelected.description : null
-                },
-                areaId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.areaSelected.id ? this.areaSelected.id : null
-                },
-                region: {
-                    visible: true,
-                    enabled: true,
-                    value: this.regionSelected.description ? this.regionSelected.description : null
-                },
-                regionId: {
-                    visible: true,
-                    enabled: true,
-                    value: this.regionSelected.id ? this.regionSelected.id : null
-                },
-                qualitativeBenefits: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('qualitativebenefits').value
-                },
-                quantitativeBenefits: {
-                    visible: true,
-                    enabled: true,
-                    value: this.newProyectFormGroup.get('quantitativebenefits').value
-                },
-                comments: {
-                    visible: true,
-                    enabled: true,
-                    value: null
-                },
-                requestedbyuser: {
-                    visible: true,
-                    enabled: true,
-                    value: this.requestedByUserSelected.description ? this.requestedByUserSelected.description : null
-                },
-                requestedbyuserid: {
-                    visible: true,
-                    enabled: true,
-                    value: this.requestedByUserSelected.id ? this.requestedByUserSelected.id : null
-                },
-                keywords: []
-            }
+            proyecto: project,
         };
     }
 
@@ -751,7 +692,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         }
     }
 
-
     saveAndClose() {
         if (this.validForm()) {
             this.flagBeforunload = false;
@@ -785,6 +725,20 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     closeModalForOtherMotive(event?) {
         if (this.documentService.nativeDocument.body.querySelectorAll('app-modal').length > 0) {
             this.closeModal();
+        }
+    }
+
+    private getValidValueOrNull(value){
+        if (value === undefined || value === NaN || value === '') {
+            return null
+        } else {
+            return value;
+        }
+    }
+
+    private sanitizeValues(project){
+        for (let [key] of Object.entries(project)) {
+            project[key].value = this.getValidValueOrNull(project[key].value);
         }
     }
 

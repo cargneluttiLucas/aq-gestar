@@ -3,17 +3,21 @@ import { CommonModule } from '@angular/common';
 import { MainObjectsComponent } from './component/main-object.component';
 import { ComponentsModule } from 'src/app/component';
 import { MainObjectsService } from './service/main-object.service';
+import { MatInputModule, MatAutocompleteModule, MatProgressSpinnerModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
-    ComponentsModule
+    ComponentsModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [
     MainObjectsComponent
   ],
   exports: [
-    MainObjectsComponent
+    MainObjectsComponent,
   ],
   providers: [MainObjectsService]
 })
