@@ -79,7 +79,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     saveAndExitText = 'Guardar y salir';
 
     public sessionId: string;
-    // public sessionId = '7a45de40a093416f91957b166abfc3e3';
+    // public sessionId = '98a2e0ea54674182b93fc5b7fc8e14e2';
     public projectId: number;
     public proyectName: string;
     public backtofld: number;
@@ -245,7 +245,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.clientSelected.id = response.proyecto.customerId.value;
         this.clientSelected.description = response.proyecto.customer.value;
         this.newProyectFormGroup.get('client').setValue(this.clientSelected);
-        
+
         this.sponsorSelected.id = response.proyecto.sponsorid.value;
         this.sponsorSelected.description = response.proyecto.sponsor.value;
         this.newProyectFormGroup.get('sponsor').setValue(this.sponsorSelected);
@@ -253,7 +253,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.coordinatorSelected.id = response.proyecto.coordinatorId.value;
         this.coordinatorSelected.description = response.proyecto.coordinator.value;
         this.newProyectFormGroup.get('coordinator').setValue(this.coordinatorSelected);
-        
+
         this.requestedByUserSelected.id = response.proyecto.requestedByUserId.value;
         this.requestedByUserSelected.description = response.proyecto.requestedByUser.value;
         this.newProyectFormGroup.get('requestedbyuser').setValue(this.requestedByUserSelected);
@@ -519,7 +519,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             sponsorid: {
                 visible: true,
                 enabled: true,
-                value:this.newProyectFormGroup.get('sponsor').value.id,
+                value: this.newProyectFormGroup.get('sponsor').value.id,
             },
             coordinator: {
                 visible: true,
@@ -597,7 +597,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 value: this.newProyectFormGroup.get('requestedbyuser').value.id,
             },
             keywords: []
-        }
+        };
         this.sanitizeValues(project);
         return {
             proyecto: project,
@@ -606,7 +606,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     buildDescription() {
         if (this.newProyectFormGroup.get('description').value !== '') {
-            let aux = `${moment().toLocaleString()} - ${this.loggedUserInfo} : ${this.newProyectFormGroup.get('description').value};`;
+            let aux = `${new Date().toLocaleString()} - ${this.loggedUserInfo} : ${this.newProyectFormGroup.get('description').value};`;
             aux += this.historicalDescription;
             return aux;
         }
@@ -624,13 +624,13 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         const dateStartRealDefaultValidator = dateStartRealControl.validator;
         const dateEndRealDefaultValidator = dateEndRealControl.validator;
 
-        dateStartControl.setValidators([dateStartDefaultValidator,greaterThanTodayValidator]);
+        dateStartControl.setValidators([dateStartDefaultValidator, greaterThanTodayValidator]);
         if (dateStartControl.value) {
             dateEndControl.setValidators([dateEndDefaultValidator, greaterThanDateValidator(dateStartControl.value)]);
         }
         dateStartControl.valueChanges.subscribe(
             () => {
-                if (dateStartControl.value){
+                if (dateStartControl.value) {
                     dateEndControl.setValidators([dateEndDefaultValidator, greaterThanDateValidator(dateStartControl.value)]);
                 } else {
                     dateEndControl.setValidators(dateEndDefaultValidator);
@@ -645,7 +645,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         }
         dateStartRealControl.valueChanges.subscribe(
             () => {
-                if (dateStartRealControl.value){
+                if (dateStartRealControl.value) {
                     dateEndRealControl.setValidators([dateEndRealDefaultValidator, greaterThanDateValidator(dateStartRealControl.value)]);
                 } else {
                     dateEndRealControl.setValidators(dateEndRealDefaultValidator);
@@ -728,16 +728,17 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         }
     }
 
-    private getValidValueOrNull(value){
+    private getValidValueOrNull(value) {
+        // tslint:disable-next-line: use-isnan
         if (value === undefined || value === NaN || value === '') {
-            return null
+            return null;
         } else {
             return value;
         }
     }
 
-    private sanitizeValues(project){
-        for (let [key] of Object.entries(project)) {
+    private sanitizeValues(project) {
+        for (const [key] of Object.entries(project)) {
             project[key].value = this.getValidValueOrNull(project[key].value);
         }
     }

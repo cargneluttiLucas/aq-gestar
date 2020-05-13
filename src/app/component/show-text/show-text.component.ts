@@ -22,6 +22,10 @@ export class ShowTextComponent implements OnChanges {
           this.historicalDescription.push(aux.replace(/;/g, ' '));
           index = i;
         }
+        if (i === this.description.length - 1) {
+          const aux = this.description.substr(index, i - index);
+          this.historicalDescription.push(aux.replace(/;/g, ' '));
+        }
       }
 
       if (this.historicalDescription.length === 0) {

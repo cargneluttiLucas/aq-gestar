@@ -357,7 +357,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.requestedByUser.id = response.requerimiento.requestedByUserId.value;
         this.requestedByUser.description = response.requerimiento.requestedByUser.value;
         this.requirementFormGroup.get('requestedByUser').setValue(this.requestedByUser);
-        
+
         this.requirementFormGroup.get('systemEffortinHours').setValue(
             response.requerimiento.systemEffortInHours.value === 0 ? '' : response.requerimiento.systemEffortInHours.value);
         this.requirementFormGroup.get('usersEffortinHours').setValue(
@@ -747,7 +747,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 enabled: true,
                 value: this.requirementFormGroup.get('solvedpercent').value,
             }
-        }
+        };
         this.sanitizeValues(requerimiento);
         return this.requirement = {
             requerimiento,
@@ -835,7 +835,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     close() {
         this.flagClose = false;
         if (window.opener && window.opener !== window) {
-            //inside a popup
             window.close();
             this.flagBeforunload = false;
         } else {
@@ -864,16 +863,17 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
-    private getValidValueOrNull(value){
+    private getValidValueOrNull(value) {
+        // tslint:disable-next-line: use-isnan
         if (value === undefined || value === NaN || value === '') {
-            return null
+            return null;
         } else {
             return value;
         }
     }
 
-    private sanitizeValues(project){
-        for (let [key] of Object.entries(project)) {
+    private sanitizeValues(project) {
+        for (const [key] of Object.entries(project)) {
             project[key].value = this.getValidValueOrNull(project[key].value);
         }
     }
