@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, Output, OnInit, OnChanges } from '@angular/core';
 import { FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
-import { filter, map } from 'rxjs/operators';
 
-function autocompleteObjectValidator(): ValidatorFn {
+function selectObjectValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
-    if (typeof control.value === 'string' && control.value !== '') {
-      return { 'invalidAutocompleteObject': { value: control.value } }
+    if (!control.value.id) {
+      return { 'mandatoryField': { value: control.value } }
     }
     return null  /* valid option selected */
   }
@@ -21,32 +20,20 @@ export class KeywordComponent implements OnInit {
   @Input() placeHolder: string;
   @Input() control: FormControl;
   @Input() keywords: any[] = [];
+  @Input() required: boolean = false;
 
-  filteredKeywords: any[] = [];
+  emptyOption = {id: null, description: null, disabled: false};
 
   constructor() { }
 
   ngOnInit() {
-    this.control.setValidators(autocompleteObjectValidator());
-    
-    this.control
-      .valueChanges
-      .pipe(
-        filter((str) => typeof str === 'string'),
-        map(description => description ? this._filter(description) : this.keywords.slice())
-      ).subscribe((result) => {
-        this.filteredKeywords = result;
-      });;
+    if(this.required){
+      this.control.setValidators(selectObjectValidator());
+    }
   }
 
-  private _filter(description: string){
-    const filterValue = description.toLowerCase();
-
-    return this.keywords.filter(option => option.description.toLowerCase().indexOf(filterValue) === 0);
-  }
-
-  displayFn(user): string | undefined {
-    return user ? user.description : undefined;
+  compareObjects(o1: any, o2: any) {
+    return o1.id == o2.id;
   }
 }
 

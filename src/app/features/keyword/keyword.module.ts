@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { KeywordComponent } from './component/keyword.component';
 import { ComponentsModule } from 'src/app/component';
 import { MatInputModule, MatAutocompleteModule, MatProgressSpinnerModule } from '@angular/material';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { MatInputModule, MatAutocompleteModule, MatProgressSpinnerModule } from 
     MatInputModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
+    MatSelectModule
   ],
   declarations: [
     KeywordComponent
