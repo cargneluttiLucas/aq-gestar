@@ -175,6 +175,7 @@ export class TextfieldComponent implements ControlValueAccessor, OnInit, AfterVi
 
     ngOnChanges() {
         if (this.control.disabled) {
+            console.log(this.control.disabled);
             this.control.disable();
         }
     }
