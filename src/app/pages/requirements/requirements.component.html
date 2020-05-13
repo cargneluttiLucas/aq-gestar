@@ -48,17 +48,27 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <app-select [items]="aplications" [item]="aplicationsSelected"
+                        <div class="col-md-3 margin-top-32">
+                            <!-- <app-select [items]="aplications" [item]="aplicationsSelected"
                                 [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'aplications')" placeholderDefault="Aplicación">
-                            </app-select>
+                            </app-select> -->
+                            <app-keyword
+                                placeHolder="Aplicación"
+                                [control]="requirementFormGroup.get('application')"
+                                [keywords]="aplications"
+                            ></app-keyword>
                         </div>
-                        <div class="col-md-3">
-                            <app-select [items]="modules" [item]="moduleSelected"
+                        <div class="col-md-3 margin-top-32">
+                            <!-- <app-select [items]="modules" [item]="moduleSelected"
                                 [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'modules')" placeholderDefault="Módulo">
-                            </app-select>
+                            </app-select> -->
+                            <app-keyword
+                                placeHolder="Módulo"
+                                [control]="requirementFormGroup.get('module')"
+                                [keywords]="modules"
+                            ></app-keyword>
                         </div>
                         <div class="col-md-6 margin-top-32">
                             <app-project
@@ -93,19 +103,29 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <app-select [items]="businessProces" [item]="businessProcesSelected"
+                        <div class="col-md-3 margin-top-32">
+                            <!-- <app-select [items]="businessProces" [item]="businessProcesSelected"
                                 [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'businessProces')"
                                 placeholderDefault="Proceso de negocio">
-                            </app-select>
+                            </app-select> -->
+                            <app-keyword
+                                placeHolder="Proceso de negocio"
+                                [control]="requirementFormGroup.get('businessProcess')"
+                                [keywords]="businessProcesses"
+                            ></app-keyword>
                         </div>
-                        <div class="col-md-3">
-                            <app-select [items]="requirementTypes" [item]="requirementTypeSelected"
+                        <div class="col-md-3 margin-top-32">
+                            <!-- <app-select [items]="requirementTypes" [item]="requirementTypeSelected"
                                 [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'requirementTypes')"
                                 placeholderDefault="Tipo de requerimiento">
-                            </app-select>
+                            </app-select> -->
+                            <app-keyword
+                                placeHolder="Tipo de requerimiento"
+                                [control]="requirementFormGroup.get('requirementType')"
+                                [keywords]="requirementTypes"
+                            ></app-keyword>
                         </div>
                         <div class="col-md-3 margin-top-32">
                             <app-main-object
@@ -116,11 +136,16 @@
                             </app-main-object>
 
                         </div>
-                        <div class="col-md-3">
-                            <app-select [items]="prioritys" [item]="prioritySelected"
+                        <div class="col-md-3 margin-top-32">
+                            <!-- <app-select [items]="prioritys" [item]="prioritySelected"
                                 [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'prioritys')" placeholderDefault="Prioridad">
-                            </app-select>
+                            </app-select> -->
+                            <app-keyword
+                                placeHolder="Prioridad"
+                                [control]="requirementFormGroup.get('priority')"
+                                [keywords]="priorities"
+                            ></app-keyword>
                         </div>
                     </div>
                     <div class="row">
@@ -154,24 +179,39 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <app-select [items]="areas" [item]="areaSelected" [dispatchHint]="'Seleccione un elemento'"
+                        <div class="col-md-3 margin-top-32">
+                            <!-- <app-select [items]="areas" [item]="areaSelected" [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'areas')" placeholderDefault="Área">
-                            </app-select>
+                            </app-select> -->
+                            <app-keyword
+                                placeHolder="Área"
+                                [control]="requirementFormGroup.get('area')"
+                                [keywords]="areas"
+                            ></app-keyword>
                         </div>
-                        <div class="col-md-3">
-                            <app-select [items]="managementAreas" [item]="managementAreaSelected"
+                        <div class="col-md-3 margin-top-32">
+                            <!-- <app-select [items]="managementAreas" [item]="managementAreaSelected"
                                 [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'managementAreas')"
                                 placeholderDefault="Gerencia responsable">
-                            </app-select>
+                            </app-select> -->
+                            <app-keyword
+                                placeHolder="Gerencia responsable"
+                                [control]="requirementFormGroup.get('managementArea')"
+                                [keywords]="managementAreas"
+                            ></app-keyword>
                         </div>
-                        <div class="col-md-3">
-                            <app-select [items]="complexityLevels" [item]="complexityLevelSelected"
+                        <div class="col-md-3 margin-top-32">
+                            <!-- <app-select [items]="complexityLevels" [item]="complexityLevelSelected"
                                 [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'complexityLevel')"
                                 placeholderDefault="Nivel de Complejidad">
-                            </app-select>
+                            </app-select> -->
+                            <app-keyword
+                                placeHolder="Nivel de Complejidad"
+                                [control]="requirementFormGroup.get('complexityLevel')"
+                                [keywords]="complexityLevels"
+                            ></app-keyword>
                         </div>
                         <div class="col-md-3">
                             <app-textfield text="Número de release" id="releaseNumber"

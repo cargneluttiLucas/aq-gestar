@@ -21,7 +21,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     requirementFormGroup: FormGroup;
 
     aplications = [];
-    aplicationsSelected = {
+    applicationSelected = {
         id: null,
         description: null,
         disabled: false
@@ -34,8 +34,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         disabled: false
     };
 
-    businessProces = [];
-    businessProcesSelected = {
+    businessProcesses = [];
+    businessProcessSelected = {
         id: null,
         description: null,
         disabled: false
@@ -55,7 +55,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         disabled: false
     };
 
-    prioritys = [];
+    priorities = [];
     prioritySelected = {
         id: null,
         description: null,
@@ -205,6 +205,14 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             solvedpercent: new FormControl(''),
             releaseNumber: new FormControl(''),
             project: new FormControl('', Validators.required),
+            application: new FormControl(''),
+            module: new FormControl(''),
+            businessProcess: new FormControl(''),
+            requirementType: new FormControl(''),
+            priority: new FormControl(''),
+            area: new FormControl(''),
+            managementArea: new FormControl(''),
+            complexityLevel: new FormControl(''),
         });
     }
 
@@ -238,23 +246,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     private loadSelects() {
-        const firstElement = {
-            id: null,
-            description: null,
-            disabled: false
-        };
         this.requirementService.getNewSelects(this.sessionId).subscribe((response) => {
             if (response) {
-                this.aplications.push(firstElement);
-                this.modules.push(firstElement);
-                this.businessProces.push(firstElement);
-                this.requirementTypes.push(firstElement);
-                this.prioritys.push(firstElement);
-                this.regios.push(firstElement);
-                this.areas.push(firstElement);
-                this.managementAreas.push(firstElement);
-                this.complexityLevels.push(firstElement);
-
                 response.reqKeywords.keywords[0].options.forEach((item) => {
                     this.aplications.push(item);
                 });
@@ -263,13 +256,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.modules.push(item);
                 });
                 response.reqKeywords.keywords[2].options.forEach((item) => {
-                    this.businessProces.push(item);
+                    this.businessProcesses.push(item);
                 });
                 response.reqKeywords.keywords[3].options.forEach((item) => {
                     this.requirementTypes.push(item);
                 });
                 response.reqKeywords.keywords[5].options.forEach((item) => {
-                    this.prioritys.push(item);
+                    this.priorities.push(item);
                 });
                 response.reqKeywords.keywords[6].options.forEach((item) => {
                     this.regios.push(item);
@@ -284,13 +277,13 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.complexityLevels.push(item);
                 });
                 // this.modules = response.reqKeywords.keywords[1].options;
-                // this.businessProces = response.reqKeywords.keywords[2].options;
+                // this.businessProcesses = response.reqKeywords.keywords[2].options;
                 // this.requirementTypes = response.reqKeywords.keywords[3].options;
 
                 // // este se convirtio en un predictivo pero no busca por filtro al back
                 // // solo busca en la carga inicial.
                 this.mainObjects = response.reqKeywords.keywords[4].options;
-                // this.prioritys = response.reqKeywords.keywords[5].options;
+                // this.priorities = response.reqKeywords.keywords[5].options;
                 // this.regios = response.reqKeywords.keywords[6].options;
                 // this.areas = response.reqKeywords.keywords[7].options;
                 // this.managementAreas = response.reqKeywords.keywords[9].options;
@@ -373,12 +366,14 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
         // combos
         if (response.requerimiento.applicationId.value) {
-            this.aplicationsSelected = {
+            this.applicationSelected = {
                 id: response.requerimiento.applicationId.value,
                 description: response.requerimiento.application.value,
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('application').setValue(this.applicationSelected);
+
         if (response.requerimiento.moduleId.value) {
             this.moduleSelected = {
                 id: response.requerimiento.moduleId.value,
@@ -386,13 +381,17 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('module').setValue(this.moduleSelected);
+
         if (response.requerimiento.businessProcessId.value) {
-            this.businessProcesSelected = {
+            this.businessProcessSelected = {
                 id: response.requerimiento.businessProcessId.value,
                 description: response.requerimiento.businessProcess.value,
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('businessProcess').setValue(this.businessProcessSelected);
+
         if (response.requerimiento.managementAreaInChargeId.value) {
             this.managementAreaSelected = {
                 id: response.requerimiento.managementAreaInChargeId.value,
@@ -400,6 +399,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('managementArea').setValue(this.managementAreaSelected);
+
         if (response.requerimiento.complexityLevelId.value) {
             this.complexityLevelSelected = {
                 id: response.requerimiento.complexityLevelId.value,
@@ -407,6 +408,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('complexityLevel').setValue(this.complexityLevelSelected);
+
         if (response.requerimiento.areaId.value) {
             this.areaSelected = {
                 id: response.requerimiento.areaId.value,
@@ -414,6 +417,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('area').setValue(this.areaSelected);
+
         if (response.requerimiento.priorityId.value) {
             this.prioritySelected = {
                 id: response.requerimiento.priorityId.value,
@@ -421,6 +426,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('priority').setValue(this.prioritySelected);
 
         if (response.requerimiento.mainObjectId.value) {
             this.mainObjectSelected = {
@@ -438,6 +444,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 disabled: false
             };
         }
+        this.requirementFormGroup.get('requirementType').setValue(this.requirementTypeSelected);
     }
 
     buildDescription() {
@@ -573,22 +580,22 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             application: {
                 visible: true,
                 enabled: true,
-                value: this.aplicationsSelected.description,
+                value: this.requirementFormGroup.get('application').value.description,
             },
             applicationId: {
                 visible: true,
                 enabled: true,
-                value: this.aplicationsSelected.id,
+                value: this.requirementFormGroup.get('application').value.id,
             },
             moduleId: {
                 visible: true,
                 enabled: true,
-                value: this.moduleSelected.id,
+                value: this.requirementFormGroup.get('module').value.id,
             },
             module: {
                 visible: true,
                 enabled: true,
-                value: this.moduleSelected.description,
+                value: this.requirementFormGroup.get('module').value.description,
             },
             requestedDate: {
                 visible: true,
@@ -608,12 +615,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             requerimentTypeId: {
                 visible: true,
                 enabled: true,
-                value: this.requirementTypeSelected.id,
+                value: this.requirementFormGroup.get('requirementType').value.id,
             },
             requerimentType: {
                 visible: true,
                 enabled: true,
-                value: this.requirementTypeSelected.description,
+                value: this.requirementFormGroup.get('requirementType').value.description,
             },
             mainObjectId: {
                 visible: true,
@@ -628,12 +635,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             priorityId: {
                 visible: true,
                 enabled: true,
-                value: this.prioritySelected.id,
+                value: this.requirementFormGroup.get('priority').value.id,
             },
             priority: {
                 visible: true,
                 enabled: true,
-                value: this.prioritySelected.description,
+                value: this.requirementFormGroup.get('priority').value.description,
             },
             estimatedStartDate: {
                 visible: true,
@@ -648,12 +655,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             areaId: {
                 visible: true,
                 enabled: true,
-                value: this.areaSelected.id,
+                value: this.requirementFormGroup.get('area').value.id,
             },
             area: {
                 visible: true,
                 enabled: true,
-                value: this.areaSelected.description,
+                value: this.requirementFormGroup.get('area').value.description,
             },
             workAreaId: {
                 visible: true,
@@ -708,32 +715,32 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             businessProcessId: {
                 visible: true,
                 enabled: true,
-                value: this.businessProcesSelected.id,
+                value: this.requirementFormGroup.get('businessProcess').value.id,
             },
             businessProcess: {
                 visibl: true,
                 enabled: true,
-                value: this.businessProcesSelected.description,
+                value: this.requirementFormGroup.get('businessProcess').value.description,
             },
             managementAreaInCharge: {
                 visible: true,
                 enabled: true,
-                value: this.managementAreaSelected.description,
+                value: this.requirementFormGroup.get('managementArea').value.description,
             },
             managementAreaInChargeId: {
                 visible: true,
                 enabled: true,
-                value: this.managementAreaSelected.id,
+                value: this.requirementFormGroup.get('managementArea').value.id,
             },
             complexityLevel: {
                 visible: true,
                 enabled: true,
-                value: this.complexityLevelSelected.description,
+                value: this.requirementFormGroup.get('complexityLevel').value.description,
             },
             complexityLevelId: {
                 visible: true,
                 enabled: true,
-                value: this.complexityLevelSelected.id,
+                value: this.requirementFormGroup.get('complexityLevel').value.id,
             },
             solvedpercent: {
                 visible: true,
@@ -761,49 +768,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         const month = value.slice(2, 4);
         const date = value.slice(0, 2);
         return new Date(year, month - 1, date);
-    }
-
-    selectedItem(item, tipe) {
-        if (item && tipe) {
-            switch (tipe) {
-                case 'aplications': {
-                    this.aplicationsSelected = item;
-                    break;
-                }
-                case 'modules': {
-                    this.moduleSelected = item;
-                    break;
-                }
-                case 'businessProces': {
-                    this.businessProcesSelected = item;
-                    break;
-                }
-                case 'requirementTypes': {
-                    this.requirementTypeSelected = item;
-                    break;
-                }
-                case 'prioritys': {
-                    this.prioritySelected = item;
-                    break;
-                }
-                /* case 'regions': {
-                    this.regioSelected = item;
-                    break;
-                } */
-                case 'areas': {
-                    this.areaSelected = item;
-                    break;
-                }
-                case 'managementAreas': {
-                    this.managementAreaSelected = item;
-                    break;
-                }
-                case 'complexityLevel': {
-                    this.complexityLevelSelected = item;
-                    break;
-                }
-            }
-        }
     }
 
     validFormFromToSave(): boolean {

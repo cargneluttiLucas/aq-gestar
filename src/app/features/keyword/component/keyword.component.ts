@@ -28,6 +28,9 @@ export class KeywordComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if (this.disabled) {
+      this.control.disable();
+    }
     if(this.required){
       this.control.setValidators(selectObjectValidator());
     }

@@ -371,13 +371,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.newProyectFormGroup.get('complexityLevel').setValue(this.complexityLevelSelected);
     }
 
-    selectedItem(item, select: string) {
-        if (item && select) {
-            switch (select) {
-            }
-        }
-    }
-
     validForm(): boolean {
         // tener en cuenta que para esto hay que ver que combos son obligatorios
         return this.newProyectFormGroup.valid
