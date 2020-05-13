@@ -1,6 +1,6 @@
 import {
     Component, forwardRef, Input, OnInit, Output,
-    EventEmitter, ViewChild, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy
+    EventEmitter, ViewChild, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy, OnChanges
 } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor, Validators } from '@angular/forms';
 import { Observable, Subject, Subscription } from 'rxjs';
@@ -28,7 +28,7 @@ export const MomentValidateTexfield = {
     }],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextfieldComponent implements ControlValueAccessor, OnInit, AfterViewInit {
+export class TextfieldComponent implements ControlValueAccessor, OnInit, AfterViewInit, OnChanges {
 
     @ViewChild('box', { static: false }) boxTextfield;
 
@@ -120,7 +120,7 @@ export class TextfieldComponent implements ControlValueAccessor, OnInit, AfterVi
     ngOnInit(): void {
         this.createForm();
 
-        if (this.disabled){
+        if (this.disabled) {
             this.control.disable();
         }
 
@@ -171,6 +171,12 @@ export class TextfieldComponent implements ControlValueAccessor, OnInit, AfterVi
             this.checkboxProyection = true;
         }
         this.cdRef.detectChanges();
+    }
+
+    ngOnChanges() {
+        if (this.control.disabled) {
+            this.control.disable();
+        }
     }
 
     focusFunction() {
