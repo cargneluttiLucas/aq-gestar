@@ -605,12 +605,14 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     }
 
     buildDescription() {
-        if (this.newProyectFormGroup.get('description').value !== '') {
-            let aux = `${new Date().toLocaleString()} - ${this.loggedUserInfo} : ${this.newProyectFormGroup.get('description').value};`;
-            aux += this.historicalDescription;
+        if (this.newProyectFormGroup.get('description').value) {
+            const valueNewDescription = this.newProyectFormGroup.get('description').value;
+            let aux = `${new Date().toLocaleString()} - ${this.loggedUserInfo}: ${valueNewDescription} ; `;
+            aux += this.historicalDescription || '';
             return aux;
+        } else {
+            return this.historicalDescription;
         }
-        return this.historicalDescription;
     }
 
     initDateValidations() {

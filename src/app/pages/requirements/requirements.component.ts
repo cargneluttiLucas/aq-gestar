@@ -123,6 +123,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     historicalDescription: string;
 
+    private loggedUserInfo: any;
+
     constructor(
         private requirementService: RequierementsService,
         private modalServiceNg: ModalService,
@@ -163,6 +165,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.loadNewRequirement();
         }
         this.createForm();
+
+        this.requirementService.loggedUserInfo(this.sessionId).subscribe((response) => {
+            if (response) {
+                this.loggedUserInfo = response.usuario.userFullName.value;
+            }
+        });
     }
 
     ngAfterViewInit() {
@@ -448,10 +456,10 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     buildDescription() {
-        if (this.requirementFormGroup.get('description').value !== '') {
+        if (this.requirementFormGroup.get('description').value) {
             const valueNewDescription = this.requirementFormGroup.get('description').value;
-            let aux = `${new Date().toLocaleString()} - ${this.requirementFormGroup.get('creator').value}: ${valueNewDescription} ; `;
-            aux += this.historicalDescription;
+            let aux = `${new Date().toLocaleString()} - ${this.loggedUserInfo}: ${valueNewDescription} ; `;
+            aux += this.historicalDescription || '';
             return aux;
         } else {
             return this.historicalDescription;
