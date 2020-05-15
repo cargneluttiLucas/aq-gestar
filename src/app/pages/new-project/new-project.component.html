@@ -26,15 +26,16 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 margin-top-32">
                         <app-client
                             [sessionId]="sessionId"
                             placeHolder="Cliente"
                             [control]="newProyectFormGroup.get('client')"
+                            [required]="true"
                         >
                         </app-client>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 margin-top-32">
                         <app-user
                             [sessionId]="sessionId"
                             placeHolder="Sponsor"
@@ -45,7 +46,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 margin-top-32">
                         <app-user
                             [sessionId]="sessionId"
                             placeHolder="Coordinador"
@@ -53,7 +54,7 @@
                         >
                         </app-user>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 margin-top-32">
                         <app-user
                             [sessionId]="sessionId"
                             placeHolder="Solicitado por"

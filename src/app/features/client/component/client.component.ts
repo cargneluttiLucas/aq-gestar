@@ -12,24 +12,32 @@ function autocompleteObjectValidator(): ValidatorFn {
   }
 }
 
+function autocompleteRequiredValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (!control.value.id) {
+      return { 'mandatoryField': { value: control.value } }
+    }
+    return null  /* valid option selected */
+  }
+}
+
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.scss']
 })
-export class ClientComponent implements OnInit {
+export class ClientComponent implements OnInit, OnChanges {
 
   @Input() sessionId: string;
   @Input() placeHolder: string;
   @Input() control: FormControl;
+  @Input() required = false;
 
   filteredClients: any[] = [];
 
   constructor(private clientService: ClientService) { }
 
   ngOnInit() {
-    this.control.setValidators(autocompleteObjectValidator());
-    
     this.control
       .valueChanges
       .pipe(
@@ -48,6 +56,13 @@ export class ClientComponent implements OnInit {
           this.buildClient(response.contactos);;
         }
       });
+  }
+
+  ngOnChanges(){
+    this.control.setValidators(autocompleteObjectValidator());
+    if (this.required) {
+      this.control.setValidators([this.control.validator, autocompleteRequiredValidator()]);
+    }
   }
 
   buildClient(client) {

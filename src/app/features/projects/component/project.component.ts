@@ -12,24 +12,32 @@ function autocompleteObjectValidator(): ValidatorFn {
   }
 }
 
+function autocompleteRequiredValidator(): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    if (!control.value.id) {
+      return { 'mandatoryField': { value: control.value } }
+    }
+    return null  /* valid option selected */
+  }
+}
+
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss']
 })
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, OnChanges {
 
   @Input() sessionId: string;
   @Input() placeHolder: string;
   @Input() control: FormControl;
+  @Input() required = false;
 
   filteredProjects: any[] = [];
 
   constructor(private projectsService: ProjectsService) { }
 
   ngOnInit() {
-    this.control.setValidators(autocompleteObjectValidator());
-    
     this.control
       .valueChanges
       .pipe(
@@ -47,6 +55,13 @@ export class ProjectComponent implements OnInit {
           this.buildProject(response.proyectos);;
         }
       });
+  }
+
+  ngOnChanges(){
+    this.control.setValidators(autocompleteObjectValidator());
+    if (this.required) {
+      this.control.setValidators([this.control.validator, autocompleteRequiredValidator()]);
+    }
   }
 
   buildProject(proyects) {
