@@ -81,7 +81,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     public sessionId: string;
     // public sessionId = '98a2e0ea54674182b93fc5b7fc8e14e2';
     public projectId: number;
-    public proyectName: string;
+    public proyectName = false;
     public backtofld: number;
     private proyectAcction: string;
 
@@ -240,7 +240,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.managementAreaInChargeDisabled = false;
         this.newProyectFormGroup.get('id').setValue(response.proyecto.id.value);
         this.newProyectFormGroup.get('name').setValue(response.proyecto.projectName.value);
-        this.proyectName = response.proyecto.projectName.value;
+        this.proyectName = response.proyecto.projectName.value === null ? false : true;
 
         this.clientSelected.id = response.proyecto.customerId.value;
         this.clientSelected.description = response.proyecto.customer.value;

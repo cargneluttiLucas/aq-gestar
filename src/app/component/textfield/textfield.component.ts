@@ -120,10 +120,6 @@ export class TextfieldComponent implements ControlValueAccessor, OnInit, AfterVi
     ngOnInit(): void {
         this.createForm();
 
-        if (this.disabled) {
-            this.control.disable();
-        }
-
         if (this.control.validator === Validators.required) {
             this.flagRequired = this.control.validator === Validators.required;
         }
@@ -170,12 +166,14 @@ export class TextfieldComponent implements ControlValueAccessor, OnInit, AfterVi
         if (containerIcon.length > 0) {
             this.checkboxProyection = true;
         }
+        if (this.disabled) {
+            this.control.disable();
+        }
         this.cdRef.detectChanges();
     }
 
     ngOnChanges() {
-        if (this.control.disabled) {
-            console.log(this.control.disabled);
+        if (this.disabled) {
             this.control.disable();
         }
     }
