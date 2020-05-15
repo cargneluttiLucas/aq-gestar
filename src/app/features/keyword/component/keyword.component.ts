@@ -15,7 +15,7 @@ function selectObjectValidator(): ValidatorFn {
   templateUrl: './keyword.component.html',
   styleUrls: ['./keyword.component.scss']
 })
-export class KeywordComponent implements OnInit {
+export class KeywordComponent implements OnInit, OnChanges {
 
   @Input() placeHolder: string;
   @Input() control: FormControl;
@@ -28,6 +28,9 @@ export class KeywordComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(){
     if (this.disabled) {
       this.control.disable();
     }
