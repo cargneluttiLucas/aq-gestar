@@ -10,6 +10,12 @@ import { PagesModule } from './pages/pages.module';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+registerLocaleData(localeEs);
+import { LOCALE_ID } from '@angular/core';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -21,9 +27,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ComponentsModule.forRoot(),
     PagesModule.forRoot(),
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: "es" }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
