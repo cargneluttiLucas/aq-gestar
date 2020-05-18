@@ -110,7 +110,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     hoursMin = 0;
     hoursMax = 99999999;
-    hoursRegEx = "[0-9]*";
+    hoursRegEx = "([-]{1})?[0-9]*\\.?[0-9]+";
 
 
     constructor(
