@@ -110,8 +110,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     hoursMin = 0;
     hoursMax = 99999999;
-    hoursRegEx = "([-]{1})?[0-9]*\\.?[0-9]+";
-
 
     constructor(
         private newProyectService: NewProjectService,
@@ -175,7 +173,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             dateStartReal: new FormControl(''),
             dateEndReal: new FormControl(''),
 
-            estimatedHours: new FormControl('', [Validators.min(this.hoursMin), Validators.max(this.hoursMax), Validators.pattern(this.hoursRegEx)]),
+            estimatedHours: new FormControl('', [Validators.min(this.hoursMin), Validators.max(this.hoursMax)]),
             realHours: new FormControl(''),
 
             repositorySVN: new FormControl(''),
