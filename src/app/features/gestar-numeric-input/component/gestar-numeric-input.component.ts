@@ -39,7 +39,7 @@ export class GestarNumericInputComponent implements ControlValueAccessor, OnInit
   }
 
   writeValue(value) {
-    if (this.auxiliarInput){
+    if (this.auxiliarInput && value){
       this.auxiliarInput.nativeElement.value = value;
     }
   }
