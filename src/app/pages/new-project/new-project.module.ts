@@ -18,6 +18,7 @@ import {
 } from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { KeywordModule } from 'src/app/features/keyword/keyword.module';
+import { GestarNumericInputModule } from 'src/app/features/gestar-numeric-input/gestar-numeric-input.module';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { KeywordModule } from 'src/app/features/keyword/keyword.module';
     UserModule.forRoot(),
     RequirementsModule.forRoot(),
     KeywordModule.forRoot(),
+    GestarNumericInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,

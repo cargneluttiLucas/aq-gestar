@@ -217,9 +217,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        <app-textfield [text]="'Horas estimadas'" id="estimatedHours"
-                            [control]="newProyectFormGroup.get('estimatedHours')"></app-textfield>
+                    <div class="col-md-6 margin-top-24">
+                        <app-gestar-numeric-input
+                            placeHolder="Horas estimadas"
+                            [formControl]="newProyectFormGroup.get('estimatedHours')"
+                        >
+                        </app-gestar-numeric-input>
+                        <mat-error *ngIf="newProyectFormGroup.get('estimatedHours').hasError('min') || newProyectFormGroup.get('estimatedHours').hasError('max')">
+                            Horas estimadas debe ser un número entre {{this.hoursMin}} y {{this.hoursMax | number:'1.0-0'}}.
+                        </mat-error>
                     </div>
                     <div class="col-md-6">
                         <app-textfield [text]="'Horas reales'" id="realHours"
