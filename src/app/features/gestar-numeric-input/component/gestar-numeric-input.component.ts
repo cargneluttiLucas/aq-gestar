@@ -44,7 +44,7 @@ export class GestarNumericInputComponent implements ControlValueAccessor, OnInit
     }
   }
 
-  _onChange(){
+  _onChange(value){
     this.onChange(this.auxiliarInput.nativeElement.inputmask.unmaskedvalue());
   }
 
