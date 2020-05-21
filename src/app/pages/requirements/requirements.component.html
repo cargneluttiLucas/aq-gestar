@@ -40,15 +40,31 @@
             </div>
             <app-tabs>
                 <app-tab [title]="'Requerimiento'">
-                    <div class="row  margin-top-16">
-                        <div class="col-md-6">
+                    <div class="row  margin-top-32">
+                        <!-- <div class="col-md-6">
                             <app-textfield text="Titulo" [disabled]="requirementName" id="title"
                                 [control]="requirementFormGroup.get('title')">
                             </app-textfield>
+                        </div> -->
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Título</mat-label>
+                            <textarea matInput maxlength="200" [formControl]="requirementFormGroup.get('title')"></textarea>
+                            <mat-hint align="end">{{(requirementFormGroup.get('title')?.value?.length || 0)}} / 200</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 margin-top-32">
+                            <app-project
+                                [sessionId]="sessionId"
+                                placeHolder="Proyecto / frente de trabajo"
+                                [control]="requirementFormGroup.get('project')"
+                                [required]="true"
+                            >
+                            </app-project>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3 margin-top-32">
+                        <div class="col-md-4 margin-top-32">
                             <!-- <app-select [items]="aplications" [item]="aplicationsSelected"
                                 [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'aplications')" placeholderDefault="Aplicación">
@@ -59,7 +75,7 @@
                                 [keywords]="aplications"
                             ></app-keyword>
                         </div>
-                        <div class="col-md-3 margin-top-32">
+                        <div class="col-md-4 margin-top-32">
                             <!-- <app-select [items]="modules" [item]="moduleSelected"
                                 [dispatchHint]="'Seleccione un elemento'"
                                 (itemSelected)="selectedItem($event, 'modules')" placeholderDefault="Módulo">
@@ -70,14 +86,12 @@
                                 [keywords]="modules"
                             ></app-keyword>
                         </div>
-                        <div class="col-md-6 margin-top-32">
-                            <app-project
-                                [sessionId]="sessionId"
-                                placeHolder="Proyecto / frente de trabajo"
-                                [control]="requirementFormGroup.get('project')"
-                                [required]="true"
+                        <div class="col-md-4 margin-top-32">
+                            <app-gestar-numeric-input
+                            placeHolder="Horas reales"
+                            [formControl]="requirementFormGroup.get('calculatedEffort')"
                             >
-                            </app-project>
+                            </app-gestar-numeric-input>
                         </div>
                     </div>
                     <div class="row">
@@ -97,10 +111,12 @@
                                 <mat-datepicker #requestDate></mat-datepicker>
                             </mat-form-field>
                         </div>
-                        <div class="col-md-3">
-                            <app-textfield text="Porcentaje de avance" id="solvedpercent"
-                                [control]="requirementFormGroup.get('solvedpercent')" [disabled]="true">
-                            </app-textfield>
+                        <div class="col-md-3 margin-top-32">
+                            <app-gestar-numeric-input
+                            placeHolder="Porcentaje de avance"
+                            [formControl]="requirementFormGroup.get('solvedpercent')"
+                            >
+                            </app-gestar-numeric-input>
                         </div>
                     </div>
                     <div class="row">
@@ -168,15 +184,25 @@
                                 <mat-error *ngIf="requirementFormGroup.get('estimatedDateEnd').hasError('greaterThanDateValidator')">'Fecha estimada de fin' debe ser mayor o igual a 'Fecha estimada de inicio'.</mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="col-md-3">
-                            <app-textfield text="Esfuerzo sistemas en horas" id="systemEffortinHours"
-                                [control]="requirementFormGroup.get('systemEffortinHours')">
-                            </app-textfield>
+                        <div class="col-md-3 margin-top-32">
+                            <app-gestar-numeric-input
+                            placeHolder="Esfuerzo sistemas en horas"
+                            [formControl]="requirementFormGroup.get('systemEffortinHours')"
+                            >
+                            </app-gestar-numeric-input>
+                            <mat-error *ngIf="requirementFormGroup.get('systemEffortinHours').hasError('min') || requirementFormGroup.get('systemEffortinHours').hasError('max')">
+                                Esfuerzo sistemas en horas debe ser un número entre {{this.hoursMin}} y {{this.hoursMax | number:'1.0-0'}}.
+                            </mat-error>
                         </div>
-                        <div class="col-md-3">
-                            <app-textfield text="Esfuerzo usuarios en horas" id="usersEffortinHours"
-                                [control]="requirementFormGroup.get('usersEffortinHours')">
-                            </app-textfield>
+                        <div class="col-md-3 margin-top-32">
+                            <app-gestar-numeric-input
+                            placeHolder="Esfuerzo usuarios en horas"
+                            [formControl]="requirementFormGroup.get('usersEffortinHours')"
+                            >
+                            </app-gestar-numeric-input>
+                            <mat-error *ngIf="requirementFormGroup.get('usersEffortinHours').hasError('min') || requirementFormGroup.get('usersEffortinHours').hasError('max')">
+                                Esfuerzo usuarios en horas debe ser un número entre {{this.hoursMin}} y {{this.hoursMax | number:'1.0-0'}}.
+                            </mat-error>
                         </div>
                     </div>
                     <div class="row">

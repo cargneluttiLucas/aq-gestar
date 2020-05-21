@@ -5,7 +5,7 @@ import { CookieService } from 'src/app/services/cookie.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'src/app/component';
 import { NavigatorService, KeypressService, DocumentService, BeforeunloadService } from 'src/app/utils/index';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
 import { FORMS_CUSTOM_VALIDATORS } from 'src/app/component/form';
@@ -125,6 +125,11 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     private loggedUserInfo: any;
 
+    docIsNew = false;
+
+    hoursMin = 0;
+    hoursMax = 99999999;
+
     constructor(
         private requirementService: RequierementsService,
         private modalServiceNg: ModalService,
@@ -138,7 +143,6 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         private router: Router) { }
 
     ngOnInit() {
-
         this.beforeunloadService.beforeunload().subscribe((data) => {
             if (this.flagBeforunload) {
                 data.preventDefault();
@@ -156,12 +160,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.backtofld = item.backtofld;
         });
         this.loadSelects();
-        if (this.requirementId && this.requirementAcction === 'open') {
+        this.docIsNew = this.requirementAcction === 'new';
+        if (!this.docIsNew) {
             this.saveText = 'Modificar';
             this.saveAndExitText = 'Modificar y salir';
             this.openRequirement(this.requirementId);
-        }
-        if (this.requirementAcction === 'new') {
+        } else {
             this.loadNewRequirement();
         }
         this.createForm();
@@ -171,6 +175,9 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.loggedUserInfo = response.usuario.userFullName.value;
             }
         });
+
+        this.disableExistentDocFields();
+        this.disableReadOnlyFields();
     }
 
     ngAfterViewInit() {
@@ -208,8 +215,9 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             estimatedDateStart: new FormControl(''),
             estimatedDateEnd: new FormControl(''),
 
-            systemEffortinHours: new FormControl(''),
-            usersEffortinHours: new FormControl(''),
+            systemEffortinHours: new FormControl('', [Validators.min(this.hoursMin), Validators.max(this.hoursMax)]),
+            usersEffortinHours: new FormControl('', [Validators.min(this.hoursMin), Validators.max(this.hoursMax)]),
+            calculatedEffort: new FormControl(''),
             solvedpercent: new FormControl(''),
             releaseNumber: new FormControl(''),
             project: new FormControl('', Validators.required),
@@ -370,7 +378,8 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
             response.requerimiento.systemEffortInHours.value === 0 ? '' : response.requerimiento.systemEffortInHours.value);
         this.requirementFormGroup.get('usersEffortinHours').setValue(
             response.requerimiento.userEffortInHours.value === 0 ? '' : response.requerimiento.userEffortInHours.value);
-
+        this.requirementFormGroup.get('calculatedEffort').setValue(
+            response.requerimiento.calculatedEffort.value === 0 ? '' : response.requerimiento.calculatedEffort.value);    
 
         // combos
         if (response.requerimiento.applicationId.value) {
@@ -823,6 +832,12 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                         if (response.message) {
                             window.alert(response.message[0]);
                         }
+
+                        if (response.status === 200) {
+                            this.docIsNew = false;
+                            this.disableExistentDocFields();
+                        }
+
                         if (response.status === 200 && this.flagClose) {
                             this.requirement.stateId = this.requirementLoad.stateId;
                             this.close();
@@ -941,5 +956,14 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
         );
     }
 
+    disableExistentDocFields() {
+        if (!this.docIsNew) {
+            this.requirementFormGroup.get('title').disable();
+        }
+    }
 
+    disableReadOnlyFields(){
+        this.requirementFormGroup.get('calculatedEffort').disable();
+        this.requirementFormGroup.get('solvedpercent').disable();
+    }
 }

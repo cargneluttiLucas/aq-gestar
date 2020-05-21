@@ -18,6 +18,7 @@ export class GestarNumericInputComponent implements ControlValueAccessor, OnInit
   @Input() required = false;
   @ViewChild('auxiliarInput',  {static: false}) auxiliarInput: any;
   onChange;
+  disabled = false;
 
   constructor() { }
 
@@ -51,5 +52,9 @@ export class GestarNumericInputComponent implements ControlValueAccessor, OnInit
   registerOnChange(fn) { this.onChange = fn;  }
 
   registerOnTouched(fn) {  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = true;
+  }
 
 }
