@@ -5,7 +5,7 @@ import { CookieService } from 'src/app/services/cookie.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from 'src/app/component';
 import { KeypressService, DocumentService, NavigatorService, BeforeunloadService } from 'src/app/utils';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { FORMS_CUSTOM_VALIDATORS } from 'src/app/component/form';
 import { greaterThanTodayValidator, greaterThanDateValidator } from 'src/app/custom-validators/date.validator';
@@ -81,7 +81,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     public sessionId: string;
     // public sessionId = '98a2e0ea54674182b93fc5b7fc8e14e2';
     public projectId: number;
-    public proyectName = false;
     public backtofld: number;
     private proyectAcction: string;
 
@@ -111,6 +110,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
     hoursMin = 0;
     hoursMax = 99999999;
 
+    docIsNew = false;
+
     constructor(
         private newProyectService: NewProjectService,
         private cookieService: CookieService,
@@ -135,7 +136,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             this.proyectAcction = item.action;
             this.backtofld = item.backtofld;
         });
-        if (this.projectId && this.proyectAcction === 'open') {
+        this.docIsNew = this.proyectAcction === 'new';
+        if (!this.docIsNew) {
             this.saveText = 'Modificar';
             this.saveAndExitText = 'Modificar y salir';
             this.openProyect(this.projectId);
@@ -149,6 +151,9 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 this.loggedUserInfo = response.usuario.userFullName.value;
             }
         });
+
+        this.disableExistentDocFields();
+        this.disableReadOnlyFields();
     }
 
     handlerErrorDate(event) {
@@ -242,7 +247,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.managementAreaInChargeDisabled = false;
         this.newProyectFormGroup.get('id').setValue(response.proyecto.id.value);
         this.newProyectFormGroup.get('name').setValue(response.proyecto.projectName.value);
-        this.proyectName = response.proyecto.projectName.value === null ? false : true;
 
         this.clientSelected.id = response.proyecto.customerId.value;
         this.clientSelected.description = response.proyecto.customer.value;
@@ -684,6 +688,8 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                             window.alert(response.message[0]);
                         }
                         if (response.status === 200) {
+                            this.docIsNew = false;
+                            this.disableExistentDocFields();
                             this.projectId = response.docId;
                             this.changeTextButtons();
                             if (this.flagClose) {
@@ -745,6 +751,17 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         for (const [key] of Object.entries(project)) {
             project[key].value = this.getValidValueOrNull(project[key].value);
         }
+    }
+
+    disableExistentDocFields(){
+        if (!this.docIsNew) {
+            this.newProyectFormGroup.get('name').disable();
+        }
+    }
+
+    disableReadOnlyFields(){
+        this.newProyectFormGroup.get('realHours').disable();
+        this.newProyectFormGroup.get('solvedpercent').disable();
     }
 
     ngOnDestroy() {

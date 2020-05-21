@@ -18,10 +18,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        <app-textfield text="Nombre del proyecto" id="name" [disabled]="proyectName"
-                            [control]="newProyectFormGroup.get('name')">
-                        </app-textfield>
+                    <div class="col-md-12 margin-top-32">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Nombre del proyecto</mat-label>
+                            <textarea matInput maxlength="200" [formControl]="newProyectFormGroup.get('name')"></textarea>
+                            <mat-hint align="end">{{(newProyectFormGroup.get('name')?.value?.length || 0)}} / 200</mat-hint>
+                        </mat-form-field>
                     </div>
                 </div>
 
@@ -227,18 +229,21 @@
                             Horas estimadas debe ser un número entre {{this.hoursMin}} y {{this.hoursMax | number:'1.0-0'}}.
                         </mat-error>
                     </div>
-                    <div class="col-md-6">
-                        <app-textfield [text]="'Horas reales'" id="realHours"
-                            [control]="newProyectFormGroup.get('realHours')"
-                            [disabled]="true">
-                        </app-textfield>
+                    <div class="col-md-6 margin-top-24">
+                        <app-gestar-numeric-input
+                            placeHolder="Horas reales"
+                            [formControl]="newProyectFormGroup.get('realHours')"
+                        >
+                        </app-gestar-numeric-input>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                        <app-textfield text="Porcentaje de avance" id="solvedpercent"
-                            [control]="newProyectFormGroup.get('solvedpercent')" [disabled]="true">
-                        </app-textfield>
+                    <div class="col-md-6 margin-top-24">
+                        <app-gestar-numeric-input
+                            placeHolder="Porcentaje de avance"
+                            [formControl]="newProyectFormGroup.get('solvedpercent')"
+                        >
+                        </app-gestar-numeric-input>
                     </div>
                     <div class="col-md-6">
                         <app-textfield text="Número de compra" id="purchaseNumber" [disabled]="disabledPurchaseNumber"

@@ -1,4 +1,4 @@
 <mat-form-field class="full-width-field">
     <mat-label>{{placeHolder}}<span class="required" *ngIf="required">*</span></mat-label>
-    <input matInput #auxiliarInput (input)="_onChange($event.target.value);">
+    <input matInput #auxiliarInput (input)="_onChange($event.target.value);" [disabled]="disabled">
 </mat-form-field>
