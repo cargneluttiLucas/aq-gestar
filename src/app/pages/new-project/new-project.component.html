@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-md-12 margin-top-32">
                         <mat-form-field class="example-full-width">
-                            <mat-label>Nombre del proyecto</mat-label>
+                            <mat-label>Nombre del proyecto <span class="required">*</span></mat-label>
                             <textarea matInput maxlength="200" [formControl]="newProyectFormGroup.get('name')"></textarea>
                             <mat-hint align="end">{{(newProyectFormGroup.get('name')?.value?.length || 0)}} / 200</mat-hint>
                         </mat-form-field>

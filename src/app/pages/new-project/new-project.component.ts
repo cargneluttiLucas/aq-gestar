@@ -755,7 +755,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
     disableExistentDocFields(){
         if (!this.docIsNew) {
-            this.newProyectFormGroup.get('name').disable();
+            /*this.newProyectFormGroup.get('name').disable();*/
         }
     }
 

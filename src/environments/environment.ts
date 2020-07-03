@@ -1,5 +1,5 @@
-const API_DOMAIN = 'http://3.227.233.148/bffgestar/api/v1';
-const GESTAR_SERVER = 'http://3.227.233.148';
+const API_DOMAIN = 'http://18.208.187.152/bffgestar/api/v1';
+const GESTAR_SERVER = 'http://18.208.187.152/';
 const APPVIRTUALROOT = 'c';
 
 export const environment = {
