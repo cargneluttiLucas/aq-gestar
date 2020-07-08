@@ -321,8 +321,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         this.newProyectFormGroup.get('state').setValue(this.projectStateSelected);
 
         if (response.proyecto.managementAreaInChargeId.value) {
-            this.managementAreaInChargeDisabled =
-                this.projectTypeSelected.id === 4370 && this.projectId ? true : false;
             this.managementAreaInChargeSelected = {
                 id: response.proyecto.managementAreaInChargeId.value,
                 description: response.proyecto.managementAreaInCharge.value,

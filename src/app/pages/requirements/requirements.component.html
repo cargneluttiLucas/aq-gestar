@@ -47,7 +47,7 @@
                             </app-textfield>
                         </div> -->
                         <mat-form-field class="example-full-width">
-                            <mat-label>Título</mat-label>
+                            <mat-label>Título <span class="required">*</span></mat-label>
                             <textarea matInput maxlength="200" [formControl]="requirementFormGroup.get('title')"></textarea>
                             <mat-hint align="end">{{(requirementFormGroup.get('title')?.value?.length || 0)}} / 200</mat-hint>
                         </mat-form-field>

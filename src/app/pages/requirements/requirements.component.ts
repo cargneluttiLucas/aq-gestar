@@ -958,7 +958,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     disableExistentDocFields() {
         if (!this.docIsNew) {
-            this.requirementFormGroup.get('title').disable();
+            //this.requirementFormGroup.get('title').disable();
         }
     }
 
