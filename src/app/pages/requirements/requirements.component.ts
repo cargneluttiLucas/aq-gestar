@@ -952,6 +952,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                     estimatedDateEndControl.setValidators(estimatedDateEndDefaultValidator);
                 }
                 estimatedDateEndControl.updateValueAndValidity();
+                estimatedDateEndControl.markAsTouched();
             }
         );
     }

@@ -636,12 +636,14 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         }
         dateStartControl.valueChanges.subscribe(
             () => {
+                debugger;
                 if (dateStartControl.value) {
                     dateEndControl.setValidators([dateEndDefaultValidator, greaterThanDateValidator(dateStartControl.value)]);
                 } else {
                     dateEndControl.setValidators(dateEndDefaultValidator);
                 }
                 dateEndControl.updateValueAndValidity();
+                dateEndControl.markAsTouched();
             }
         );
 
@@ -657,6 +659,7 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                     dateEndRealControl.setValidators(dateEndRealDefaultValidator);
                 }
                 dateEndRealControl.updateValueAndValidity();
+                dateEndRealControl.markAsTouched();
             }
         );
     }
