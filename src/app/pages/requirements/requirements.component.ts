@@ -945,6 +945,7 @@ export class RequirementsComponent implements OnInit, AfterViewInit, OnDestroy {
                 estimatedDateEndControl.setErrors({ 'dateIsNotGreaterThanStartDate': true })
             }
         }
+        estimatedDateEndControl.markAsTouched();
     }
 
     disableExistentDocFields() {

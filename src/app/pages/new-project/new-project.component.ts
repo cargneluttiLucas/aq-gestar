@@ -631,21 +631,23 @@ export class NewProjectComponent implements OnInit, OnDestroy {
 
         dateEndControl.setErrors(null);
         if (dateEnd && !dateStart) {
-            dateEndControl.setErrors({ 'startDateIsNotSet': true })
+            dateEndControl.setErrors({ 'startDateIsNotSet': true });
         } else {
             if (dateEnd && !dateEnd.isSameOrAfter(dateStart, 'day')) {
-                dateEndControl.setErrors({ 'dateIsNotGreaterThanStartDate': true })
+                dateEndControl.setErrors({ 'dateIsNotGreaterThanStartDate': true });
             }
         }
+        dateEndControl.markAsTouched();
 
         dateEndRealControl.setErrors(null);
         if (dateEndReal && !dateStartReal) {
-            dateEndRealControl.setErrors({ 'startDateIsNotSet': true })
+            dateEndRealControl.setErrors({ 'startDateIsNotSet': true });
         } else {
             if (dateEndReal && !dateEndReal.isSameOrAfter(dateStartReal, 'day')) {
-                dateEndRealControl.setErrors({ 'dateIsNotGreaterThanStartDate': true })
+                dateEndRealControl.setErrors({ 'dateIsNotGreaterThanStartDate': true });
             }
         }
+        dateEndRealControl.markAsTouched();
     }
 
     save() {
