@@ -8,7 +8,6 @@ import { KeypressService, DocumentService, NavigatorService, BeforeunloadService
 import { Subscription, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { FORMS_CUSTOM_VALIDATORS } from 'src/app/component/form';
-import { greaterThanTodayValidator, greaterThanDateValidator } from 'src/app/custom-validators/date.validator';
 import * as moment from 'moment';
 
 
@@ -195,7 +194,9 @@ export class NewProjectComponent implements OnInit, OnDestroy {
             complexityLevel: new FormControl(''),
             area: new FormControl(''),
             region: new FormControl(''),
-        });
+        },
+        this.formValidators.bind(this)
+        );
     }
 
     cargarNewProject() {
@@ -204,7 +205,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 setTimeout(() => {
                     this.cargarCombos(response);
                     this.loadFilds(response);
-                    this.initDateValidations();
                 }, 200);
             }
         });
@@ -237,7 +237,6 @@ export class NewProjectComponent implements OnInit, OnDestroy {
                 setTimeout(() => {
                     this.cargarCombos(response);
                     this.loadFilds(response);
-                    this.initDateValidations();
                 }, 200);
             }
         });
@@ -619,49 +618,34 @@ export class NewProjectComponent implements OnInit, OnDestroy {
         }
     }
 
-    initDateValidations() {
-        const dateStartControl = this.newProyectFormGroup.get('dateStart');
-        const dateEndControl = this.newProyectFormGroup.get('dateEnd');
-        const dateStartRealControl = this.newProyectFormGroup.get('dateStartReal');
-        const dateEndRealControl = this.newProyectFormGroup.get('dateEndReal');
+    formValidators(formGroup: FormGroup){
+        const dateStartControl = formGroup.get('dateStart');
+        const dateEndControl = formGroup.get('dateEnd');
+        const dateStartRealControl = formGroup.get('dateStartReal');
+        const dateEndRealControl = formGroup.get('dateEndReal');
 
-        const dateStartDefaultValidator = dateStartControl.validator;
-        const dateEndDefaultValidator = dateEndControl.validator;
-        const dateStartRealDefaultValidator = dateStartRealControl.validator;
-        const dateEndRealDefaultValidator = dateEndRealControl.validator;
+        const dateStart = dateStartControl.value;
+        const dateEnd = dateEndControl.value;
+        const dateStartReal = dateStartRealControl.value;
+        const dateEndReal = dateEndRealControl.value;
 
-        dateStartControl.setValidators([dateStartDefaultValidator, greaterThanTodayValidator]);
-        if (dateStartControl.value) {
-            dateEndControl.setValidators([dateEndDefaultValidator, greaterThanDateValidator(dateStartControl.value)]);
-        }
-        dateStartControl.valueChanges.subscribe(
-            () => {
-                debugger;
-                if (dateStartControl.value) {
-                    dateEndControl.setValidators([dateEndDefaultValidator, greaterThanDateValidator(dateStartControl.value)]);
-                } else {
-                    dateEndControl.setValidators(dateEndDefaultValidator);
-                }
-                dateEndControl.updateValueAndValidity();
-                dateEndControl.markAsTouched();
+        dateEndControl.setErrors(null);
+        if (dateEnd && !dateStart) {
+            dateEndControl.setErrors({ 'startDateIsNotSet': true })
+        } else {
+            if (dateEnd && !dateEnd.isSameOrAfter(dateStart, 'day')) {
+                dateEndControl.setErrors({ 'dateIsNotGreaterThanStartDate': true })
             }
-        );
-
-        dateStartRealControl.setValidators([dateStartRealDefaultValidator, greaterThanTodayValidator]);
-        if (dateStartRealControl.value) {
-            dateEndRealControl.setValidators([dateEndRealDefaultValidator, greaterThanDateValidator(dateStartRealControl.value)]);
         }
-        dateStartRealControl.valueChanges.subscribe(
-            () => {
-                if (dateStartRealControl.value) {
-                    dateEndRealControl.setValidators([dateEndRealDefaultValidator, greaterThanDateValidator(dateStartRealControl.value)]);
-                } else {
-                    dateEndRealControl.setValidators(dateEndRealDefaultValidator);
-                }
-                dateEndRealControl.updateValueAndValidity();
-                dateEndRealControl.markAsTouched();
+
+        dateEndRealControl.setErrors(null);
+        if (dateEndReal && !dateStartReal) {
+            dateEndRealControl.setErrors({ 'startDateIsNotSet': true })
+        } else {
+            if (dateEndReal && !dateEndReal.isSameOrAfter(dateStartReal, 'day')) {
+                dateEndRealControl.setErrors({ 'dateIsNotGreaterThanStartDate': true })
             }
-        );
+        }
     }
 
     save() {
