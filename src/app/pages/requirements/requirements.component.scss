@@ -1,5 +1,10 @@
 @import "../../styles/spaces";
+@import "../../styles/colors";
 
 mat-form-field {
-        width: 100%;
+    width: 100%;
 }
+.required {
+    padding: 0 0 0 15px;
+    color: $color-error-500;
+  }

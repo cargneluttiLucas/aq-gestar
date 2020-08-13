@@ -47,7 +47,7 @@
                             </app-textfield>
                         </div> -->
                         <mat-form-field class="example-full-width">
-                            <mat-label>Título</mat-label>
+                            <mat-label>Título <span class="required">*</span></mat-label>
                             <textarea matInput maxlength="200" [formControl]="requirementFormGroup.get('title')"></textarea>
                             <mat-hint align="end">{{(requirementFormGroup.get('title')?.value?.length || 0)}} / 200</mat-hint>
                         </mat-form-field>
@@ -173,7 +173,6 @@
                                 <mat-datepicker-toggle matSuffix [for]="estimatedDateStart"></mat-datepicker-toggle>
                                 <mat-datepicker #estimatedDateStart></mat-datepicker>
                             </mat-form-field>
-                            <mat-error *ngIf="requirementFormGroup.get('estimatedDateStart').hasError('greaterThanTodayValidator')">'Fecha estimada de inicio' debe ser mayor o igual a hoy.</mat-error>
                         </div>
                         <div class="col-md-3 margin-top-32">
                             <mat-form-field>
@@ -181,7 +180,8 @@
                                 <input matInput placeholder="dd/mm/aaaa" [matDatepicker]="estimatedDateEnd" [formControl]="requirementFormGroup.get('estimatedDateEnd')">
                                 <mat-datepicker-toggle matSuffix [for]="estimatedDateEnd"></mat-datepicker-toggle>
                                 <mat-datepicker #estimatedDateEnd></mat-datepicker>
-                                <mat-error *ngIf="requirementFormGroup.get('estimatedDateEnd').hasError('greaterThanDateValidator')">'Fecha estimada de fin' debe ser mayor o igual a 'Fecha estimada de inicio'.</mat-error>
+                                <mat-error *ngIf="requirementFormGroup.get('estimatedDateEnd').hasError('dateIsNotGreaterThanStartDate')">'Fecha estimada de fin' debe ser mayor o igual a 'Fecha estimada de inicio'.</mat-error>
+                            <mat-error *ngIf="requirementFormGroup.get('estimatedDateEnd').hasError('startDateIsNotSet')">Debe seleccionar una fecha de 'Fecha estimada de inicio'.</mat-error>
                             </mat-form-field>
                         </div>
                         <div class="col-md-3 margin-top-32">
